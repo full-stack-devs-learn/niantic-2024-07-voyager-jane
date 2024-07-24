@@ -267,7 +267,8 @@ public class Main
 
         // How many total shots did they make?
         int peteShots = 6;
-        int patShots = peteShots * 2;
+        int doubleShots = 2;
+        int patShots = peteShots * doubleShots;
 
         int totalPetePatShots = peteShots + patShots;
 
@@ -298,7 +299,17 @@ public class Main
         // he missed 4 shots.
 
         // What percentage of his shots did he make?
+        double peteTotalShots = 11;
+        double peteMissedShots = 4;
+        double percentConvert = 100;
 
+        double peteSuccessfulShots = peteTotalShots - peteMissedShots;
+        double decimalSuccess = peteSuccessfulShots / peteTotalShots;
+        double percentSuccess = decimalSuccess * percentConvert;
+
+        System.out.println("17) Pete's Percentage of Successful Shots");
+        System.out.println("Success Rate: " + percentSuccess + "%");
+        System.out.println();
 
 
 
@@ -310,6 +321,18 @@ public class Main
 
         // How many shots do Pete and Pat have to take to win
         // this game?
+        int threePointer = 3;
+        double threePointPetePat = 0.7;
+        int rivalTeamScore = 31;
+        int needToWin = rivalTeamScore + 1;
+
+        double calculateContribution = needToWin * threePointPetePat;
+        int calculateShotsNeeded = (int)calculateContribution / threePointer;
+
+        System.out.println("18) 3 Point Shots Pete and Pat Need to Take to Win");
+        System.out.println("3 Point Shots: " + calculateShotsNeeded);
+        System.out.println();
+
     }
     
     public static void clairesCookies()
