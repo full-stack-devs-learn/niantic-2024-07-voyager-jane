@@ -4,7 +4,7 @@ public class Functions02
 {
     public static void main(String[] args)
     {
-        // add your code here
+        displayTeamScores(1, "Georgia", 12, 14, 6, 7);
     }
     
     public static void displayTeamScores(int rank, String teamName, int q1, int q2, int q3, int q4)
