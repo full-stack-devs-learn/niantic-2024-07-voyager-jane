@@ -119,7 +119,7 @@ public class Main
         // Hint: You cannot use the same variable name
         // as a variable that you have used before.
         String favSuperHero;
-        favSuperHero = "Spiderman";
+        favSuperHero = "Spider-Man";
 
         System.out.println("5) Favorite Super Hero");
         System.out.println("Name: " + favSuperHero);
@@ -141,7 +141,7 @@ public class Main
         // 7. Declare a variable that holds the current
         // population in the United States.
         // (search what the population is today)
-        double populationUSA;
+        int populationUSA;
         populationUSA = 333300000;
 
         System.out.println("7) Current USA Population");
@@ -152,7 +152,7 @@ public class Main
         // 8. Declare a variable that holds the current
         // population in China.
         // (search what the population is today)
-        double populationChina;
+        int populationChina;
         populationChina = 1412000000;
 
         System.out.println("8) Current China Population");
@@ -198,7 +198,7 @@ public class Main
         microsoftStock = 444.85;
 
         System.out.println("12) Current Microsoft Stock Price");
-        System.out.println("Price: " + microsoftStock);
+        System.out.println("Price: " + microsoftStock + " USD");
         System.out.println();
 
     }
@@ -324,13 +324,14 @@ public class Main
         int threePointer = 3;
         double threePointPetePat = 0.7;
         int rivalTeamScore = 31;
+        int roundUp = 1;
 
-        double calculateThree = rivalTeamScore / threePointer;
-        double calculatePercent = (int)calculateThree / threePointPetePat;
-        int roundUp = (int)calculatePercent + 1;
+        int calculateThree = rivalTeamScore / threePointer;
+        double calculatePercent = calculateThree / threePointPetePat;
+        int roundShoot = (int)calculatePercent + roundUp;
 
         System.out.println("18) 3 Point Shots Pete and Pat Need to Take to Win");
-        System.out.println("3 Point Shots: " + roundUp);
+        System.out.println("3 Point Shots: " + roundShoot);
         System.out.println();
 
     }
