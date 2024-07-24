@@ -324,13 +324,13 @@ public class Main
         int threePointer = 3;
         double threePointPetePat = 0.7;
         int rivalTeamScore = 31;
-        int needToWin = rivalTeamScore + 1;
 
-        double calculateContribution = needToWin * threePointPetePat;
-        int calculateShotsNeeded = (int)calculateContribution / threePointer;
+        double calculateThree = rivalTeamScore / threePointer;
+        double calculatePercent = (int)calculateThree / threePointPetePat;
+        int roundUp = (int)calculatePercent + 1;
 
         System.out.println("18) 3 Point Shots Pete and Pat Need to Take to Win");
-        System.out.println("3 Point Shots: " + calculateShotsNeeded);
+        System.out.println("3 Point Shots: " + roundUp);
         System.out.println();
 
     }
