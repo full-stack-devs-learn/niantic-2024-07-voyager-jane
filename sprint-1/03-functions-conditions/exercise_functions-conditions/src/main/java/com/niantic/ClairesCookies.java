@@ -21,7 +21,11 @@ public class ClairesCookies
      */
     public double calculateSubtotal(int quantity)
     {
-        return 0;
+        double priceOfDozenCookies = 12.95;
+
+        double calculateCostofQuantity = priceOfDozenCookies * quantity;
+
+        return calculateCostofQuantity;
     }
 
     /*
@@ -43,7 +47,12 @@ public class ClairesCookies
      */
     public double calculateTotal(int quantity)
     {
-        return 0;
+        double subTotal = calculateSubtotal(quantity);
+
+        double plusTax = subTotal * TaxRate;
+        double totalCost = plusTax + subTotal;
+
+        return totalCost;
     }
 
     /*
@@ -75,7 +84,16 @@ public class ClairesCookies
      */
     public double calculateQuickOrder(int snickerDozen, int chocolateDozen, int frostedDozen)
     {
-        return 0;
+        double chocoChipCost = 13.95;
+        double frostedChipCost = 15.95;
+
+        double snickerTotal = calculateTotal(snickerDozen);
+
+        double sumCookiePrice = (chocoChipCost * chocolateDozen) + (frostedChipCost * frostedDozen);
+        double plusTax = sumCookiePrice * TaxRate;
+        double totalCostOrder = plusTax + snickerTotal + sumCookiePrice;
+
+        return totalCostOrder;
     }
 
 
@@ -103,7 +121,25 @@ public class ClairesCookies
      */
     public double calculateCustomOrder (int quantity, boolean hasChocolateChips, boolean hasFrosting)
     {
-        return 0;
+
+        double plusChocoChips = quantity * 1.00;
+        double plusFrosting = quantity * 2.00;
+
+        double costOfDozens = calculateSubtotal(quantity);
+
+        if(hasChocolateChips)
+        {
+            costOfDozens += plusChocoChips;
+        }
+
+        if(hasFrosting)
+        {
+            costOfDozens += plusFrosting;
+        }
+
+        double plusTax = TaxRate * costOfDozens;
+        double customTotal = plusTax + costOfDozens;
+        return customTotal;
     }
 
 }
