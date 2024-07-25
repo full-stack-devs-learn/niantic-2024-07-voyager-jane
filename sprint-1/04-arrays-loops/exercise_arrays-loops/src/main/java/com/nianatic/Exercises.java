@@ -11,7 +11,10 @@ public class Exercises
      */
     public String[] daysOfTheWeek()
     {
-        return null;
+
+        String[] daysInWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+        return daysInWeek;
     }
 
     /*
@@ -23,7 +26,11 @@ public class Exercises
      */
     public String[] monthsOfTheYear()
     {
-        return null;
+
+        String[] monthsInYear = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+        return monthsInYear;
+
     }
 
     /*
@@ -38,7 +45,15 @@ public class Exercises
      */
     public int[] oneToFifty()
     {
-        return null;
+
+        int[] numbersToFifty = new int[50];
+
+        for (int index = 0; index < 50; index++)
+        {
+            numbersToFifty[index] = index + 1;
+        }
+
+        return numbersToFifty;
     }
 
     /*
@@ -53,7 +68,19 @@ public class Exercises
      */
     public int[] evenNumbers()
     {
-        return null;
+
+        int[] onlyEvens = new int[100];
+
+        int evenNumber = 2;
+
+        for (int index = 0; index < 100; index++)
+        {
+            onlyEvens[index] = evenNumber;
+
+            evenNumber+=2;
+        }
+
+        return onlyEvens;
     }
 
     /*
@@ -75,7 +102,11 @@ public class Exercises
      */
     public String firstDayOfWeek(String[] daysOfTheWeek)
     {
-        return null;
+
+        String firstDay = daysOfTheWeek[0];
+
+        return firstDay;
+
     }
 
     /*
@@ -97,7 +128,11 @@ public class Exercises
      */
     public String lastDayOfWeek(String[] daysOfTheWeek)
     {
-        return null;
+
+        String lastDay = daysOfTheWeek[daysOfTheWeek.length - 1];
+
+        return lastDay;
+
     }
 
     /*
@@ -116,7 +151,11 @@ public class Exercises
      */
     public String monthName(String[] months, int monthNumber)
     {
-        return null;
+
+        String month = months[monthNumber - 1];
+
+        return month;
+
     }
 
     /*
@@ -138,7 +177,19 @@ public class Exercises
      */
     public boolean hasName(String[] names, String nameToFind)
     {
-        return false;
+
+        boolean nameIncluded = false;
+
+        for (String name : names)
+        {
+            if (name.equalsIgnoreCase(nameToFind))
+            {
+                nameIncluded = true;
+            }
+        }
+
+        return nameIncluded;
+
     }
 
     /*
@@ -159,7 +210,19 @@ public class Exercises
      */
     public int countName(String[] names, String nameToFind)
     {
-        return -1;
+
+        int count = 0;
+
+        for (String name : names)
+        {
+            if (name.equalsIgnoreCase(nameToFind))
+            {
+                count++;
+            }
+        }
+
+        return count;
+
     }
 
     /*
@@ -173,7 +236,16 @@ public class Exercises
      */
     public int sumNumbers(int[] numbers)
     {
-        return -1;
+
+        int sum = 0;
+
+        for (int num : numbers)
+        {
+            sum += num;
+        }
+
+        return sum;
+
     }
 
     /*
@@ -188,7 +260,21 @@ public class Exercises
      */
     public int doubleEvens(int[] numbers)
     {
-        return -1;
+
+        int sum = 0;
+
+        for (int num : numbers)
+        {
+            if (num % 2 == 0)
+            {
+                sum += num;
+            }
+        }
+
+        int doubleSum = sum * 2;
+
+        return doubleSum;
+
     }
 
     /*
@@ -203,7 +289,29 @@ public class Exercises
      */
     public int sumEveryThird(int[] numbers)
     {
-        return -1;
+        int count = 3;
+        int sum = 0;
+
+        for (int index = 0; index < numbers.length; index++)
+        {
+            if (count == 3)
+            {
+                sum += numbers[index];
+                count -= 1;
+            }
+            else if (count == 1)
+            {
+                count = 3;
+            }
+            else
+            {
+                count -= 1;
+
+            }
+        }
+
+        return sum;
+
     }
 
     /*
@@ -216,7 +324,19 @@ public class Exercises
      */
     public double averagePrice(double[] prices)
     {
-        return -1;
+
+        double sumPrice = 0;
+        double avgPrice;
+
+        for (double price : prices)
+        {
+            sumPrice += price;
+        }
+
+        avgPrice = sumPrice / prices.length;
+
+        return avgPrice;
+
     }
 
     /*
@@ -229,7 +349,18 @@ public class Exercises
      */
     public double highestValue(double[] prices)
     {
-        return -1;
+
+        double maxValue = prices[0];
+
+        for (double price : prices)
+        {
+            if (price > maxValue) {
+                maxValue = price;
+            }
+        }
+
+        return maxValue;
+
     }
 
     /*
@@ -242,7 +373,17 @@ public class Exercises
      */
     public double lowestValue(double[] prices)
     {
-        return -1;
+
+        double minValue = Double.MAX_VALUE;
+
+        for (double price : prices)
+        {
+            if (price < minValue) {
+                minValue = price;
+            }
+        }
+
+        return minValue;
     }
 
 }
