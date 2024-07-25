@@ -299,13 +299,13 @@ public class Main
         // he missed 4 shots.
 
         // What percentage of his shots did he make?
-        double peteTotalShots = 11;
+        double peteGoodShots = 11;
         double peteMissedShots = 4;
         double percentConvert = 100;
 
-        double peteSuccessfulShots = peteTotalShots - peteMissedShots;
-        double decimalSuccess = peteSuccessfulShots / peteTotalShots;
-        double percentSuccess = decimalSuccess * percentConvert;
+        double peteSuccessfulShots = peteGoodShots + peteMissedShots;
+        double decimalSuccess = peteGoodShots / peteSuccessfulShots;
+        double percentSuccess = Math.round(decimalSuccess * 100);
 
         System.out.println("17) Pete's Percentage of Successful Shots");
         System.out.println("Success Rate: " + percentSuccess + "%");
@@ -324,14 +324,14 @@ public class Main
         int threePointer = 3;
         double threePointPetePat = 0.7;
         int rivalTeamScore = 31;
-        int roundUp = 1;
 
-        int calculateThree = rivalTeamScore / threePointer;
-        double calculatePercent = calculateThree / threePointPetePat;
-        int roundShoot = (int)calculatePercent + roundUp;
+        int extraShot = rivalTeamScore % threePointer;
+        int pointsToWin = rivalTeamScore + extraShot;
+        double calculateThree = (double) pointsToWin / threePointer;
+        double calculatePercent = Math.ceil(calculateThree / threePointPetePat);
 
         System.out.println("18) 3 Point Shots Pete and Pat Need to Take to Win");
-        System.out.println("3 Point Shots: " + roundShoot);
+        System.out.println("3 Point Shots: " + calculatePercent);
         System.out.println();
 
     }
