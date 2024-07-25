@@ -292,6 +292,9 @@ public class Exercises
         int count = 3;
         int sum = 0;
 
+        // count keeps track for every third number.
+        // for every loop, count is either decreased or set back to 3.
+        // if count is 3, add the value to sum.
         for (int index = 0; index < numbers.length; index++)
         {
             if (count == 3)
@@ -384,6 +387,7 @@ public class Exercises
         }
 
         return minValue;
+
     }
 
 }
