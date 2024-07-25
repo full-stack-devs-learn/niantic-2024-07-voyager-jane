@@ -268,8 +268,8 @@ public class Main
         // How many total shots did they make?
         int peteShots = 6;
         int doubleShots = 2;
-        int patShots = peteShots * doubleShots;
 
+        int patShots = peteShots * doubleShots;
         int totalPetePatShots = peteShots + patShots;
 
         System.out.println("15) Pete and Pat's Total Number of Shots");
