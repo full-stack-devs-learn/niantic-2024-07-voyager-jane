@@ -83,16 +83,17 @@ public class BackyardBasketball
      */
     public int calculateShotsRequired(int shotPercentage, int desiredScore, boolean isThree)
     {
-        int minAmountofAllShots;
+        int shotType;
         if(isThree) {
-            minAmountofAllShots = (int) Math.ceil((double)desiredScore / 3);
+            shotType = 3;
         }
         else
         {
-            minAmountofAllShots = (int) Math.ceil((double)desiredScore / 2);
+            shotType = 2;
         }
-        double shot = (double)100 /shotPercentage;
-        int calculatePercentShots = (int) Math.ceil(shot * minAmountofAllShots);
+        int minAmountofShotsIf100Percent = (int) Math.ceil((double)desiredScore / shotType);
+        double actualAttemptsNeeded = (double) 100 / shotPercentage;
+        int calculatePercentShots = (int) Math.ceil(actualAttemptsNeeded * minAmountofShotsIf100Percent);
         return calculatePercentShots;
     }
 }
