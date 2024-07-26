@@ -21,7 +21,22 @@ public class ElliotsYardCare
      */
     public double  calculateCost(int width, int length, boolean  isTrimming)
     {
-        return 0;
+        double cost;
+        double yesTrim = 3.0;
+        double noTrim = 2.5;
+
+        double everyThousand = ((double) width * length) / 1000;
+
+        if (isTrimming)
+        {
+            cost = everyThousand * yesTrim;
+        }
+        else
+        {
+            cost = everyThousand * noTrim;
+        }
+
+        return cost;
     }
 
     /*
@@ -41,7 +56,12 @@ public class ElliotsYardCare
      */
     public double  calculateProfit(int width, int length, boolean  isTrimming, int amountCharged)
     {
-        return 0;
+        double costOfGasMaterials = calculateCost(width, length, isTrimming);
+
+        double profit = amountCharged - costOfGasMaterials;
+
+        return profit;
+
     }
 
     /*
@@ -62,7 +82,22 @@ public class ElliotsYardCare
      */
     public double calculateTime(int width, int length, boolean  isTrimming)
     {
-        return 0;
+        double timeNeeded;
+
+        double everyThousand = ((double) width * length) / 1000;
+
+        if (isTrimming) {
+            timeNeeded = everyThousand * 45;
+        }
+
+        else
+        {
+            timeNeeded = everyThousand * 30;
+        }
+
+        double hoursTotal = timeNeeded / 60;
+
+        return hoursTotal;
     }
 
     /*
@@ -93,6 +128,19 @@ public class ElliotsYardCare
      */
     public double  calculatePrice(int width, int length, boolean  isTrimming)
     {
-        return 0;
+
+        int wantPerHour = 10;
+        int minCharge = 25;
+        double howManyHours = calculateTime(width, length, isTrimming);
+        double costGasMaterials = calculateCost(width, length, isTrimming);
+
+        // ((Charge_25x) - Cost) / Hours >= 10
+        double calculatePerHour = wantPerHour * howManyHours;
+        double addCost = calculatePerHour + costGasMaterials;
+        double chargeSize = addCost / minCharge;
+
+        int estimatePrice = (int) Math.ceil(chargeSize) * minCharge;
+
+        return estimatePrice;
     }
 }
