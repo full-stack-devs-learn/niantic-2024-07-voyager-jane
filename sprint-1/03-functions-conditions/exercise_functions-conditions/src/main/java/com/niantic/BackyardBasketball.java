@@ -101,6 +101,10 @@ public class BackyardBasketball
             shotType = 2;
         }
 
+        // Calculate how many shots Pete would need to get the desired score if he made all the shots.
+        // Calculate how much more shot attempts he needs to make up for his failures
+        // using the INVERSE OF HIS PROBABILITY (1 / x -> where 1 is 100% shots made and x is shotPercentage) to get how many more attempts he needs per success (ex: 50% means he needs to try 2x harder).
+        // Then multiply how much more attempts he needs by the amount of min shots he would need at his best form.
         int minAmountShotsIf100Percent = (int) Math.ceil((double)desiredScore / shotType);
         double moreAttemptsNeeded = (double) 100 / shotPercentage;
         int shotsNeeded = (int) Math.ceil(moreAttemptsNeeded * minAmountShotsIf100Percent);
