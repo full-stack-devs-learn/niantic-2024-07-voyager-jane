@@ -18,7 +18,14 @@ public class Exercises
      */
     public String changeCase(String word, boolean toUpperCase)
     {
-        return null;
+        if (toUpperCase)
+        {
+            return word.toUpperCase();
+        }
+        else
+        {
+            return word.toLowerCase();
+        }
     }
 
     /*
@@ -49,7 +56,9 @@ public class Exercises
      */
     public String createHtml(String content, String elementName)
     {
-        return null;
+        String tag = "<%1$s>" + content + "</%1$s>";
+        String htmlFinal = String.format(tag, elementName);
+        return htmlFinal;
     }
 
     /*
@@ -71,7 +80,18 @@ public class Exercises
      */
     public String moreHtml(String content, String elementName)
     {
-        return null;
+        if (content.equals(""))
+        {
+            String selfClose = String.format("<%s />", elementName);
+            return selfClose;
+        }
+
+        else
+        {
+            String hasContent = createHtml(content, elementName);
+            return hasContent;
+        }
+
     }
 
     /*
@@ -94,7 +114,9 @@ public class Exercises
      */
     public String createXml(int id, String name)
     {
-        return  null;
+        String customerID = "<customer><id>%d</id><name>%s</name></customer>";
+        String formatID = String.format(customerID, id, name);
+        return  formatID;
     }
 
     /*
@@ -131,7 +153,14 @@ public class Exercises
      */
     public String formattedXml(int id, String name)
     {
-        return null;
+        String multiLine = """
+                <customer>
+                  <id>%d</id>
+                  <name>%s</name>
+                </customer>""";
+        String formatID = String.format(multiLine, id, name);
+        System.out.println(formatID);
+        return formatID;
     }
 
     /*
@@ -155,7 +184,22 @@ public class Exercises
      */
     public String formatFullName(String firstName, String middleName, String lastName, String suffix)
     {
-        return  null;
+        String fullName = firstName;
+
+        if (!middleName.equals(""))
+        {
+            fullName = fullName + " " + middleName;
+        }
+
+        fullName = fullName + " " + lastName;
+
+        if (!suffix.equals(""))
+        {
+            fullName = fullName + ", " + suffix;
+        }
+        System.out.println(fullName);
+
+        return  fullName;
     }
 
     /*
@@ -186,6 +230,29 @@ public class Exercises
      */
     public String createUserName(String fullName)
     {
-        return null;
+        String userName;
+        String firstName;
+        String lastName;
+
+        String lowerName = changeCase(fullName, false);
+
+        String[] noSuffix = lowerName.split(",");
+        String[] splitName = noSuffix[0].split(" ");
+
+        firstName = splitName[0];
+
+        if (splitName.length == 2)
+        {
+            lastName = splitName[1];
+            userName = String.format("%1$s.%2$s", firstName, lastName);
+        }
+        else
+        {
+            lastName = splitName[2];
+            char middleInitial = splitName[1].charAt(0);
+            userName = String.format("%1$s.%2$s.%3$s", firstName, middleInitial, lastName);
+        }
+
+        return userName;
     }
 }
