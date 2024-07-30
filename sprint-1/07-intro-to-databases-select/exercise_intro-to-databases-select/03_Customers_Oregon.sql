@@ -6,7 +6,7 @@ use northwind;
 
 SELECT company_name
 	, city
-    , region
+    , region AS state
 FROM customers
 WHERE region = 'OR';
 
