@@ -248,7 +248,7 @@ public class Exercises
         String lastName;
 
         // change to lowercase
-        String lowerName = changeCase(fullName, false);
+        String lowerName = changeCase(fullName, false).strip();
 
         // first, split the string by any comma + suffix that may be present. then split the first item in the array as it will contain First, Middle, Last
         String[] noSuffix = lowerName.split(",");
