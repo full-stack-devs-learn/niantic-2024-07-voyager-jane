@@ -30,24 +30,28 @@ public class ExerciseChallenge
         String firstName;
         String lastName;
 
+        // split off titles from First, Last and Suffix
         String[] commaSplit = fullName.split(", ");
         String[] nameSplit = commaSplit[0].split(" ");
 
+        // Piece together base string - "Last, First"
         firstName = nameSplit[0];
         lastName = nameSplit[1];
 
         finalFormat = lastName + ", " + firstName;
 
+        //  check if theres a suffix (3 items means suffix present in second split with space), and then add it if there is one
         if (nameSplit.length > 2)
         {
             String suffix = nameSplit[2];
             finalFormat = finalFormat + ", " + suffix;
         }
 
+        // check if theres a title at the end (2 items in first split with comma), and add if there is one
         if (commaSplit.length == 2)
         {
-            String nameDecoration = commaSplit[1];
-            finalFormat = finalFormat + ", " + nameDecoration;
+            String title = commaSplit[1];
+            finalFormat = finalFormat + ", " + title;
         }
 
         return finalFormat;
@@ -74,8 +78,10 @@ public class ExerciseChallenge
      */
     public String createJSON(int id, String name)
     {
+        // escape characters
         String formatJSON = "{ \"id\": %d, \"name\": \"%s\" }";
         String finalJSON = String.format(formatJSON, id, name);
+
         return finalJSON;
     }
 

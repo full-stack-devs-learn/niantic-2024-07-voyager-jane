@@ -22,6 +22,7 @@ public class Exercises
         {
             return word.toUpperCase();
         }
+
         else
         {
             return word.toLowerCase();
@@ -56,8 +57,10 @@ public class Exercises
      */
     public String createHtml(String content, String elementName)
     {
+        // if there are multiple instances even with just one argument, need to put the argument position (#$) or else it errors out, %s for strings
         String tag = "<%1$s>" + content + "</%1$s>";
         String htmlFinal = String.format(tag, elementName);
+
         return htmlFinal;
     }
 
@@ -80,15 +83,18 @@ public class Exercises
      */
     public String moreHtml(String content, String elementName)
     {
+        // equals check for if the string has the same contents and is the better == for strings. == would check location and not content
         if (content.equals(""))
         {
             String selfClose = String.format("<%s />", elementName);
+
             return selfClose;
         }
 
         else
         {
             String hasContent = createHtml(content, elementName);
+
             return hasContent;
         }
 
@@ -114,8 +120,10 @@ public class Exercises
      */
     public String createXml(int id, String name)
     {
+        // %d for integers
         String customerID = "<customer><id>%d</id><name>%s</name></customer>";
         String formatID = String.format(customerID, id, name);
+
         return  formatID;
     }
 
@@ -153,13 +161,15 @@ public class Exercises
      */
     public String formattedXml(int id, String name)
     {
+        // put the end quotes with the last line of content! if you put the end quotes on a separate line from the content, its like a /n where it creates a new line after string content
         String multiLine = """
                 <customer>
                   <id>%d</id>
                   <name>%s</name>
                 </customer>""";
+
         String formatID = String.format(multiLine, id, name);
-        System.out.println(formatID);
+
         return formatID;
     }
 
@@ -184,20 +194,23 @@ public class Exercises
      */
     public String formatFullName(String firstName, String middleName, String lastName, String suffix)
     {
+        // building string from scratch starting with first name
         String fullName = firstName;
 
+        // if there is a middle name, add it to fullName
         if (!middleName.equals(""))
         {
             fullName = fullName + " " + middleName;
         }
 
+        // add last name to string
         fullName = fullName + " " + lastName;
 
+        // if theres a suffix, add it to the end
         if (!suffix.equals(""))
         {
             fullName = fullName + ", " + suffix;
         }
-        System.out.println(fullName);
 
         return  fullName;
     }
@@ -234,18 +247,24 @@ public class Exercises
         String firstName;
         String lastName;
 
+        // change to lowercase
         String lowerName = changeCase(fullName, false);
 
+        // first, split the string by any comma + suffix that may be present. then split the first item in the array as it will contain First, Middle, Last
         String[] noSuffix = lowerName.split(",");
         String[] splitName = noSuffix[0].split(" ");
 
+        // Start the string with first name
         firstName = splitName[0];
 
+        // if there are only 2 items in the array, there is no middle name
         if (splitName.length == 2)
         {
             lastName = splitName[1];
             userName = String.format("%1$s.%2$s", firstName, lastName);
         }
+
+        // if there are more than 2 items, then there is a middle name
         else
         {
             lastName = splitName[2];
