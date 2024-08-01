@@ -145,3 +145,17 @@ VALUES
     , (@new_order_id, @product_id3, @price_3, 2, 0)
     , (@new_order_id, @product_id4, @price_4, 10, 0)
     , (@new_order_id, @product_id5, @price_5, 4, 0);
+
+
+-- View New Customer, Order, and Order Details Results
+SELECT *
+FROM customers
+WHERE customer_id = @customer_code;
+
+SELECT * 
+FROM orders
+WHERE customer_id = @customer_code;
+
+SELECT *
+FROM order_details
+WHERE order_id = @new_order_id;
