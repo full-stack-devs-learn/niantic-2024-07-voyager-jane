@@ -8,10 +8,14 @@ SELECT @sport_category := category_id
 FROM categories
 WHERE category_name = 'Sporting Goods';
 
-SELECT @sport_category;
+SELECT *
+FROM products
+WHERE category_id = @sport_category;
 
+DELETE FROM products
+WHERE product_name = 'Running Shoes';
 
-
--- SELECT *
--- FROM products
--- WHERE category_id = ;
+-- Checking to make sure running shoes was deleted 
+SELECT *
+FROM products
+WHERE category_id = @sport_category;
