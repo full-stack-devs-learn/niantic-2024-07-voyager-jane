@@ -45,3 +45,103 @@ OrderDetails: (Create 5 line items)
     Discount: 0
 */
 
+
+-- Setting Product ID Variables and Customer Code(ID)
+SET @product_id1 = 1;
+SET @product_id2 = 2;
+SET @product_id3 = 3;
+SET @product_id4 = 4;
+SET @product_id5 = 5;
+
+SET @customer_code = 'JNEDO';
+
+
+-- Creating a New Customer
+INSERT INTO customers
+(
+	customer_id
+    , company_name
+    , contact_name
+    , address
+    , city
+    , region
+    , postal_code
+	, country
+)
+VALUES 
+(
+	@customer_code
+    , 'Quality Convenience Mart'
+    , 'Bob Smith'
+    , '787 Washington Ave'
+    , 'Tacoma'
+    , 'WA'
+    , '90012'
+    , 'USA'
+);
+
+
+-- Inserting the Customer's Order
+INSERT INTO orders 
+(
+	customer_id
+    , order_date
+    , ship_name
+    , ship_address
+    , ship_city
+    , ship_region
+    , ship_postal_code
+    , ship_country
+)
+VALUES 
+(
+	@customer_code
+    , '2024-07-31 00:00:00'
+    , 'Bob Smith'
+    , '787 Washington Ave'
+    , 'Tacoma'
+    , 'WA'
+    , '90012'
+    , 'USA'
+);
+
+
+ -- Setting Variables to Find the Order ID and the product prices
+SET @new_order_id = LAST_INSERT_ID();
+
+SELECT @price_1 := unit_price
+FROM products
+WHERE product_id = @product_id1;
+
+SELECT @price_2 := unit_price
+FROM products
+WHERE product_id = @product_id2;
+
+SELECT @price_3 := unit_price
+FROM products
+WHERE product_id = @product_id3;
+
+SELECT @price_4 := unit_price
+FROM products
+WHERE product_id = @product_id4;
+
+SELECT @price_5 := unit_price
+FROM products
+WHERE product_id = @product_id5;
+
+
+-- Inserting the Order Details of Customer's Order using the variables we created
+INSERT INTO order_details 
+(
+	order_id
+    , product_id
+    , unit_price
+    , quantity
+    , discount
+)
+VALUES 
+	(@new_order_id, @product_id1, @price_1, 5, 0)
+	, (@new_order_id, @product_id2, @price_2, 7, 0)
+    , (@new_order_id, @product_id3, @price_3, 2, 0)
+    , (@new_order_id, @product_id4, @price_4, 10, 0)
+    , (@new_order_id, @product_id5, @price_5, 4, 0);
