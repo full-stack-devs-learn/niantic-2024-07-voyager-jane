@@ -46,17 +46,25 @@ OrderDetails: (Create 5 line items)
 */
 
 
--- Setting Product ID Variables and Customer Code(ID)
-SET @product_id1 = 1;
-SET @product_id2 = 2;
-SET @product_id3 = 3;
-SET @product_id4 = 4;
-SET @product_id5 = 5;
+-- USER INPUT for product names & customer info
+SET @product_n1 = 'Chai'
+	, @product_n2 = 'Chang'
+    , @product_n3 = 'Aniseed Syrup'
+    , @product_n4 = 'Chef Anton''s Cajun Seasoning'
+	, @product_n5 = 'Chef Anton''s Gumbo Mix';
 
-SET @customer_code = 'JNEDO';
+SET @customer_code = 'JNEDO'
+	, @company_name = 'Quality Convenience Mart'
+    , @contact_name = 'Bob Smith'
+    , @address = '787 Washington Ave'
+    , @city = 'Tacoma'
+    , @region_state = 'WA'
+    , @postal_code = 90012
+    , @country = 'USA';
 
 
--- Creating a New Customer
+
+-- 1 - FIRST - Creating a New Customer
 INSERT INTO customers
 (
 	customer_id
@@ -71,17 +79,18 @@ INSERT INTO customers
 VALUES 
 (
 	@customer_code
-    , 'Quality Convenience Mart'
-    , 'Bob Smith'
-    , '787 Washington Ave'
-    , 'Tacoma'
-    , 'WA'
-    , '90012'
-    , 'USA'
+    , @company_name
+    , @contact_name
+    , @address
+    , @city
+    , @region_state
+    , @postal_code
+    , @country
 );
 
 
--- Inserting the Customer's Order
+
+-- 2 - SECOND - Inserting the Customer's Order
 INSERT INTO orders 
 (
 	customer_id
@@ -96,41 +105,49 @@ INSERT INTO orders
 VALUES 
 (
 	@customer_code
-    , '2024-07-31 00:00:00'
-    , 'Bob Smith'
-    , '787 Washington Ave'
-    , 'Tacoma'
-    , 'WA'
-    , '90012'
-    , 'USA'
+    , CURRENT_DATE
+    , @contact_name
+    , @address
+    , @city
+    , @region_state
+    , @postal_code
+    , @country
 );
 
 
- -- Setting Variables to Find the Order ID and the product prices
+
+-- Finding the ProductsIDs and ProductPrices based on Product Names user input
+SELECT @product_id1 := product_id
+	, @price_1 := unit_price
+FROM products
+WHERE product_name = @product_n1;
+
+SELECT @product_id2 := product_id
+	, @price_2 := unit_price
+FROM products
+WHERE product_name = @product_n2;
+
+SELECT @product_id3 := product_id
+	, @price_3 := unit_price
+FROM products
+WHERE product_name = @product_n3;
+
+SELECT @product_id4 := product_id
+	, @price_4 := unit_price
+FROM products
+WHERE product_name = @product_n4;
+
+SELECT @product_id5 := product_id
+	, @price_5 := unit_price
+FROM products
+WHERE product_name = @product_n5;
+
+ -- Find the OrderID
 SET @new_order_id = LAST_INSERT_ID();
 
-SELECT @price_1 := unit_price
-FROM products
-WHERE product_id = @product_id1;
-
-SELECT @price_2 := unit_price
-FROM products
-WHERE product_id = @product_id2;
-
-SELECT @price_3 := unit_price
-FROM products
-WHERE product_id = @product_id3;
-
-SELECT @price_4 := unit_price
-FROM products
-WHERE product_id = @product_id4;
-
-SELECT @price_5 := unit_price
-FROM products
-WHERE product_id = @product_id5;
 
 
--- Inserting the Order Details of Customer's Order using the variables we created
+-- 3 - THIRD - Inserting the Order Details of Customer's Order using the variables we created
 INSERT INTO order_details 
 (
 	order_id
@@ -147,7 +164,8 @@ VALUES
     , (@new_order_id, @product_id5, @price_5, 4, 0);
 
 
--- View New Customer, Order, and Order Details Results
+
+-- View New Customer, Order, and Order Details Inserts
 SELECT *
 FROM customers
 WHERE customer_id = @customer_code;
