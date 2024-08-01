@@ -14,14 +14,12 @@ USE northwind;
 -- The sript should do the rest
 
 
--- First, delete all rows from products table that contain the category Sporting Goods (children rows?).
-
--- Then, delete Sporting Good category from categories table (parent row?).
-
+-- First, delete all rows from products table that contain the category Sporting Goods (children rows).
 SELECT @sport_category := category_id
 FROM categories
 WHERE category_name = 'Sporting Goods';
 
+-- Check before deleting
 SELECT *
 FROM products
 WHERE category_id = @sport_category;
@@ -29,8 +27,14 @@ WHERE category_id = @sport_category;
 DELETE FROM products
 WHERE category_id = @sport_category;
 
+-- Then, delete Sporting Good category from categories table (parent row).
+-- Check before deleting
+SELECT * 
+FROM categories;
+
 DELETE FROM categories
 WHERE category_name = 'Sporting Goods'; 
 
+-- Look at after deleting to see if things are ok
 SELECT * 
 FROM categories;

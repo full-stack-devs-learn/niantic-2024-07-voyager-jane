@@ -43,3 +43,8 @@ VALUES
     , ''
 );
 
+
+-- View new insert query
+SELECT *
+FROM employees
+WHERE last_name = 'Huynh';

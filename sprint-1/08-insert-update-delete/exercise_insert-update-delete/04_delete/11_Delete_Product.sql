@@ -8,6 +8,7 @@ SELECT @sport_category := category_id
 FROM categories
 WHERE category_name = 'Sporting Goods';
 
+-- Check before deleting
 SELECT *
 FROM products
 WHERE category_id = @sport_category;

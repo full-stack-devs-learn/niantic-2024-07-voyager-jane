@@ -24,4 +24,9 @@ VALUE ('Badminton Birdie', @new_id, 8.00, 20, 0, 10)
     , ('Ping Pong Paddle', @new_id, 25.00, 20, 0, 10)
     , ('Ping Pong Table', @new_id, 355.00, 20, 0, 10)
     , ('Running Shoes', @new_id, 175.00, 20, 0, 10);
-    
+
+
+-- View Insert queries
+SELECT *
+FROM products
+WHERE category_id = @new_id;
