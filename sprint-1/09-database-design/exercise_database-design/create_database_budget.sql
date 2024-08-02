@@ -34,7 +34,7 @@ CREATE TABLE sub_categories
     , category_id INT NOT NULL
     , total_amount DECIMAL(10,2) NOT NULL
     , PRIMARY KEY (sub_category_id)
-    , FOREIGN KEY (category_id) REFERENCES categorie(category_id)
+    , FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
 ROLLBACK;
