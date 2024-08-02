@@ -34,7 +34,7 @@ VALUES
     , 'Sales Associate'
     , 'Ms.'
     , '2000-10-01 00:00:00'
-    , '2024-07-31 00:00:00'
+    , CURRENT_DATE
     , '1005 Lincoln St.'
     , 'Bellevue'
     , 'WA'
