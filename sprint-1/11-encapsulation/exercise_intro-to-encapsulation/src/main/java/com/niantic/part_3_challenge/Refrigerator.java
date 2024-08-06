@@ -2,16 +2,16 @@ package com.niantic.part_3_challenge;
 
 public class Refrigerator
 {
-    private final int MAX_CAPACITY;
+    private int maxCapacity;
 
     private int currentTemperature;
     private int availableCapacity;
-    private boolean isDoorOpen = false;
+    private boolean isDoorOpen;
 
     public Refrigerator(int currentTemperature, int maxCapacity)
     {
         this.currentTemperature = currentTemperature;
-        this.MAX_CAPACITY = maxCapacity;
+        this.maxCapacity = maxCapacity;
         this.availableCapacity = maxCapacity;
     }
 
@@ -22,7 +22,7 @@ public class Refrigerator
 
     public int getMaxCapacity()
     {
-        return this.MAX_CAPACITY;
+        return this.maxCapacity;
     }
 
     public int getAvailableCapacity()
@@ -45,29 +45,29 @@ public class Refrigerator
         this.isDoorOpen = false;
     }
 
-    public void addItem(int capacity)
-    {
-        if (isDoorOpen)
-        {
-            if (getAvailableCapacity() - capacity != 0)
-            {
-                this.availableCapacity -= capacity;
-            }
-        }
-        else
-        {
-            return;
-        }
-    }
-
-    public void removeItem(int capacity)
+    public boolean addItem(int capacity)
     {
         if (isDoorOpen())
         {
-            if (getAvailableCapacity() + capacity != this.MAX_CAPACITY)
+            if (getAvailableCapacity() - capacity >= 0)
             {
-                this.availableCapacity += capacity;
+                this.availableCapacity -= capacity;
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean removeItem(int capacity)
+    {
+        if (isDoorOpen())
+        {
+            if (getAvailableCapacity() + capacity != this.maxCapacity)
+            {
+                this.availableCapacity += capacity;
+                return true;
+            }
+        }
+        return true;
     }
 }
