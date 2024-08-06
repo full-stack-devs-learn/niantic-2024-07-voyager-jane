@@ -25,6 +25,45 @@ public class Order
      */
     public void addItem(OrderLineItem item)
     {
+        // get the shopping cart to check items
+        var cart = getShoppingCart();
+
+        // check if cart has item, if no add to cart
+        if (!cart.contains(item))
+        {
+            cart.add(item);
+        }
+
+        // otherwise, update the quantity
+        else
+        {
+            int i = cart.indexOf(item);
+            var product = cart.get(i);
+            product.setQuantity(product.getQuantity() + item.getQuantity());
+        }
+
+        /* THIS WAS MY ORIGINAL FUNCTION UNTIL I DID REMOVE_ITEM AND REALIZED THERE WAS ALSO PROBABLY A FUNCTION TO EASILY FIND AN ITEM IN THE CART LIKE REMOVE()
+        AND REMEMBERED LECTURE TALKING ABOUT HOW ITS EASY TO FIND STUFF IN ARRAYLISTS COMPARED TO LINKED LISTS. Keeping it for the memories.
+
+        // variable to check if the item is in the cart or not
+        boolean inCart = false;
+
+        for (var product : cart)
+        {
+            // if the product in cart is the same as the new item, update the product's quantity and set inCart to be true
+            if (product.getId() == item.getId())
+            {
+                product.setQuantity(product.getQuantity() + item.getQuantity());
+                inCart = true;
+            }
+        }
+
+        // if the new item is not in the cart, add it
+        if (!inCart)
+        {
+            cart.add(item);
+        } */
+
     }
 
     /*
@@ -33,6 +72,9 @@ public class Order
      */
     public void removeItem(OrderLineItem item)
     {
+        var cart = getShoppingCart();
+
+        cart.remove(item);
     }
 
     /*
@@ -43,7 +85,29 @@ public class Order
      */
     public OrderLineItem findHighestPriceProduct()
     {
-        return null;
+        var cart = getShoppingCart();
+
+        // Tracker Variables
+        double maxPrice = 0.0;
+        OrderLineItem mostExpensivePrice = null;
+
+        // null if empty
+        if (cart.size() == 0)
+        {
+            return mostExpensivePrice;
+        }
+
+        // find the product with the highest price (NOT LINE TOTAL) and set it to tracker variables
+        else {
+            for (var product : cart) {
+                if (product.getPrice() > maxPrice) {
+                    maxPrice = product.getPrice();
+                    mostExpensivePrice = product;
+                }
+            }
+
+            return mostExpensivePrice;
+        }
     }
 
     /*
@@ -54,7 +118,31 @@ public class Order
      */
     public OrderLineItem findMostExpensiveLineItem()
     {
-        return null;
+        var cart = getShoppingCart();
+
+        // tracker variables
+        double maxLine = 0.0;
+        OrderLineItem mostExpensiveLine = null;
+
+        // null if empty
+        if (cart.size() == 0)
+        {
+            return mostExpensiveLine;
+        }
+
+        // find the item with the highest LineTotal and set it to tracker variables
+        else
+        {
+            for (var product : cart)
+            {
+                if (product.getLineTotal() > maxLine)
+                {
+                    maxLine = product.getLineTotal();
+                    mostExpensiveLine = product;
+                }
+            }
+            return mostExpensiveLine;
+        }
     }
 
     /*
@@ -62,7 +150,16 @@ public class Order
      */
     public double getOrderTotal()
     {
-        return 0;
+        var cart = getShoppingCart();
+        
+        double orderTotal = 0.0;
+        
+        for (var product : cart)
+        {
+            orderTotal += product.getLineTotal();
+        }
+        
+        return orderTotal;
     }
 
     /*
@@ -70,7 +167,17 @@ public class Order
      */
     public int getTotalItemCount()
     {
-        return 0;
+        var cart = getShoppingCart();
+
+        int numOfItems = 0;
+
+        // Find how many items in the cart (Not find how many types of products = cart.size())
+        for (var product : cart)
+        {
+            numOfItems += product.getQuantity();;
+        }
+
+        return numOfItems;
     }
 
     /*
@@ -78,6 +185,16 @@ public class Order
      */
     public double getAveragePricePerItem()
     {
-        return 0;
+        var cart = getShoppingCart();
+        int numOfItems = getTotalItemCount();
+
+        double sumAvgPrice = 0.0;
+
+        for (var product : cart)
+        {
+            sumAvgPrice += product.getLineTotal();
+        }
+
+        return sumAvgPrice / numOfItems;
     }
 }
