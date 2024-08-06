@@ -18,7 +18,7 @@ public class TestScores
 
         for (var test : testScores)
         {
-            if (test.getTestName() == testName)
+            if (test.getTestName().equals(testName))
             {
                 byTestScore.add(test);
             }
@@ -38,7 +38,7 @@ public class TestScores
 
         for (var test : testScores)
         {
-            if (test.getStudentName() == student)
+            if (test.getStudentName().equals(student))
             {
                 studentTestScores.add(test);
             }
@@ -111,7 +111,7 @@ public class TestScores
 
         for (var test : testScores)
         {
-            if (test.getTestName() == testName && test.getScore() > maxTest)
+            if (test.getTestName().equals(testName) && test.getScore() > maxTest)
             {
                 maxTest = test.getScore();
             }
@@ -130,7 +130,7 @@ public class TestScores
 
         for (var test : testScores)
         {
-            if (test.getTestName() == testName && test.getScore() < minTest)
+            if (test.getTestName().equals(testName) && test.getScore() < minTest)
             {
                 minTest = test.getScore();
             }
@@ -150,7 +150,7 @@ public class TestScores
 
         for (var test: testScores)
         {
-            if (test.getTestName() == testName)
+            if (test.getTestName().equals(testName))
             {
                 sumTest += test.getScore();
                 testSize ++;
@@ -170,7 +170,7 @@ public class TestScores
 
         for (var test: testScores)
         {
-            if (test.getStudentName() == student && test.getScore() > maxStudentTest)
+            if (test.getStudentName().equals(student) && test.getScore() > maxStudentTest)
             {
                 maxStudentTest = test.getScore();
             }
@@ -189,7 +189,7 @@ public class TestScores
 
         for (var test: testScores)
         {
-            if (test.getStudentName() == student && test.getScore() < minStudentTest)
+            if (test.getStudentName().equals(student) && test.getScore() < minStudentTest)
             {
                 minStudentTest = test.getScore();
             }
@@ -209,7 +209,7 @@ public class TestScores
 
         for (var test : testScores)
         {
-            if (test.getStudentName() == student)
+            if (test.getStudentName().equals(student))
             {
                 sumStudentAvg += test.getScore();
                 testSizeStudent++;
