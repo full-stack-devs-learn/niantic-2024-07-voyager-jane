@@ -51,8 +51,19 @@ public class Hotel
         return getNumberOfSuites() - getBookedSuites();
     }
 
-    public boolean makeReservation()
+    public boolean makeReservation(int numberOfRooms, boolean isSuite)
     {
-        
+        if (isSuite && numberOfRooms < getAvailableSuites())
+        {
+            this.bookedSuites += numberOfRooms;
+            return true;
+        }
+
+        else if (!isSuite && numberOfRooms < getAvailableRooms())
+        {
+            this.bookedRooms += numberOfRooms;
+            return true;
+        }
+        return false;
     }
 }
