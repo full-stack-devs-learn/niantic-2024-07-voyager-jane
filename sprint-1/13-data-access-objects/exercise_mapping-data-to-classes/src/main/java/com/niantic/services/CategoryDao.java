@@ -65,7 +65,27 @@ public class CategoryDao
      */
     public Category getCategoryById(int categoryId)
     {
-        return null;
+        Category category = null;
+
+        String sql = """
+                SELECT category_id
+                    , category_name
+                    , description
+                FROM categories
+                WHERE category_id = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, categoryId);
+
+        if (row.next())
+        {
+            int findID = row.getInt("category_id");
+            String description = row.getString("description");
+            String categoryName = row.getString("category_name");
+            category = new Category(findID, categoryName, description);
+        }
+
+        return category;
     }
 
     /*
@@ -75,6 +95,12 @@ public class CategoryDao
      */
     public void addCategory(Category category)
     {
+        String sql = """
+                INSERT INTO categories (category_id, category_name, description)
+                VALUES (?, ?, ?);
+                """;
+
+        jdbcTemplate.update(sql, category.getCategoryId(), category.getCategoryName(), category.getDescription());
     }
 
     /*
@@ -84,6 +110,14 @@ public class CategoryDao
      */
     public void updateCategory(Category category)
     {
+        String sql = """
+                UPDATE categories
+                SET category_name = ?
+                    , description = ?
+                WHERE category_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, category.getCategoryName(), category.getDescription(), category.getCategoryId());
     }
 
     /*
@@ -92,6 +126,12 @@ public class CategoryDao
      */
     public void deleteCategory(int categoryId)
     {
+        String sql = """
+                DELETE FROM categories
+                WHERE category_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, categoryId);
     }
 
 
