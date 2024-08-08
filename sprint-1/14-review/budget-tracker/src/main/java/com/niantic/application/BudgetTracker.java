@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class BudgetTracker
 {
     Scanner userInput = new Scanner(System.in);
+
+    // <editor-fold desc="Home Page - Budget">
     public void run()
     {
 
@@ -64,6 +66,7 @@ public class BudgetTracker
         System.out.print("Enter an option: ");
         return Integer.parseInt(userInput.nextLine());
     }
+    // </editor-fold>
 
 
 }
