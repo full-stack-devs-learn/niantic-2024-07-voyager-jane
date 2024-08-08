@@ -91,6 +91,7 @@ public class TestScores
      */
     public int getAverageScore(ArrayList<TestScore> testScores)
     {
+
         int sum = 0;
 
         for (var test : testScores)
@@ -107,17 +108,25 @@ public class TestScores
      */
     public int getHighestScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        int maxTest = 0;
 
-        for (var test : testScores)
-        {
-            if (test.getTestName().equals(testName) && test.getScore() > maxTest)
-            {
-                maxTest = test.getScore();
-            }
-        }
+        var highByTest = getScoresByTest(testScores, testName);
 
-        return maxTest;
+        int maxByTest = getHighestScore(highByTest);
+
+        return maxByTest;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int maxTest = 0;
+//
+//        for (var test : testScores)
+//        {
+//            if (test.getTestName().equals(testName) && test.getScore() > maxTest)
+//            {
+//                maxTest = test.getScore();
+//            }
+//        }
+//
+//        return maxTest;
     }
 
     /*
@@ -126,17 +135,25 @@ public class TestScores
      */
     public int getLowestScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        int minTest = Integer.MAX_VALUE;
 
-        for (var test : testScores)
-        {
-            if (test.getTestName().equals(testName) && test.getScore() < minTest)
-            {
-                minTest = test.getScore();
-            }
-        }
+        var lowByTest = getScoresByTest(testScores, testName);
 
-        return minTest;
+        int minByTest = getLowestScore(lowByTest);
+
+        return minByTest;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int minTest = Integer.MAX_VALUE;
+//
+//        for (var test : testScores)
+//        {
+//            if (test.getTestName().equals(testName) && test.getScore() < minTest)
+//            {
+//                minTest = test.getScore();
+//            }
+//        }
+//
+//        return minTest;
     }
 
     /*
@@ -145,19 +162,27 @@ public class TestScores
      */
     public int getAverageScoreByTest(ArrayList<TestScore> testScores, String testName)
     {
-        int sumTest = 0;
-        int testSize = 0;
 
-        for (var test: testScores)
-        {
-            if (test.getTestName().equals(testName))
-            {
-                sumTest += test.getScore();
-                testSize ++;
-            }
-        }
+        var avgByTest = getScoresByTest(testScores, testName);
 
-        return sumTest / testSize;
+        int avgTest = getAverageScore(avgByTest);
+
+        return avgTest;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int sumTest = 0;
+//        int testSize = 0;
+//
+//        for (var test: testScores)
+//        {
+//            if (test.getTestName().equals(testName))
+//            {
+//                sumTest += test.getScore();
+//                testSize ++;
+//            }
+//        }
+//
+//        return sumTest / testSize;
     }
 
     /*
@@ -166,17 +191,25 @@ public class TestScores
      */
     public int getHighestScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        int maxStudentTest = 0;
 
-        for (var test: testScores)
-        {
-            if (test.getStudentName().equals(student) && test.getScore() > maxStudentTest)
-            {
-                maxStudentTest = test.getScore();
-            }
-        }
+        var highByStudent = getScoresByStudent(testScores, student);
 
-        return maxStudentTest;
+        int highScore = getHighestScore(highByStudent);
+
+        return highScore;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int maxStudentTest = 0;
+//
+//        for (var test: testScores)
+//        {
+//            if (test.getStudentName().equals(student) && test.getScore() > maxStudentTest)
+//            {
+//                maxStudentTest = test.getScore();
+//            }
+//        }
+//
+//        return maxStudentTest;
     }
 
     /*
@@ -185,17 +218,25 @@ public class TestScores
      */
     public int getLowestScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        int minStudentTest = Integer.MAX_VALUE;
 
-        for (var test: testScores)
-        {
-            if (test.getStudentName().equals(student) && test.getScore() < minStudentTest)
-            {
-                minStudentTest = test.getScore();
-            }
-        }
+        var lowByStudent = getScoresByStudent(testScores, student);
 
-        return minStudentTest;
+        int lowScore = getLowestScore(lowByStudent);
+
+        return lowScore;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int minStudentTest = Integer.MAX_VALUE;
+//
+//        for (var test: testScores)
+//        {
+//            if (test.getStudentName().equals(student) && test.getScore() < minStudentTest)
+//            {
+//                minStudentTest = test.getScore();
+//            }
+//        }
+//
+//        return minStudentTest;
     }
 
     /*
@@ -204,18 +245,26 @@ public class TestScores
      */
     public int getAverageScoreByStudent(ArrayList<TestScore> testScores, String student)
     {
-        int sumStudentAvg = 0;
-        int testSizeStudent = 0;
 
-        for (var test : testScores)
-        {
-            if (test.getStudentName().equals(student))
-            {
-                sumStudentAvg += test.getScore();
-                testSizeStudent++;
-            }
-        }
+        var avgByStudent = getScoresByStudent(testScores, student);
 
-        return sumStudentAvg / testSizeStudent;
+        int avgScore = getAverageScore(avgByStudent);
+
+        return avgScore;
+
+//        ORIGINAL CODE BEFORE I FIGURED OUT THAT I MADE FUNCTIONS THAT I CAN USE TO SIMPLIFY CODE. Keeping for memories.
+//        int sumStudentAvg = 0;
+//        int testSizeStudent = 0;
+//
+//        for (var test : testScores)
+//        {
+//            if (test.getStudentName().equals(student))
+//            {
+//                sumStudentAvg += test.getScore();
+//                testSizeStudent++;
+//            }
+//        }
+//
+//        return sumStudentAvg / testSizeStudent;
     }
 }
