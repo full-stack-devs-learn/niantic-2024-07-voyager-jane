@@ -1,17 +1,21 @@
 package com.niantic.models;
 
+import java.util.ArrayList;
+
 public class Vendor
 {
     private int vendorId;
-    private String vendorName;
+    private String name;
     private String website;
+
+    private ArrayList<Transaction> transaction;
 
     public Vendor() {}
 
-    public Vendor(int vendorId, String vendorName, String website)
+    public Vendor(int vendorId, String name, String website)
     {
         this.vendorId = vendorId;
-        this.vendorName = vendorName;
+        this.name = name;
         this.website = website;
     }
 
@@ -19,9 +23,9 @@ public class Vendor
 
     public void setVendorId(int vendorId) {this.vendorId = vendorId;}
 
-    public String getVendorName() {return vendorName;}
+    public String getName() {return name;}
 
-    public void setVendorName(String vendorName) {this.vendorName = vendorName;}
+    public void setName(String name) {this.name = name;}
 
     public String getWebsite() {return website;}
 

@@ -1,19 +1,23 @@
 package com.niantic.models;
 
+import java.util.ArrayList;
+
 public class SubCategory
 {
     private int subCategoryId;
-    private String subCategoryName;
     private int categoryId;
+    private String name;
     private String description;
+
+    private ArrayList<Transaction> transaction;
 
     public SubCategory() {}
 
-    public SubCategory(int subCategoryId, String subCategoryName, int categoryId, String description)
+    public SubCategory(int subCategoryId, int categoryId, String name, String description)
     {
         this.subCategoryId = subCategoryId;
-        this.subCategoryName = subCategoryName;
         this.categoryId = categoryId;
+        this.name = name;
         this.description = description;
     }
 
@@ -21,9 +25,9 @@ public class SubCategory
 
     public void setSubCategoryId(int subCategoryId) {this.subCategoryId = subCategoryId;}
 
-    public String getSubCategoryName() {return subCategoryName;}
+    public String getName() {return name;}
 
-    public void setSubCategoryName(String subCategoryName) {this.subCategoryName = subCategoryName;}
+    public void setName(String name) {this.name = name;}
 
     public int getCategoryId() {return categoryId;}
 

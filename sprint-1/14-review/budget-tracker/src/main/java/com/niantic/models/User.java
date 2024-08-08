@@ -1,5 +1,7 @@
 package com.niantic.models;
 
+import java.util.ArrayList;
+
 public class User
 {
     private int userId;
@@ -8,6 +10,8 @@ public class User
     private String lastName;
     private String phone;
     private String email;
+
+    private ArrayList<Transaction> transactions;
 
     public User() {}
 
