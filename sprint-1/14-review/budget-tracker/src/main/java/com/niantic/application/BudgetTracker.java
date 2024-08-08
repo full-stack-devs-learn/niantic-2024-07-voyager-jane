@@ -1,10 +1,19 @@
 package com.niantic.application;
 
+import com.niantic.models.Category;
+import com.niantic.models.User;
+import com.niantic.services.CategoryDao;
+import com.niantic.services.UserDao;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BudgetTracker
 {
     Scanner userInput = new Scanner(System.in);
+
+    UserDao userDao = new UserDao();
+    CategoryDao categoryDao = new CategoryDao();
 
     // <editor-fold desc="Home Page - Budget">
     public void run()
@@ -22,7 +31,7 @@ public class BudgetTracker
                     System.out.println("reports");
                     break;
                 case 3:
-                    System.out.println("add user");
+                    addNewUser();
                     break;
                 case 4:
                     System.out.println("add category");
@@ -68,5 +77,110 @@ public class BudgetTracker
     }
     // </editor-fold>
 
+    // <editor-fold desc="Add User">
 
+    private void listAllUsers()
+    {
+        ArrayList<User> users = userDao.getAllUsers();
+
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("All Users");
+        System.out.println("-".repeat(100));
+        users.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void addNewUser()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Add User");
+        System.out.println("-".repeat(100));
+
+        String userName = getInputString("Enter username: ");
+        String firstName = getInputString("Enter first name: ");
+        String lastName = getInputString("Enter last name: ");
+        String phone = getInputString("Enter phone number: ");
+        String email = getInputString("Enter email: ");
+
+        System.out.println();
+
+        User user = new User(){{
+            setUserName(userName);
+            setFirstName(firstName);
+            setLastName(lastName);
+            setPhone(phone);
+            setEmail(email);
+        }};
+
+        try {
+            userDao.addUser(user);
+            System.out.println(String.format("%s %s has been added.", firstName.toUpperCase(), lastName.toUpperCase()));
+
+            System.out.println();
+
+            System.out.println("-".repeat(100));
+
+            listAllUsers();
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(String.format("There was an error in adding %s.", firstName));
+        }
+
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="Add Category">
+
+    private void listAllCategories()
+    {
+        ArrayList<Category> categories = categoryDao.getAllCategories();
+
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("All Categories");
+        System.out.println("-".repeat(100));
+
+        categories.forEach(System.out::println);
+        System.out.println();
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="Other Functions">
+    private void waitTime()
+    {
+        System.out.println();
+        System.out.println("Done Reading? Press ENTER to continue.");
+        userInput.nextLine();
+        System.out.println();
+    }
+
+    private String getInputString(String line)
+    {
+        System.out.println(line);
+        String input = userInput.nextLine();
+        return input;
+    }
+
+    private int getInputInt(String line)
+    {
+        System.out.println(line);
+        int input = userInput.nextInt();
+        return input;
+    }
+
+    private double getInputDouble(String line)
+    {
+        System.out.println(line);
+        double input = userInput.nextDouble();
+        return input;
+    }
+    // </editor-fold
 }

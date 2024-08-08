@@ -1,5 +1,6 @@
 package com.niantic.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Transaction {
@@ -7,18 +8,18 @@ public class Transaction {
     private int userId;
     private int subCategoryId;
     private int vendorId;
-    private LocalDate date;
-    private double amount;
+    private LocalDate transactionDate;
+    private BigDecimal amount;
 
     public Transaction() {}
 
-    public Transaction(int transactionId, int userId, int subCategoryId, int vendorId, LocalDate date, double amount)
+    public Transaction(int transactionId, int userId, int subCategoryId, int vendorId, LocalDate transactionDate, BigDecimal amount)
     {
         this.transactionId = transactionId;
         this.userId = userId;
         this.subCategoryId = subCategoryId;
         this.vendorId = vendorId;
-        this.date = date;
+        this.transactionDate = transactionDate;
         this.amount = amount;
     }
 
@@ -38,11 +39,11 @@ public class Transaction {
 
     public void setVendorId(int vendorId) {this.vendorId = vendorId;}
 
-    public LocalDate getDate() {return date;}
+    public LocalDate getTransactionDate() {return transactionDate;}
 
-    public void setDate(LocalDate date) {this.date = date;}
+    public void setTransactionDate(LocalDate transactionDate) {this.transactionDate = transactionDate;}
 
-    public double getAmount() {return amount;}
+    public BigDecimal getAmount() {return amount;}
 
-    public void setAmount(double amount) {this.amount = amount;}
+    public void setAmount(BigDecimal amount) {this.amount = amount;}
 }

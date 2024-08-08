@@ -48,4 +48,9 @@ public class User
     public String getEmail() {return email;}
 
     public void setEmail(String email) {this.email = email;}
+
+    @Override
+    public String toString() {
+        return String.format("%-5d %-15s %-15s", userId, firstName, lastName);
+    }
 }
