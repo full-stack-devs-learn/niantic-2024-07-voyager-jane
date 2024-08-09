@@ -417,7 +417,7 @@ public class BudgetTracker
 
     //<editor-fold desc="Report - User">
 
-    
+
 
     //</editor-fold>
 
