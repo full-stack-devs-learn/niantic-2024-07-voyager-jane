@@ -28,7 +28,7 @@ public class BudgetTracker
             switch(choice)
             {
                 case 1:
-                    System.out.println("add transaction");
+                    addNewTransaction();
                     break;
                 case 2:
                     System.out.println("reports");
@@ -82,6 +82,17 @@ public class BudgetTracker
 
     // <editor-fold desc="Add Transaction">
 
+    private void listAllTransactions()
+    {
+        System.out.println("-".repeat(100));
+        System.out.println("All Transactions");
+        System.out.println("-".repeat(100));
+
+        ArrayList<Transaction> transactions = transactionDao.getAllTransactions();
+        transactions.forEach(System.out::println);
+        System.out.println();
+    }
+
     private void addNewTransaction()
     {
         System.out.println("-".repeat(100));
@@ -128,13 +139,17 @@ public class BudgetTracker
             System.out.println();
             System.out.println();
 
+            listAllTransactions();
+
             waitTime();
 
         }
 
         catch (Exception e)
         {
+            System.out.println(String.format("There was an error in adding Transaction of %d.", amount));
 
+            waitTime();
         }
     }
 
@@ -144,12 +159,13 @@ public class BudgetTracker
 
     private void listAllUsers()
     {
-        ArrayList<User> users = userDao.getAllUsers();
 
         System.out.println();
         System.out.println("-".repeat(100));
         System.out.println("All Users");
         System.out.println("-".repeat(100));
+
+        ArrayList<User> users = userDao.getAllUsers();
         users.forEach(System.out::println);
         System.out.println();
     }
