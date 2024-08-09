@@ -3,10 +3,13 @@ package com.niantic.application;
 import com.niantic.models.Category;
 import com.niantic.models.SubCategory;
 import com.niantic.models.User;
+import com.niantic.models.Vendor;
 import com.niantic.services.CategoryDao;
 import com.niantic.services.SubCategoryDao;
 import com.niantic.services.UserDao;
+import com.niantic.services.VendorDao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,6 +20,7 @@ public class BudgetTracker
     UserDao userDao = new UserDao();
     CategoryDao categoryDao = new CategoryDao();
     SubCategoryDao subCategoryDao = new SubCategoryDao();
+    VendorDao vendorDao = new VendorDao();
 
     // <editor-fold desc="Home Page - Budget">
     public void run()
@@ -43,7 +47,7 @@ public class BudgetTracker
                     addNewSubcategory();
                     break;
                 case 6:
-                    System.out.println("add vendor");
+                    addNewVendor();
                     break;
                 case 0:
                     System.out.println();
@@ -124,6 +128,7 @@ public class BudgetTracker
 
             System.out.println("-".repeat(100));
             System.out.println();
+            System.out.println();
             System.out.println(String.format("%s %s has been added as a User.", firstName.toUpperCase(), lastName.toUpperCase()));
             System.out.println();
 
@@ -184,6 +189,7 @@ public class BudgetTracker
 
             System.out.println("-".repeat(100));
             System.out.println();
+            System.out.println();
             System.out.println(String.format("%s has been added as a Category", categoryName.toUpperCase()));
             System.out.println();
 
@@ -206,7 +212,7 @@ public class BudgetTracker
 
     private void listAllSubCategories()
     {
-        ArrayList<SubCategory> subCategories = subCategoryDao.getAllSubCategory();
+        ArrayList<SubCategory> subCategories = subCategoryDao.getAllSubCategories();
 
         System.out.println();
         System.out.println("-".repeat(100));
@@ -245,6 +251,7 @@ public class BudgetTracker
 
             System.out.println("-".repeat(100));
             System.out.println();
+            System.out.println();
             System.out.println(String.format("%s has been added as a Sub Category", subCategoryName.toUpperCase()));
             System.out.println();
 
@@ -263,6 +270,64 @@ public class BudgetTracker
     }
 
     //</editor-fold>
+
+    // <editor-fold desc="Add Vendor">
+
+    private void listAllVendors()
+    {
+        ArrayList<Vendor> vendors = vendorDao.getAllVendors();
+
+        System.out.println("-".repeat(100));
+        System.out.println("All Vendors");
+        System.out.println("-".repeat(100));
+
+        vendors.forEach(System.out::println);
+    }
+
+    private void addNewVendor()
+    {
+        System.out.println("-".repeat(100));
+        System.out.println("Add User");
+        System.out.println("-".repeat(100));
+        System.out.println("Enter Vendor Information");
+        System.out.println();
+
+        String vendorName = getInputString("Vendor Name: ");
+        String website = getInputString("Website: ");
+
+        System.out.println();
+
+        Vendor vendor = new Vendor()
+        {{
+           setName(vendorName);
+           setWebsite(website);
+        }};
+
+        try
+        {
+            vendorDao.addVendor(vendor);
+
+            System.out.println("-".repeat(100));
+            System.out.println();
+            System.out.println();
+            System.out.println(String.format("%s has been added as a Vendor.", vendorName.toUpperCase()));
+            System.out.println();
+            System.out.println();
+
+            listAllVendors();
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(String.format("There was an error in adding %s.", vendorName));
+
+            waitTime();
+        }
+    }
+
+    // </editor-fold>
 
     // <editor-fold desc="Other Functions">
     private void waitTime()
@@ -284,13 +349,15 @@ public class BudgetTracker
     {
         System.out.println(line);
         int input = userInput.nextInt();
+        userInput.nextLine();
         return input;
     }
 
-    private double getInputDouble(String line)
+    private BigDecimal getInputDouble(String line)
     {
         System.out.println(line);
-        double input = userInput.nextDouble();
+        BigDecimal input = userInput.nextBigDecimal();
+        userInput.nextLine();
         return input;
     }
     // </editor-fold

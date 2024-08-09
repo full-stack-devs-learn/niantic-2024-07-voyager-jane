@@ -140,7 +140,7 @@ public class UserDao
                     , phone
                     , email
                 )
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
 
         jdbcTemplate.update(sql,
@@ -177,7 +177,7 @@ public class UserDao
     {
         String sql = """
                 DELETE FROM users
-                WHERE user_id = ?
+                WHERE user_id = ?;
                 """;
 
         jdbcTemplate.update(sql, id);

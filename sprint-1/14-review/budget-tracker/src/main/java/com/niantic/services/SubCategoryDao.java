@@ -28,7 +28,7 @@ public class SubCategoryDao
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public ArrayList<SubCategory> getAllSubCategory()
+    public ArrayList<SubCategory> getAllSubCategories()
     {
         ArrayList<SubCategory> subCategories = new ArrayList<>();
 

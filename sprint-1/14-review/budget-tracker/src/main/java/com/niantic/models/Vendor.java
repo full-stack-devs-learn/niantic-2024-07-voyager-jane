@@ -30,4 +30,9 @@ public class Vendor
     public String getWebsite() {return website;}
 
     public void setWebsite(String website) {this.website = website;}
+
+    @Override
+    public String toString() {
+        return String.format("%-5d %-20s", vendorId, name);
+    }
 }

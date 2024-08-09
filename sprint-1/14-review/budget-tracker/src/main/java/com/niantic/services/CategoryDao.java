@@ -64,7 +64,7 @@ public class CategoryDao
                     , category_name
                     , description
                 )
-                VALUES (?, ?, ?)
+                VALUES (?, ?, ?);
                 """;
 
         jdbcTemplate.update(sql,
