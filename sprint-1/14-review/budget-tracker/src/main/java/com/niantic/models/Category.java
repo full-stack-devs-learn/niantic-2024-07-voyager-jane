@@ -33,11 +33,6 @@ public class Category
 
     @Override
     public String toString() {
-        return "Category{" +
-                "categoryId=" + categoryId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", subCategories=" + subCategories +
-                '}';
+        return String.format("%-5d %-30s %-60s", categoryId, name, description);
     }
 }

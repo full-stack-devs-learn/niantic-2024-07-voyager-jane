@@ -1,8 +1,10 @@
 package com.niantic.application;
 
 import com.niantic.models.Category;
+import com.niantic.models.SubCategory;
 import com.niantic.models.User;
 import com.niantic.services.CategoryDao;
+import com.niantic.services.SubCategoryDao;
 import com.niantic.services.UserDao;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class BudgetTracker
 
     UserDao userDao = new UserDao();
     CategoryDao categoryDao = new CategoryDao();
+    SubCategoryDao subCategoryDao = new SubCategoryDao();
 
     // <editor-fold desc="Home Page - Budget">
     public void run()
@@ -34,10 +37,10 @@ public class BudgetTracker
                     addNewUser();
                     break;
                 case 4:
-                    System.out.println("add category");
+                    addNewCategory();
                     break;
                 case 5:
-                    System.out.println("add sub category");
+                    addNewSubcategory();
                     break;
                 case 6:
                     System.out.println("add vendor");
@@ -97,12 +100,14 @@ public class BudgetTracker
         System.out.println("-".repeat(100));
         System.out.println("Add User");
         System.out.println("-".repeat(100));
+        System.out.println("Enter User Information");
+        System.out.println();
 
-        String userName = getInputString("Enter username: ");
-        String firstName = getInputString("Enter first name: ");
-        String lastName = getInputString("Enter last name: ");
-        String phone = getInputString("Enter phone number: ");
-        String email = getInputString("Enter email: ");
+        String userName = getInputString("User Name: ");
+        String firstName = getInputString("First Name: ");
+        String lastName = getInputString("Last Name: ");
+        String phone = getInputString("Phone Number: ");
+        String email = getInputString("Email: ");
 
         System.out.println();
 
@@ -116,11 +121,11 @@ public class BudgetTracker
 
         try {
             userDao.addUser(user);
-            System.out.println(String.format("%s %s has been added.", firstName.toUpperCase(), lastName.toUpperCase()));
-
-            System.out.println();
 
             System.out.println("-".repeat(100));
+            System.out.println();
+            System.out.println(String.format("%s %s has been added as a User.", firstName.toUpperCase(), lastName.toUpperCase()));
+            System.out.println();
 
             listAllUsers();
 
@@ -130,6 +135,8 @@ public class BudgetTracker
         catch (Exception e)
         {
             System.out.println(String.format("There was an error in adding %s.", firstName));
+
+            waitTime();
         }
 
     }
@@ -151,7 +158,111 @@ public class BudgetTracker
         System.out.println();
     }
 
+    private void addNewCategory()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Add Category");
+        System.out.println("-".repeat(100));
+        System.out.println("Enter Category Information");
+        System.out.println();
+
+        String categoryName = getInputString("Category name: ");
+        String description = getInputString("Description: ");
+
+        System.out.println();
+
+        Category category = new Category()
+        {{
+            setName(categoryName);
+            setDescription(description);
+        }};
+
+        try
+        {
+            categoryDao.addCategory(category);
+
+            System.out.println("-".repeat(100));
+            System.out.println();
+            System.out.println(String.format("%s has been added as a Category", categoryName.toUpperCase()));
+            System.out.println();
+
+            listAllCategories();
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(String.format("There was an error in adding %s.", categoryName));
+
+            waitTime();
+        }
+    }
+
     // </editor-fold>
+
+    // <editor-fold desc="Add Sub Category">
+
+    private void listAllSubCategories()
+    {
+        ArrayList<SubCategory> subCategories = subCategoryDao.getAllSubCategory();
+
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("All SubCategories");
+        System.out.println("-".repeat(100));
+
+        subCategories.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void addNewSubcategory()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Add Sub Category");
+        System.out.println("-".repeat(100));
+        System.out.println("Enter Sub Category Information");
+        System.out.println();
+
+        int categoryId = getInputInt("Category Id: ");
+        String subCategoryName = getInputString("Sub Category Name: ");
+        String description = getInputString("Description: ");
+
+        System.out.println();
+
+        SubCategory subCategory = new SubCategory()
+        {{
+            setCategoryId(categoryId);
+            setName(subCategoryName);
+            setDescription(description);
+        }};
+
+        try
+        {
+            subCategoryDao.addSubCategory(subCategory);
+
+            System.out.println("-".repeat(100));
+            System.out.println();
+            System.out.println(String.format("%s has been added as a Sub Category", subCategoryName.toUpperCase()));
+            System.out.println();
+
+            listAllSubCategories();
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(String.format("There was an error in adding %s.", subCategoryName));
+
+            waitTime();
+        }
+
+    }
+
+    //</editor-fold>
 
     // <editor-fold desc="Other Functions">
     private void waitTime()

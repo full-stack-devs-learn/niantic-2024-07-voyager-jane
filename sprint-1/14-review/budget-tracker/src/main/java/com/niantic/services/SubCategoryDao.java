@@ -1,6 +1,6 @@
 package com.niantic.services;
 
-import com.niantic.models.Category;
+import com.niantic.models.SubCategory;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -8,11 +8,11 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 
-public class CategoryDao
+public class SubCategoryDao
 {
     private final JdbcTemplate jdbcTemplate;
 
-    public CategoryDao()
+    public SubCategoryDao()
     {
         String databaseUrl = "jdbc:mysql://localhost:3306/budget";
         String userName = "root";
@@ -28,49 +28,55 @@ public class CategoryDao
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public ArrayList<Category> getAllCategories()
+    public ArrayList<SubCategory> getAllSubCategory()
     {
-        ArrayList<Category> categories = new ArrayList<>();
+        ArrayList<SubCategory> subCategories = new ArrayList<>();
 
         String sql = """
-                SELECT category_id
-                    , category_name
+                SELECT sub_category_id
+                    , category_id
+                    , sub_category_name
                     , description
-                FROM categories;
+                FROM sub_categories;
                 """;
 
         SqlRowSet row = jdbcTemplate.queryForRowSet(sql);
 
         while (row.next())
         {
+            int subCategoryId = row.getInt("sub_category_id");
             int categoryId = row.getInt("category_id");
-            String categoryName = row.getString("category_name");
+            String subCategoryName = row.getString("sub_category_name");
             String description = row.getString("description");
 
-            Category category = new Category(categoryId, categoryName, description);
+            SubCategory subCategory = new SubCategory(subCategoryId, categoryId, subCategoryName, description);
 
-            categories.add(category);
+            subCategories.add(subCategory);
         }
 
-        return categories;
+        return subCategories;
     }
 
-    public void addCategory(Category category)
+    public void addSubCategory(SubCategory subCategory)
     {
         String sql = """
-                INSERT INTO categories
+                INSERT INTO sub_categories
                 (
-                    category_id
-                    , category_name
+                    sub_category_id
+                    , category_id
+                    , sub_category_name
                     , description
                 )
-                VALUES (?, ?, ?)
+                VALUES (?, ?, ?, ?);
                 """;
 
         jdbcTemplate.update(sql,
-                category.getCategoryId(),
-                category.getName(),
-                category.getDescription());
-
+                subCategory.getSubCategoryId(),
+                subCategory.getCategoryId(),
+                subCategory.getName(),
+                subCategory.getDescription());
     }
+
+
+
 }

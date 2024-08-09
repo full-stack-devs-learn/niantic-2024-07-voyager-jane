@@ -36,4 +36,9 @@ public class SubCategory
     public String getDescription() {return description;}
 
     public void setDescription(String description) {this.description = description;}
+
+    @Override
+    public String toString() {
+        return String.format("%-5d %-30s %-60s", subCategoryId, name, description);
+    }
 }

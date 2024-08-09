@@ -51,6 +51,6 @@ public class User
 
     @Override
     public String toString() {
-        return String.format("%-5d %-15s %-15s", userId, firstName, lastName);
+        return String.format("%-8d %-10s %-10s", userId, firstName, lastName);
     }
 }
