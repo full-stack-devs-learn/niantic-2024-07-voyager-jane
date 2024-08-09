@@ -131,15 +131,17 @@ public class BudgetTracker
         {
             transactionDao.addTransaction(transaction);
 
-            System.out.println("*".repeat(100));
-            System.out.println();
-            System.out.println();
-            System.out.println(String.format("Transaction of %d was added to database.", amount));
-            System.out.println("*".repeat(100));
-            System.out.println();
-            System.out.println();
-
             listAllTransactions();
+
+            System.out.println("*".repeat(100));
+            System.out.println();
+            System.out.println();
+            System.out.println(String.format("Transaction of %f was added to database.", amount));
+            System.out.println();
+            System.out.println();
+            System.out.println("*".repeat(100));
+            System.out.println();
+            System.out.println();
 
             waitTime();
 
@@ -147,7 +149,7 @@ public class BudgetTracker
 
         catch (Exception e)
         {
-            System.out.println(String.format("There was an error in adding Transaction of %d.", amount));
+            System.out.println(String.format("There was an error in adding Transaction of %f.", amount));
 
             waitTime();
         }
@@ -198,13 +200,16 @@ public class BudgetTracker
         try {
             userDao.addUser(user);
 
-            System.out.println("-".repeat(100));
+            listAllUsers();
+
+            System.out.println("*".repeat(100));
             System.out.println();
             System.out.println();
             System.out.println(String.format("%s %s has been added as a User.", firstName.toUpperCase(), lastName.toUpperCase()));
             System.out.println();
-
-            listAllUsers();
+            System.out.println();
+            System.out.println("*".repeat(100));
+            System.out.println();
 
             waitTime();
         }
@@ -259,13 +264,17 @@ public class BudgetTracker
         {
             categoryDao.addCategory(category);
 
-            System.out.println("-".repeat(100));
+
+            listAllCategories();
+
+            System.out.println("*".repeat(100));
             System.out.println();
             System.out.println();
             System.out.println(String.format("%s has been added as a Category", categoryName.toUpperCase()));
             System.out.println();
-
-            listAllCategories();
+            System.out.println();
+            System.out.println("*".repeat(100));
+            System.out.println();
 
             waitTime();
         }
@@ -321,13 +330,16 @@ public class BudgetTracker
         {
             subCategoryDao.addSubCategory(subCategory);
 
-            System.out.println("-".repeat(100));
+            listAllSubCategories();
+
+            System.out.println("*".repeat(100));
             System.out.println();
             System.out.println();
             System.out.println(String.format("%s has been added as a Sub Category", subCategoryName.toUpperCase()));
             System.out.println();
-
-            listAllSubCategories();
+            System.out.println();
+            System.out.println("*".repeat(100));
+            System.out.println();
 
             waitTime();
         }
@@ -379,14 +391,16 @@ public class BudgetTracker
         {
             vendorDao.addVendor(vendor);
 
-            System.out.println("-".repeat(100));
+            listAllVendors();
+
+            System.out.println("*".repeat(100));
             System.out.println();
             System.out.println();
             System.out.println(String.format("%s has been added as a Vendor.", vendorName.toUpperCase()));
             System.out.println();
             System.out.println();
-
-            listAllVendors();
+            System.out.println("*".repeat(100));
+            System.out.println();
 
             waitTime();
         }
@@ -400,6 +414,12 @@ public class BudgetTracker
     }
 
     // </editor-fold>
+
+    //<editor-fold desc="Report - User">
+
+    
+
+    //</editor-fold>
 
     // <editor-fold desc="Other Functions">
     private void waitTime()

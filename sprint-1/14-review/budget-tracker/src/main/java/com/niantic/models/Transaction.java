@@ -55,6 +55,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return String.format("%-5d %-15tF %-8d", transactionId, transactionDate, amount);
+        return String.format("%-5d %-15s %-10.2f", transactionId, transactionDate.toString(), amount);
     }
 }

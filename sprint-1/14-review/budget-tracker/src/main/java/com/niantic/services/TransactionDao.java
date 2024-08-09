@@ -8,7 +8,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Date;
+//import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -86,8 +86,9 @@ public class TransactionDao
                     , vendor_id
                     , transaction_date
                     , amount
+                    , notes
                 )
-                VALUES (?, ?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
 
         jdbcTemplate.update(sql,
@@ -96,7 +97,8 @@ public class TransactionDao
                 transaction.getSubCategoryId(),
                 transaction.getVendorId(),
                 transaction.getTransactionDate(),
-                transaction.getAmount());
+                transaction.getAmount(),
+                transaction.getNotes());
     }
 
 
