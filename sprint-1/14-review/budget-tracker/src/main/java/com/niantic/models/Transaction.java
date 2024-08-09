@@ -10,10 +10,11 @@ public class Transaction {
     private int vendorId;
     private LocalDate transactionDate;
     private BigDecimal amount;
+    private String notes;
 
     public Transaction() {}
 
-    public Transaction(int transactionId, int userId, int subCategoryId, int vendorId, LocalDate transactionDate, BigDecimal amount)
+    public Transaction(int transactionId, int userId, int subCategoryId, int vendorId, LocalDate transactionDate, BigDecimal amount, String notes)
     {
         this.transactionId = transactionId;
         this.userId = userId;
@@ -21,6 +22,7 @@ public class Transaction {
         this.vendorId = vendorId;
         this.transactionDate = transactionDate;
         this.amount = amount;
+        this.notes = notes;
     }
 
     public int getTransactionId() {return transactionId;}
@@ -46,6 +48,10 @@ public class Transaction {
     public BigDecimal getAmount() {return amount;}
 
     public void setAmount(BigDecimal amount) {this.amount = amount;}
+
+    public String getNotes() {return notes;}
+
+    public void setNotes(String notes) {this.notes = notes;}
 
     @Override
     public String toString() {

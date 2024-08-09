@@ -57,6 +57,34 @@ public class SubCategoryDao
         return subCategories;
     }
 
+    public SubCategory getSubCategoryByName(String name)
+    {
+        SubCategory subCategory = null;
+
+        String sql = """
+                SELECT sub_category_id
+                    , category_id
+                    , sub_category_name
+                    , description
+                FROM sub_categories
+                WHERE sub_category_name = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, name);
+
+        if (row.next())
+        {
+            int subCategoryId = row.getInt("sub_category_id");
+            int categoryId = row.getInt(("category_id"));
+            String subCatName = row.getString("sub_category_name");
+            String description = row.getString("description");
+
+            subCategory = new SubCategory(subCategoryId, categoryId, subCatName, description);
+        }
+
+        return subCategory;
+    }
+
     public void addSubCategory(SubCategory subCategory)
     {
         String sql = """

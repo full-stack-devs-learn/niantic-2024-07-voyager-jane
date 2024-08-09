@@ -55,6 +55,32 @@ public class VendorDao
         return vendors;
     }
 
+    public Vendor getVendorByName(String name)
+    {
+        Vendor vendor = null;
+
+        String sql = """
+                SELECT vendor_id
+                    , vendor_name
+                    , website
+                FROM vendors
+                WHERE vendor_name = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, name);
+
+        if (row.next())
+        {
+            int vendorId = row.getInt("vendor_id");
+            String vendorName = row.getString("vendor_name");
+            String website = row.getString("website");
+
+            vendor = new Vendor(vendorId, vendorName, website);
+        }
+
+        return vendor;
+    }
+
     public void addVendor(Vendor vendor)
     {
         String sql = """

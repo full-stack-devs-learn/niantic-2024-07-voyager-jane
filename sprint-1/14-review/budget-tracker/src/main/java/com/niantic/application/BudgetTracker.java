@@ -1,15 +1,10 @@
 package com.niantic.application;
 
-import com.niantic.models.Category;
-import com.niantic.models.SubCategory;
-import com.niantic.models.User;
-import com.niantic.models.Vendor;
-import com.niantic.services.CategoryDao;
-import com.niantic.services.SubCategoryDao;
-import com.niantic.services.UserDao;
-import com.niantic.services.VendorDao;
+import com.niantic.models.*;
+import com.niantic.services.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,6 +16,7 @@ public class BudgetTracker
     CategoryDao categoryDao = new CategoryDao();
     SubCategoryDao subCategoryDao = new SubCategoryDao();
     VendorDao vendorDao = new VendorDao();
+    TransactionDao transactionDao = new TransactionDao();
 
     // <editor-fold desc="Home Page - Budget">
     public void run()
@@ -82,6 +78,66 @@ public class BudgetTracker
         System.out.print("Enter an option: ");
         return Integer.parseInt(userInput.nextLine());
     }
+    // </editor-fold>
+
+    // <editor-fold desc="Add Transaction">
+
+    private void addNewTransaction()
+    {
+        System.out.println("-".repeat(100));
+        System.out.println("Add Transaction");
+        System.out.println("-".repeat(100));
+        System.out.println("Enter Transaction Information");
+        System.out.println();
+
+
+        BigDecimal amount = getInputDecimal("Amount: ");
+        String strDate = getInputString("Date (YYYY-MM-DD): ");
+        String notes = getInputString("Notes: ");
+        String userName = getInputString("Username: ");
+        String vendorName = getInputString("Vendor: ");
+        String subCatName = getInputString("Sub Category: ");
+
+        System.out.println();
+
+        // Converting variables to the right data type
+        LocalDate transactionDate = LocalDate.parse(strDate);
+        int userId = userDao.getUserByName(userName).getUserId();
+        int vendorId = vendorDao.getVendorByName(vendorName).getVendorId();
+        int subCatId = subCategoryDao.getSubCategoryByName(subCatName).getSubCategoryId();
+
+        Transaction transaction = new Transaction()
+        {{
+            setAmount(amount);
+            setTransactionDate(transactionDate);
+            setNotes(notes);
+            setUserId(userId);
+            setVendorId(vendorId);
+            setSubCategoryId(subCatId);
+        }};
+
+        try
+        {
+            transactionDao.addTransaction(transaction);
+
+            System.out.println("*".repeat(100));
+            System.out.println();
+            System.out.println();
+            System.out.println(String.format("Transaction of %d was added to database.", amount));
+            System.out.println("*".repeat(100));
+            System.out.println();
+            System.out.println();
+
+            waitTime();
+
+        }
+
+        catch (Exception e)
+        {
+
+        }
+    }
+
     // </editor-fold>
 
     // <editor-fold desc="Add User">
@@ -353,7 +409,7 @@ public class BudgetTracker
         return input;
     }
 
-    private BigDecimal getInputDouble(String line)
+    private BigDecimal getInputDecimal(String line)
     {
         System.out.println(line);
         BigDecimal input = userInput.nextBigDecimal();
