@@ -46,4 +46,9 @@ public class Transaction {
     public BigDecimal getAmount() {return amount;}
 
     public void setAmount(BigDecimal amount) {this.amount = amount;}
+
+    @Override
+    public String toString() {
+        return String.format("%-5d %-15tF %-8d", transactionId, transactionDate, amount);
+    }
 }
