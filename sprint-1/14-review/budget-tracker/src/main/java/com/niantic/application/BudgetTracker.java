@@ -187,11 +187,10 @@ public class BudgetTracker
             System.out.println("*".repeat(100));
             System.out.println();
             System.out.println();
-            System.out.println(String.format("Transaction of %f was added to database.", amount));
+            System.out.println(String.format("Transaction of %.2f was added to database.", amount));
             System.out.println();
             System.out.println();
             System.out.println("*".repeat(100));
-            System.out.println();
             System.out.println();
 
             waitTime();
@@ -200,7 +199,7 @@ public class BudgetTracker
 
         catch (Exception e)
         {
-            System.out.println(String.format("There was an error in adding Transaction of %f.", amount));
+            System.out.println(String.format("There was an error in adding Transaction of %.2f.", amount));
 
             waitTime();
         }
@@ -348,7 +347,7 @@ public class BudgetTracker
 
         System.out.println();
         System.out.println("-".repeat(100));
-        System.out.println("All SubCategories");
+        System.out.println("All Sub Categories");
         System.out.println("-".repeat(100));
 
         subCategories.forEach(System.out::println);
@@ -422,7 +421,7 @@ public class BudgetTracker
     private void addNewVendor()
     {
         System.out.println("-".repeat(100));
-        System.out.println("Add User");
+        System.out.println("Add Vendor");
         System.out.println("-".repeat(100));
         System.out.println("Enter Vendor Information");
         System.out.println();
@@ -443,6 +442,8 @@ public class BudgetTracker
             vendorDao.addVendor(vendor);
 
             listAllVendors();
+
+            System.out.println();
 
             System.out.println("*".repeat(100));
             System.out.println();
