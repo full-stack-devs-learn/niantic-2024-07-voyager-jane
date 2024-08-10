@@ -26,6 +26,10 @@ FONTS CSS FORMAT
 
 body {
     margin: 0;
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 
@@ -77,9 +81,14 @@ nav {
     height: 25px;
 }
 
+#nav-flex {
+    display: flex;
+}
+
 ul {
     margin: 0;
     padding: 0;
+    display: inline-block;
 }
 
 nav li {
@@ -95,6 +104,50 @@ nav li {
 nav li:hover
 {
     border-bottom: 5px solid #2D5D2A;
+}
+
+#search {
+    display: inline-block;
+    margin-top: 17px;
+    margin-left: auto;
+}
+
+#search input {
+    border: 1px solid rgb(146, 146, 146);
+    border-radius: 6px 0 0 6px;
+    margin: 0;
+    padding: 9px;
+    width: 220px;
+    height: 40px;
+    font-size: 12pt;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+#search input:focus {
+    border: 1px solid #00a576;
+    outline: none;
+}
+
+#promo {
+    background-color: #2D5D2A;
+    border-radius: 0 6px 6px 0;
+    margin-left: -4px;
+    border: none;
+    width: 60px;
+    height: 40px;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+#promo:hover {
+    background-color: #333333;
 }
 
 h1 {

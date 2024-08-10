@@ -75,8 +75,8 @@ nav {
     padding-top: 15px;
     text-transform: uppercase;
     cursor: pointer;
-    background-color: aqua;
 }
+
 #top-nav li:hover {
     color: #e01212;
     /* height: 33px; */
