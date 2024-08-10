@@ -8,7 +8,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Date;
-//import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -48,6 +47,50 @@ public class TransactionDao
                 """;
 
         SqlRowSet row = jdbcTemplate.queryForRowSet(sql);
+
+        while (row.next())
+        {
+            int transactionId = row.getInt("transaction_id");
+            int userId = row.getInt("user_id");
+            int subCatId = row.getInt("sub_category_id");
+            int vendorId = row.getInt("vendor_id");
+            BigDecimal amount = row.getBigDecimal("amount");
+            String notes = row.getString("notes");
+
+            LocalDate transactionDate = null;
+            Date convertDate = row.getDate("transaction_date");
+
+            if (convertDate != null)
+            {
+                transactionDate = convertDate.toLocalDate();
+            }
+
+            Transaction transaction = new Transaction(transactionId, userId, subCatId, vendorId, transactionDate, amount, notes);
+
+            transactions.add(transaction);
+        }
+
+        return transactions;
+    }
+
+    public ArrayList<Transaction> getTransactionByUser(int id)
+    {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        String sql = """
+                SELECT transactions.transaction_id
+                    , transactions.user_id
+                    , transactions.sub_category_id
+                    , transactions.vendor_id
+                    , transactions.transaction_date
+                    , transactions.amount
+                    , transactions.notes
+                FROM transactions
+                INNER JOIN users ON transactions.user_id = users.user_id
+                WHERE transactions.user_id = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, id);
 
         while (row.next())
         {

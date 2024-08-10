@@ -31,7 +31,7 @@ public class BudgetTracker
                     addNewTransaction();
                     break;
                 case 2:
-                    System.out.println("reports");
+                    reportTransactions();
                     break;
                 case 3:
                     addNewUser();
@@ -77,6 +77,57 @@ public class BudgetTracker
 
         System.out.print("Enter an option: ");
         return Integer.parseInt(userInput.nextLine());
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Reports Menu">
+    private void reportTransactions()
+    {
+        while (true)
+        {
+            int choice = reportsSelection();
+
+            switch (choice)
+            {
+                case 1:
+                    reportTransactionUser();
+                    break;
+                case 2:
+                    System.out.println("put month transactions");
+                    break;
+                case 3:
+                    System.out.println("put year transactions");
+                    break;
+                case 4:
+                    System.out.println("put subcategory transactions");
+                    break;
+                case 5:
+                    System.out.println("put category transactions");
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Invalid option. Please select the listed options.");
+            }
+        }
+    }
+
+    private int reportsSelection()
+    {
+        System.out.println();
+        System.out.println("Reports");
+        System.out.println("--------------------------------------");
+        System.out.println("Select from the following options:");
+        System.out.println();
+        System.out.println("  1) Transactions By User");
+        System.out.println("  2) Transactions By Month");
+        System.out.println("  3) Transactions By Year");
+        System.out.println("  4) Transactions By Sub Category");
+        System.out.println("  5) Transactions By Category");
+        System.out.println("  0) Back");
+        System.out.println();
+
+        return getInputInt("Enter an option: ");
     }
     // </editor-fold>
 
@@ -417,7 +468,33 @@ public class BudgetTracker
 
     //<editor-fold desc="Report - User">
 
+    private void reportTransactionUser()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Transactions By User");
+        System.out.println("-".repeat(100));
+        String userName = getInputString("Enter User Name: ");
 
+        User user = userDao.getUserByName(userName);
+        int userId = user.getUserId();
+
+        ArrayList<Transaction> transactions = transactionDao.getTransactionByUser(userId);
+
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println(String.format("%-10s %-8s %-80s", "Date", "Amount", "Notes"));
+        System.out.println(String.format("%-10s %-8s %-80s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
+
+        transactions.forEach( (transaction) -> { System.out.println(String.format(
+                "%-10s $%7.2f %-80s",
+                transaction.getTransactionDate().toString(),
+                transaction.getAmount(),
+                transaction.getNotes())); });
+        System.out.println("-".repeat(100));
+
+        waitTime();
+    }
 
     //</editor-fold>
 
