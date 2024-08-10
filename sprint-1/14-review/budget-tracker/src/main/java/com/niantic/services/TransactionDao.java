@@ -117,6 +117,49 @@ public class TransactionDao
         return transactions;
     }
 
+    public ArrayList<Transaction> getTransactionByMonth(int month)
+    {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        String sql = """
+                SELECT transaction_id
+                    , user_id
+                    , sub_category_id
+                    , vendor_id
+                    , transaction_date
+                    , amount
+                    , notes
+                FROM transactions
+                WHERE MONTH(transaction_date) = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, month);
+
+        while (row.next())
+        {
+            int transactionId = row.getInt("transaction_id");
+            int userId = row.getInt("user_id");
+            int subCatId = row.getInt("sub_category_id");
+            int vendorId = row.getInt("vendor_id");
+            BigDecimal amount = row.getBigDecimal("amount");
+            String notes = row.getString("notes");
+
+            LocalDate transactionDate = null;
+            Date convertDate = row.getDate("transaction_date");
+
+            if (convertDate != null)
+            {
+                transactionDate = convertDate.toLocalDate();
+            }
+
+            Transaction transaction = new Transaction(transactionId, userId, subCatId, vendorId, transactionDate, amount, notes);
+
+            transactions.add(transaction);
+        }
+
+        return transactions;
+    }
+
     public void addTransaction(Transaction transaction)
     {
 

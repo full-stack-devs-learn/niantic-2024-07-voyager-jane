@@ -90,10 +90,10 @@ public class BudgetTracker
             switch (choice)
             {
                 case 1:
-                    reportTransactionUser();
+                    transactionUser();
                     break;
                 case 2:
-                    System.out.println("put month transactions");
+                    transactionMonth();
                     break;
                 case 3:
                     System.out.println("put year transactions");
@@ -154,11 +154,11 @@ public class BudgetTracker
 
 
         BigDecimal amount = getInputDecimal("Amount: ");
-        String strDate = getInputString("Date (YYYY-MM-DD): ");
-        String notes = getInputString("Notes: ");
-        String userName = getInputString("Username: ");
-        String vendorName = getInputString("Vendor: ");
-        String subCatName = getInputString("Sub Category: ");
+        String strDate = getInputString("Date (YYYY-MM-DD): ").strip();
+        String notes = getInputString("Notes: ").strip();
+        String userName = getInputString("Username: ").strip();
+        String vendorName = getInputString("Vendor: ").strip();
+        String subCatName = getInputString("Sub Category: ").strip();
 
         System.out.println();
 
@@ -232,11 +232,11 @@ public class BudgetTracker
         System.out.println("Enter User Information");
         System.out.println();
 
-        String userName = getInputString("User Name: ");
-        String firstName = getInputString("First Name: ");
-        String lastName = getInputString("Last Name: ");
-        String phone = getInputString("Phone Number: ");
-        String email = getInputString("Email: ");
+        String userName = getInputString("User Name: ").strip();
+        String firstName = getInputString("First Name: ").strip();
+        String lastName = getInputString("Last Name: ").strip();
+        String phone = getInputString("Phone Number: ").strip();
+        String email = getInputString("Email: ").strip();
 
         System.out.println();
 
@@ -300,8 +300,8 @@ public class BudgetTracker
         System.out.println("Enter Category Information");
         System.out.println();
 
-        String categoryName = getInputString("Category name: ");
-        String description = getInputString("Description: ");
+        String categoryName = getInputString("Category name: ").strip();
+        String description = getInputString("Description: ").strip();
 
         System.out.println();
 
@@ -365,8 +365,8 @@ public class BudgetTracker
         System.out.println();
 
         int categoryId = getInputInt("Category Id: ");
-        String subCategoryName = getInputString("Sub Category Name: ");
-        String description = getInputString("Description: ");
+        String subCategoryName = getInputString("Sub Category Name: ").strip();
+        String description = getInputString("Description: ").strip();
 
         System.out.println();
 
@@ -427,8 +427,8 @@ public class BudgetTracker
         System.out.println("Enter Vendor Information");
         System.out.println();
 
-        String vendorName = getInputString("Vendor Name: ");
-        String website = getInputString("Website: ");
+        String vendorName = getInputString("Vendor Name: ").strip();
+        String website = getInputString("Website: ").strip();
 
         System.out.println();
 
@@ -468,13 +468,14 @@ public class BudgetTracker
 
     //<editor-fold desc="Report - User">
 
-    private void reportTransactionUser()
+    private void transactionUser()
     {
         System.out.println();
         System.out.println("-".repeat(100));
         System.out.println("Transactions By User");
         System.out.println("-".repeat(100));
-        String userName = getInputString("Enter User Name: ");
+
+        String userName = getInputString("Enter User Name: ").strip();
 
         User user = userDao.getUserByName(userName);
         int userId = user.getUserId();
@@ -483,20 +484,111 @@ public class BudgetTracker
 
         System.out.println();
         System.out.println("-".repeat(100));
-        System.out.println(String.format("%-10s %-8s %-80s", "Date", "Amount", "Notes"));
-        System.out.println(String.format("%-10s %-8s %-80s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
+        System.out.println(String.format("%-10s  %-8s  %-78s", "Date", "Amount", "Notes"));
+        System.out.println(String.format("%-10s  %-8s  %-78s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
 
         transactions.forEach( (transaction) -> { System.out.println(String.format(
-                "%-10s $%7.2f %-80s",
+                "%-10s  $%7.2f  %-78s",
                 transaction.getTransactionDate().toString(),
                 transaction.getAmount(),
                 transaction.getNotes())); });
+
         System.out.println("-".repeat(100));
 
         waitTime();
     }
 
     //</editor-fold>
+
+    // <editor-fold desc="Report - Month">
+
+    private void transactionMonth()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Transactions By User");
+        System.out.println("-".repeat(100));
+
+        String userName = getInputString("Enter Month Name: ").toLowerCase().strip();
+
+        int month = 0;
+
+        switch (userName)
+        {
+            case "january":
+            case "jan":
+                month = 1;
+                break;
+            case "february":
+            case "feb":
+                month = 2;
+                break;
+            case "march":
+            case "mar":
+                month = 3;
+                break;
+            case "april":
+            case "apr":
+                month = 4;
+                break;
+            case "may":
+                month = 5;
+                break;
+            case "june":
+            case "jun":
+                month = 6;
+                break;
+            case "july":
+            case "jul":
+                month = 7;
+                break;
+            case "august":
+            case "aug":
+                month = 8;
+                break;
+            case "september":
+            case "sep":
+                month = 9;
+                break;
+            case "october":
+            case "oct":
+                month = 10;
+                break;
+            case "november":
+            case "nov":
+                month = 11;
+                break;
+            case "december":
+            case "dec":
+                month = 12;
+                break;
+            default:
+                System.out.println("Invalid Month");
+        }
+
+        if (month != 0) {
+            ArrayList<Transaction> transactions = transactionDao.getTransactionByMonth(month);
+
+            System.out.println();
+            System.out.println("-".repeat(100));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "Date", "Amount", "Notes"));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
+
+            transactions.forEach((transaction) -> {
+                System.out.println(String.format(
+                        "%-10s  $%7.2f  %-78s",
+                        transaction.getTransactionDate().toString(),
+                        transaction.getAmount(),
+                        transaction.getNotes()));
+            });
+
+            System.out.println("-".repeat(100));
+        }
+
+        waitTime();
+    }
+
+    // </editor-fold>
 
     // <editor-fold desc="Other Functions">
     private void waitTime()
