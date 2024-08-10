@@ -28,8 +28,35 @@ body {
     margin: 0;
 }
 
-.container {
+
+
+main {
+    padding-bottom: 30px;
+}
+
+
+section {
+    padding-bottom: 50px;
+}
+
+
+footer {
+    background-color: #000000;
+    margin-top: 65px;
+    height: 350px;
+    color: #ffffff;
+}
+
+.head-foot {
     width: 87vw;
+    margin: auto;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.body-container {
+    width: 67vw;
     margin: auto;
 }
 
@@ -55,20 +82,155 @@ ul {
     padding: 0;
 }
 
-li {
+nav li {
     display: inline-block;
-    height: 59px;
+    height: 74px;
     margin-right: 30px;
-    margin-top: 15px;
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 20pt;
+    padding-top: 15px;
+    font-size: 19pt;
     text-transform: uppercase;
     cursor: pointer;
 }
 
-li:hover
+nav li:hover
 {
     border-bottom: 5px solid #2D5D2A;
 }
+
+h1 {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 45pt;
+}
+
+p {
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14pt;
+    line-height: 24pt;
+}
+
+h2 {
+    font-size: 24pt;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: underline #FF0000;
+}
+
+
+#home-pizzas li {
+    display: inline-block;
+    position: relative;
+    margin-right: 30px;
+}
+
+.signature-pizza {
+    width: 350px;
+    height: 400px;
+    border-radius: 24px;
+    background-color: #2D5D2A;
+    overflow: hidden;
+
+    cursor: pointer;
+}
+
+.img-pizza {
+    width:350px;
+    transition: transform 0.7s ease-in-out;
+}
+
+.img-pizza:hover {
+    transform: scale(1.1);
+}
+
+.overlay-text-pizza {
+    position: absolute;
+    width: 300px;
+    bottom: 10%;
+    left: 7%;
+    color: #ffffff;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.pizza-title {
+    background-color: #2D5D2A;
+    padding: 8px;
+    width: 220px;
+    height: 50px;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.pizza-order-now {
+    display: block;
+    background-color: rgb(255, 255, 255);
+    margin-top: 30px;
+    border-radius: 30px;
+    border: none;
+    width: 96.2031px;
+    height: 36px;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+.pizza-order-now:hover {
+    background: #e6e6e6;
+}
+
+
+/* I think its a collapsed margin with footer so need to float left of display: in-line block */
+#foot-contact {
+    float:left;
+    height: 100px;
+    margin-top: 20px;
+}
+
+#foot-contact ul {
+    line-height:20pt;
+}
+
+#foot-contact li {
+    display: table-cell;
+    vertical-align: top;
+    border-collapse: separate;
+    padding-right: 80px;
+
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12pt;
+    
+}
+
+#foot-socials {
+    float: right;
+    height: 100px;
+    margin-top: 20px;
+}
+
+#foot-socials li {
+    display: inline-block;
+}
+
+.social-icon {
+    background-color: #FF0000;
+    width: 40px;
+    height: 40px;
+    margin-right: 25px;
+
+    cursor: pointer;
+}
+
