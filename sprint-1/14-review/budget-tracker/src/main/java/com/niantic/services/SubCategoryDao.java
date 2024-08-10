@@ -28,6 +28,7 @@ public class SubCategoryDao
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+
     public ArrayList<SubCategory> getAllSubCategories()
     {
         ArrayList<SubCategory> subCategories = new ArrayList<>();
@@ -57,6 +58,36 @@ public class SubCategoryDao
         return subCategories;
     }
 
+
+    public SubCategory getSubCategoryById(int id)
+    {
+        SubCategory subCategory = null;
+
+        String sql = """
+                SELECT sub_category_id
+                    , category_id
+                    , sub_category_name
+                    , description
+                FROM sub_categories
+                WHERE sub_category_id = ?;
+                """;
+
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, id);
+
+        if (row.next())
+        {
+            int subCategoryId = row.getInt("sub_category_id");
+            int categoryId = row.getInt(("category_id"));
+            String subCatName = row.getString("sub_category_name");
+            String description = row.getString("description");
+
+            subCategory = new SubCategory(subCategoryId, categoryId, subCatName, description);
+        }
+
+        return subCategory;
+    }
+
+
     public SubCategory getSubCategoryByName(String name)
     {
         SubCategory subCategory = null;
@@ -84,6 +115,7 @@ public class SubCategoryDao
 
         return subCategory;
     }
+
 
     public void addSubCategory(SubCategory subCategory)
     {

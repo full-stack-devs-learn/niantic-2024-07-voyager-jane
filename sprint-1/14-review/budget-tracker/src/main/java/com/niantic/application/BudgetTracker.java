@@ -99,10 +99,10 @@ public class BudgetTracker
                     transactionYear();
                     break;
                 case 4:
-                    System.out.println("put subcategory transactions");
+                    transactionSubCategory();
                     break;
                 case 5:
-                    System.out.println("put category transactions");
+                    transactionCategory();
                     break;
                 case 0:
                     return;
@@ -466,7 +466,7 @@ public class BudgetTracker
 
     // </editor-fold>
 
-    //<editor-fold desc="Report - User">
+    // <editor-fold desc="Report - User">
 
     private void transactionUser()
     {
@@ -477,7 +477,8 @@ public class BudgetTracker
 
         String userName = getInputString("Enter User Name: ");
 
-        try {
+        try
+        {
             User user = userDao.getUserByName(userName);
             int userId = user.getUserId();
 
@@ -504,13 +505,13 @@ public class BudgetTracker
         catch (Exception e)
         {
             System.out.println();
-            System.out.println(String.format("There was an error finding %s. User may not exist", userName));
+            System.out.println(String.format("There was an error finding %s. User may not exist.", userName));
 
             waitTime();
         }
     }
 
-    //</editor-fold>
+    // </editor-fold>
 
     // <editor-fold desc="Report - Month">
 
@@ -644,6 +645,100 @@ public class BudgetTracker
         {
             System.out.println();
             System.out.println(String.format("There was an error finding transactions in %s. There may not be transactions that year.", year));
+            waitTime();
+        }
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="Report - Sub Category">
+
+    private void transactionSubCategory()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Transactions By Sub Category");
+        System.out.println("-".repeat(100));
+
+        String subCatName = getInputString("Enter Sub Category Name: ");
+
+        try
+        {
+            SubCategory subCategory = subCategoryDao.getSubCategoryByName(subCatName);
+            int subCatId = subCategory.getSubCategoryId();
+
+            ArrayList<Transaction> transactions = transactionDao.getTransactionBySubCategory(subCatId);
+
+            System.out.println();
+            System.out.println("-".repeat(100));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "Date", "Amount", "Notes"));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
+
+            transactions.forEach((transaction) -> {
+                System.out.println(String.format(
+                        "%-10s  $%7.2f  %-78s",
+                        transaction.getTransactionDate().toString(),
+                        transaction.getAmount(),
+                        transaction.getNotes()));
+            });
+
+            System.out.println("-".repeat(100));
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println();
+            System.out.println(String.format("There was an error finding transactions in %s. Sub Category may not exist.", subCatName));
+
+            waitTime();
+        }
+    }
+
+    // </editor-fold>
+
+    // <editor-fold desc="Report - Category">
+
+    private void transactionCategory()
+    {
+        System.out.println();
+        System.out.println("-".repeat(100));
+        System.out.println("Transactions By Category");
+        System.out.println("-".repeat(100));
+
+        String catName = getInputString("Enter Category Name: ");
+
+        try
+        {
+            Category category = categoryDao.getCategoryByName(catName);
+            int catId = category.getCategoryId();
+
+            ArrayList<Transaction> transactions = transactionDao.getTransactionByCategory(catId);
+
+            System.out.println();
+            System.out.println("-".repeat(100));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "Date", "Amount", "Notes"));
+            System.out.println(String.format("%-10s  %-8s  %-78s", "-".repeat(10), "-".repeat(8), "-".repeat(80)));
+
+            transactions.forEach((transaction) -> {
+                System.out.println(String.format(
+                        "%-10s  $%7.2f  %-78s",
+                        transaction.getTransactionDate().toString(),
+                        transaction.getAmount(),
+                        transaction.getNotes()));
+            });
+
+            System.out.println("-".repeat(100));
+
+            waitTime();
+        }
+
+        catch (Exception e)
+        {
+            System.out.println();
+            System.out.println(String.format("There was an error finding transactions in %s. Category may not exist.", catName));
+
             waitTime();
         }
     }
