@@ -20,6 +20,9 @@ FONTS CSS FORMAT
 }
 */
 
+
+/* #region General Tags */
+
 * {
     box-sizing: border-box;
 }
@@ -31,8 +34,6 @@ body {
     font-weight: 400;
     font-style: normal;
 }
-
-
 
 main {
     padding-bottom: 30px;
@@ -51,19 +52,6 @@ footer {
     color: #ffffff;
 }
 
-.head-foot {
-    width: 87vw;
-    margin: auto;
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.body-container {
-    width: 67vw;
-    margin: auto;
-}
-
 nav {
     background-color: #f3f3f3;
     border: 1px solid #b3b3b3;
@@ -72,82 +60,17 @@ nav {
     height: 75px;
 }
 
-#header-logo {
-    height: 65px;
-}
-
-#pic-logo{
-    margin-top: 20px;
-    height: 25px;
-}
-
-#nav-flex {
-    display: flex;
-}
-
 ul {
     margin: 0;
     padding: 0;
     display: inline-block;
 }
 
-nav li {
-    display: inline-block;
-    height: 74px;
-    margin-right: 30px;
-    padding-top: 15px;
-    font-size: 19pt;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-nav li:hover
-{
-    border-bottom: 5px solid #2D5D2A;
-}
-
-#search {
-    display: inline-block;
-    margin-top: 17px;
-    margin-left: auto;
-}
-
-#search input {
-    border: 1px solid rgb(146, 146, 146);
-    border-radius: 6px 0 0 6px;
-    margin: 0;
-    padding: 9px;
-    width: 220px;
-    height: 40px;
-    font-size: 12pt;
-    font-style: italic;
-    vertical-align: middle;
-}
-
-#search input:focus {
-    border: 1px solid #00a576;
-    outline: none;
-}
-
-#promo {
-    background-color: #2D5D2A;
-    border-radius: 0 6px 6px 0;
-    margin-left: -4px;
-    border: none;
-    width: 60px;
-    height: 40px;
+button {
     font-family: "Anton", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: #ffffff;
-    vertical-align: middle;
-}
-
-#promo:hover {
-    background-color: #333333;
 }
 
 h1 {
@@ -174,7 +97,175 @@ h2 {
     text-decoration: underline #FF0000;
 }
 
+/* #endregion */
 
+
+
+/* #region Container Classes */
+
+.head-foot {
+    width: 87vw;
+    margin: auto;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.body-container {
+    width: 67vw;
+    margin: auto;
+}
+
+/* #endregion */
+
+
+
+/* #region Header Logo */
+
+#header-logo {
+    display: flex;
+    justify-content: flex-end;
+    height: 65px;
+}
+
+#pic-logo {
+    margin-top: 20px;
+    height: 25px;
+}
+
+#pic-track {
+    background-color: #2D5D2A;
+    margin-right: 10px;
+    display: inline-block;
+    width: 25px; 
+    height: 25px;
+    vertical-align: text-top; 
+}
+
+#order-tabs {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 1420px;
+}
+
+#order-tabs li {
+    padding: 10px;
+    margin-left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13pt;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+#order-tabs li:hover {
+    background-color: #e1e1e1;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#sign-up-button {
+    background-color: #2D5D2A;
+    border: none;
+    padding: 5px;
+    width: 85px;
+    height: 40px;
+    border-radius: 25px;
+    color: #ffffff;
+    font-size: 13pt;
+    text-transform: uppercase;
+}
+
+#sign-up-button:hover {
+    background-color: #333333;
+}
+
+/* #endregion */
+
+
+
+/* #region Header Navigation */
+
+#nav-flex {
+    display: flex;
+}
+
+nav li {
+    display: inline-block;
+    height: 74px;
+    margin-right: 30px;
+    padding-top: 15px;
+    font-size: 19pt;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+nav li:hover
+{
+    border-bottom: 5px solid #2D5D2A;
+}
+
+#search {
+    display: inline-block;
+    margin-top: 17px;
+    margin-left: auto;
+}
+
+#search input {
+    border: 1px solid rgb(146, 146, 146);
+    border-radius: 5px 0 0 5px;
+    margin: 0;
+    padding: 10px;
+    width: 220px;
+    height: 40px;
+    font-size: 12pt;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+#search input:focus {
+    border: 1px solid #00a576;
+    outline: none;
+}
+
+
+#promo {
+    background-color: #2D5D2A;
+    border-radius: 0 5px 5px 0;
+    margin-left: -5px;
+    border: none;
+    width: 60px;
+    height: 40px;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+#promo:hover {
+    background-color: #333333;
+}
+
+/* #endregion */
+
+
+
+#big-sign {
+    background-color: #2D5D2A; 
+    height: 515px; 
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+
+/* #region Signature Pizzas */
 #home-pizzas li {
     display: inline-block;
     position: relative;
@@ -229,18 +320,16 @@ h2 {
     border: none;
     width: 96.2031px;
     height: 36px;
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
     font-size: 16px;
-    text-transform: uppercase;
-
     cursor: pointer;
 }
 
 .pizza-order-now:hover {
     background: #e6e6e6;
 }
+
+/* #endregion */
+
 
 
 /* I think its a collapsed margin with footer so need to float left of display: in-line block */
