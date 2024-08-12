@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    display: grid;
+    grid-area: 
+    "header header header"
+    ". main ."
+    "footer footer footer";
+}
+
+main {
+    width: 67vw;
+    grid-area: main;
+}
+
+section {
+    margin-bottom: 100px;
+}
+
+h1 {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 45pt;
+}
+
+h2 {
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: underline #FF0000;
+}
+
+label {
+    margin-right: 20px;
+}
+
+select {
+    display: block;
+    width: 250px;
+    height: 35px;
+}
+
+.form {
+    border: 1px solid #8c8c8c;
+    border-radius: 5px;
+    height: 35px;
+}
+
+.form:focus {
+    border: 1px solid #00a576;
+    outline: none;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-grid input {
+    width: 100%;
+}
+
+.wide {
+    grid-column: span 2;
+}
+
+#wide input {
+    width: 100%;
+}
+
+input[type="submit"] {
+    background-color: #2D5D2A;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14pt;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+input[type="submit"]:hover {
+    background-color: #333333;
+    cursor: pointer;
+}
