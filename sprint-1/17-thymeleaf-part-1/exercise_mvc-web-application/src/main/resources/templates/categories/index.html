@@ -26,7 +26,7 @@
     <tbody>
     <tr th:each="category:${categories}">
         <td th:text="${category.categoryId}"></td>
-        <td th:text="${category.categoryName}"></td>
+        <td><a th:text="${category.categoryName}" th:href="@{|/categories/${category.categoryId}|}"></a></td>
     </tr>
     </tbody>
 </table>

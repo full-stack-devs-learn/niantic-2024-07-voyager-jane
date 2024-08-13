@@ -15,8 +15,24 @@
 <main class="container mt-4">
 <h4>Category Details</h4>
 
-    
+<!--    <a th:href="@{/categories/new}">New</a>-->
 
+<table class="table table-striped">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td th:text="${category.categoryId}"></td>
+    </tr>
+    <tr>
+        <th>Category</th>
+        <td th:text="${category.categoryName}"></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td th:text="${category.description}"></td>
+    </tr>
+    </tbody>
+</table>
 </main>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class CategoriesController
     @GetMapping("/categories/{id}")
     public String details(Model model, @PathVariable int id)
     {
-        Category category = categoryDao.getCategoryById(id);
+        var category = categoryDao.getCategoryById(id);
 
         model.addAttribute("category", category);
 
