@@ -6,6 +6,7 @@
 
 body {
     margin: 0;
+    width: 100%;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -92,10 +93,6 @@ h2 {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-
-    font-family: "Anton", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 }
 
 .body-container {
@@ -111,6 +108,7 @@ h2 {
 
 #header-logo {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     row-gap: 10px;
 }
@@ -168,6 +166,7 @@ h2 {
 
 #sign-up-button:hover {
     background-color: #333333;
+    border-radius: none;
 }
 
 /* #endregion */
@@ -249,9 +248,13 @@ nav li:hover
 
 #big-sign {
     background-color: #2D5D2A; 
-    height: 515px; 
     overflow: hidden;
     cursor: pointer;
+    text-align:center;
+}
+
+#big-sign > img {
+    width: 100%
 }
 
 
@@ -274,7 +277,7 @@ nav li:hover
 }
 
 .img-pizza {
-    width:350px;
+    width:100%;
     transition: transform 0.7s ease-in-out;
 }
 
@@ -320,6 +323,7 @@ nav li:hover
 }
 
 /* #endregion */
+
 
 
 /* #region Footer */
@@ -373,6 +377,93 @@ nav li:hover
     height: 40px;
 
     cursor: pointer;
+}
+
+/* #endregion */
+
+
+
+/* #region Resonsive */
+
+
+@media screen and (max-width: 768px) {
+    #pic-logo {
+        margin-right: 0;
+    }
+
+    #header-logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #order-tabs {
+        column-gap: 5px;
+    }
+}
+
+@media screen and (max-width:360px) {
+    
+    #pic-logo {
+        width: 50%;
+        margin-right: 0;
+    }
+
+    #order-tabs {
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    nav > .head-foot {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0px
+    }
+
+    #nav-flex {
+        width: 50%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #nav-flex > li {
+        margin: 0;
+        padding: 0;
+        border: none;
+        height: 50px;
+    }
+
+    #big-sign img {
+        width: 360px;
+        height: 104px;
+    }
+
+    #home-pizzas > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .signature-pizza {
+        width: 250px;
+        height: 286px;
+        background-color: #2D5D2A;
+        overflow: hidden;
+    
+        cursor: pointer;
+    }
+
+    .overlay-text-pizza {
+        left: 5.5%;
+    }
+
+    .pizza-order-now {
+        margin-top: 10px;
+    }
 }
 
 /* #endregion */
