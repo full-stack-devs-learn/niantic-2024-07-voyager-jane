@@ -1,3 +1,5 @@
+/* #region General Tags */
+
 * {
     box-sizing: border-box;
 }
@@ -52,6 +54,11 @@ select {
     height: 35px;
 }
 
+/* #endregion */
+
+
+
+/* #region Checkout Forms */
 .form {
     border: 1px solid #8c8c8c;
     border-radius: 5px;
@@ -67,6 +74,7 @@ select {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    align-items: end;
 }
 
 .form-grid input {
@@ -101,3 +109,37 @@ input[type="submit"]:hover {
     background-color: #333333;
     cursor: pointer;
 }
+
+/* #endregion */
+
+
+
+/* #region Mobile First Design */
+
+@media screen and (max-width: 768px) {
+    select {
+        width: 50%;
+    }
+
+    .form-grid select {
+        width: 100%
+    }
+}
+
+@media screen and (max-width: 360px) {
+    main {
+        width: 70vw;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .wide {
+        grid-column: span 1;
+    }
+}
+
+/* #endregion */
