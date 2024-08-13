@@ -24,8 +24,10 @@ section {
 
 footer {
     background-color: #000000;
+    padding: 50px 0px;
+    width: 100%;
+    height: 100%;
     margin-top: 65px;
-    height: 350px;
     color: #ffffff;
 }
 
@@ -34,7 +36,6 @@ nav {
     border: 1px solid #b3b3b3;
     border-left: none;
     border-right: none;
-    height: 75px;
 }
 
 ul {
@@ -86,6 +87,15 @@ h2 {
     font-family: "Anton", sans-serif;
     font-weight: 400;
     font-style: normal;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .body-container {
@@ -101,13 +111,22 @@ h2 {
 
 #header-logo {
     display: flex;
-    justify-content: flex-end;
-    height: 65px;
+    justify-content: space-between;
+    row-gap: 10px;
 }
 
 #pic-logo {
     margin-top: 20px;
+    margin-right: 50px;
     height: 25px;
+}
+
+#order-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 15px;
 }
 
 #pic-track {
@@ -119,16 +138,8 @@ h2 {
     vertical-align: text-top; 
 }
 
-#order-tabs {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 1420px;
-}
-
 #order-tabs li {
     padding: 10px;
-    margin-left: 15px;
     display: inline-block;
     vertical-align: middle;
     font-size: 13pt;
@@ -167,6 +178,8 @@ h2 {
 
 #nav-flex {
     display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 nav li {
@@ -227,6 +240,7 @@ nav li:hover
 
 #promo:hover {
     background-color: #333333;
+    cursor: pointer;
 }
 
 /* #endregion */
@@ -308,24 +322,24 @@ nav li:hover
 /* #endregion */
 
 
-
+/* #region Footer */
 /* I think its a collapsed margin with footer so need to float left of display: in-line block */
 #foot-contact {
-    float:left;
-    height: 100px;
-    margin-top: 20px;
+    width: 40%;
+    height: 40%;
+    display: inline-block;
+    /* background-color: #FF0000; */
 }
 
 #foot-contact ul {
-    line-height:20pt;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    line-height: 20pt;
 }
 
 #foot-contact li {
-    display: table-cell;
-    vertical-align: top;
-    border-collapse: separate;
-    padding-right: 80px;
-
+    display: inline-block;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -335,9 +349,18 @@ nav li:hover
 }
 
 #foot-socials {
+    width: 40%;
+    height: 40%;
+    display: inline-block;
+    text-align: right;
+    /* background-color: aqua; */
+}
+
+#foot-socials ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
     float: right;
-    height: 100px;
-    margin-top: 20px;
 }
 
 #foot-socials li {
@@ -348,8 +371,8 @@ nav li:hover
     background-color: #FF0000;
     width: 40px;
     height: 40px;
-    margin-right: 25px;
 
     cursor: pointer;
 }
 
+/* #endregion */

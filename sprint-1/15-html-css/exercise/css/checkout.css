@@ -131,6 +131,10 @@ input[type="submit"]:hover {
         width: 70vw;
     }
 
+    select {
+        width: 100%;
+    }
+
     .form-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -140,6 +144,7 @@ input[type="submit"]:hover {
     .wide {
         grid-column: span 1;
     }
+
 }
 
 /* #endregion */
