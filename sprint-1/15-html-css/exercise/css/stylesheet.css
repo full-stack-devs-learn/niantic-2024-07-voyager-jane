@@ -507,6 +507,47 @@ nav li:hover
     .pizza-order-now {
         margin-top: 10px;
     }
+
+    footer {
+        padding-bottom: 30px;
+        padding-top: 30px;
+    }
+
+    footer .head-foot {
+        width: 350px;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .head-foot h2 {
+        font-size: 1.5em;
+    }
+
+    .head-foot span {
+        font-size: 1em;
+    }
+
+    #foot-contact {
+        width: 80%;
+    }
+
+    #foot-contact ul {
+        gap: 20px;
+    }
+
+    #foot-socials {
+        width: 80%;
+        text-align: left;
+    }
+
+    #foot-socials ul {
+        float: none;
+    }
+
+    .social-icon {
+        width: 30px;
+    }
 }
 
 /* #endregion */
