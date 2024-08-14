@@ -53,6 +53,8 @@ h1 {
     font-weight: 400;
     font-style: normal;
     font-size: 45pt;
+    text-align: center;
+    margin-top: 80px;
 }
 
 h2 {
@@ -303,6 +305,17 @@ nav li:hover
 
 
 /* #region Checkout Forms */
+
+#check-pizza {
+    display: block;
+    border: 10px solid #2D5D2A;
+    border-radius: 30px;
+    margin: auto;
+    margin-top: 45px;
+    margin-bottom: 60px;
+    width: 100%;
+}
+
 .form {
     border: 1px solid #8c8c8c;
     border-radius: 5px;
@@ -394,6 +407,11 @@ input[type="submit"]:hover {
     #order-tabs {
         column-gap: 5px;
     }
+
+    #check-pizza {
+        border: 6px solid #2D5D2A;
+        border-radius: 20px;
+    }
 }
 
 @media screen and (max-width: 360px) {
@@ -430,6 +448,11 @@ input[type="submit"]:hover {
 
     .body-container {
         width: 75vw;
+    }
+
+    #check-pizza {
+        border: 3px solid #2D5D2A;
+        border-radius: 10px;
     }
 
 
