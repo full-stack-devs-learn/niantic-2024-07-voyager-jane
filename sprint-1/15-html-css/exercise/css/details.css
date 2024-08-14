@@ -61,7 +61,6 @@ h1 {
     font-style: normal;
     font-size: 45pt;
     text-align: center;
-    margin-top: 80px;
 }
 
 p {
@@ -80,6 +79,10 @@ h2 {
     letter-spacing: 2px;
     text-decoration: underline #2D5D2A;
     text-underline-offset: 5px;
+}
+
+span {
+    color: #FF0000;
 }
 
 /* #endregion */
@@ -104,6 +107,14 @@ h2 {
 .body-container {
     width: 67vw;
     margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "name name"
+    "img description"
+    "img tbl";
+    gap: 40px;
 }
 
 /* #endregion */
@@ -307,7 +318,47 @@ nav li:hover
 /* #region Body */
 
 #mushroom {
-    width: 50%;
+    width: 100%;
+    grid-area: img;
+    border-radius: 20px;
+}
+
+.body-container h1 {
+    grid-area: name;
+    margin-top: 80px;
+}
+
+.body-container p {
+    width: 100%;
+    grid-area: description;
+    margin: 0;
+}
+
+table  {
+    border: 2px solid #2D5D2A;
+    border-collapse: collapse;
+    width: 100%;
+    grid-area: tbl;
+}
+
+th {
+    background-color: #2D5D2A;
+    padding: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+td {
+    border: 2px solid #FF0000;
+    border-top: none;
+    border-collapse: collapse;
+    padding: 10px;
+    grid-area: tbl;
+}
+
+.center-cell {
+    text-align: center;
 }
 
 /* #endregion */
@@ -343,6 +394,15 @@ nav li:hover
 
     #order-tabs {
         column-gap: 5px;
+    }
+
+    .body-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "name"
+        "img"
+        "description"
+        "tbl";
     }
 
 }
