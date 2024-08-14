@@ -13,24 +13,35 @@
 <body>
 <div th:replace="fragments/header.html :: nav"></div>
 <main class="container mt-4">
-<h4>Category Details</h4>
+    <h4>Delete Category</h4>
 
-<table class="table table-striped">
-    <tbody>
-    <tr>
-        <th>Id</th>
-        <td th:text="${category.categoryId}"></td>
-    </tr>
-    <tr>
-        <th>Category</th>
-        <td th:text="${category.categoryName}"></td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td th:text="${category.description}"></td>
-    </tr>
-    </tbody>
-</table>
+    <br>
+
+    <p>You are about to delete the following category, do you want to continue?</p>
+    <form method="post">
+        <input type="submit" value="Delete Category" class="btn btn-danger">
+        <a href="/categories" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    <br>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td th:text="${category.categoryId}"></td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td th:text="${category.categoryName}"></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td th:text="${category.description}"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </main>
 </body>
 </html>

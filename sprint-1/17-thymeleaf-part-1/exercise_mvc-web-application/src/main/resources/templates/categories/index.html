@@ -15,18 +15,23 @@
 <main class="container mt-4">
 <h4>Categories</h4>
 
-    <a th:href="@{/categories/new}">New</a>
+    <a th:href="@{/categories/add}">New</a>
 <table class="table table-striped">
     <thead>
     <tr>
         <th>Id</th>
         <th>Category</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="category:${categories}">
         <td th:text="${category.categoryId}"></td>
         <td><a th:text="${category.categoryName}" th:href="@{|/categories/${category.categoryId}|}"></a></td>
+        <td>
+            <a th:href="@{|/categories/${category.categoryId}/edit|}" class="btn btn-success">Edit</a>
+            <a th:href="@{|/categories/${category.categoryId}/delete|}" class="btn btn-danger">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -13,24 +13,27 @@
 <body>
 <div th:replace="fragments/header.html :: nav"></div>
 <main class="container mt-4">
-<h4>Category Details</h4>
+    <h4>Edit Category</h4>
 
-<table class="table table-striped">
-    <tbody>
-    <tr>
-        <th>Id</th>
-        <td th:text="${category.categoryId}"></td>
-    </tr>
-    <tr>
-        <th>Category</th>
-        <td th:text="${category.categoryName}"></td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td th:text="${category.description}"></td>
-    </tr>
-    </tbody>
-</table>
+    <form action="#" method="post" th:object="${category}">
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" th:field="*{categoryId}">
+            <label th:for="*{categoryId}">Category Id</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" th:field="*{categoryName}">
+            <label th:for="*{categoryName}">Category Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" th:field="*{description}">
+            <label th:for="*{description}">Description</label>
+        </div>
+
+        <input class="btn btn-success" type="submit" value="Save Category">
+    </form>
+
 </main>
 </body>
 </html>
