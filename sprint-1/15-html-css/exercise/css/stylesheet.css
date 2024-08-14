@@ -465,6 +465,7 @@ nav li:hover
         display: none !important;
     }
 
+
     nav > .head-foot {
         flex-direction: column;
         justify-content: center;
