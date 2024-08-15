@@ -20,6 +20,12 @@ public class ProductsController
     public String getAllProductsByCategory(Model model, @RequestParam(required = false) int catId) {
 
         Category category = categoryDao.getCategoryById(catId);
+
+        if (category == null)
+        {
+            return "404";
+        }
+
         ArrayList<Product> products = productDao.getProductsByCategory(catId);
 
         model.addAttribute("category", category);
@@ -33,6 +39,12 @@ public class ProductsController
     public String productDetails(Model model, @PathVariable int id)
     {
         Product product = productDao.getProduct(id);
+
+        if (product == null)
+        {
+            return "404";
+        }
+
         Category category = categoryDao.getCategoryById(product.getCategoryId());
         String catName = category.getCategoryName();
 
@@ -69,6 +81,10 @@ public class ProductsController
         Product product = productDao.getProduct(id);
         ArrayList<Category> categories = categoryDao.getCategories();
 
+        if (product == null) {
+            return "404";
+        }
+
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
         model.addAttribute("action", "edit");
@@ -90,6 +106,12 @@ public class ProductsController
     public String deleteProduct(Model model, @PathVariable int id)
     {
         Product product = productDao.getProduct(id);
+
+        if (product == null)
+        {
+            return "404";
+        }
+
         Category category = categoryDao.getCategoryById(product.getCategoryId());
         String catName = category.getCategoryName();
 
@@ -100,7 +122,7 @@ public class ProductsController
         return "products/delete";
     }
 
-    @PostMapping("products/{id}/delete")
+    @PostMapping("/products/{id}/delete")
     public String deleteProduct(@PathVariable int id)
     {
         productDao.deleteProduct(id);

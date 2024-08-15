@@ -28,6 +28,11 @@ public class CategoriesController
     {
         var category = categoryDao.getCategoryById(id);
 
+        if (category == null)
+        {
+            return "404";
+        }
+
         model.addAttribute("category", category);
 
         return "categories/details";
@@ -52,6 +57,11 @@ public class CategoriesController
     {
         Category category = categoryDao.getCategoryById(id);
 
+        if (category == null)
+        {
+            return "404";
+        }
+
         model.addAttribute("category", category);
 
         return "categories/edit";
@@ -71,6 +81,11 @@ public class CategoriesController
     public String deleteCategory(Model model, @PathVariable int id)
     {
         Category category = categoryDao.getCategoryById(id);
+
+        if (category == null)
+        {
+            return "404";
+        }
 
         model.addAttribute("category", category);
 
