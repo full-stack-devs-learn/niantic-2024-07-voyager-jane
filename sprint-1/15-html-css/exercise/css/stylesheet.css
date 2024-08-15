@@ -270,11 +270,26 @@ nav li:hover
 
 
 /* #region Signature Pizzas */
+
+/* CHANGE 2 */
+#home-pizzas ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* CHANGE 2 */ 
 #home-pizzas li {
     display: inline-block;
     position: relative;
-    margin-right: 30px;
 }
+
+/* #home-pizzas li {
+    display: inline-block;
+    position: relative;
+    margin-right: 30px;
+} */
 
 .signature-pizza {
     width: 350px;
@@ -392,6 +407,12 @@ nav li:hover
 
 /* #region Resonsive */
 
+/* CHANGE 2 */
+@media screen and (max-width: 1090px) {
+    .body-container h1 {
+        text-align: center;
+    }
+}
 
 @media screen and (max-width: 768px) {
 
@@ -509,6 +530,18 @@ nav li:hover
 
     .social-icon {
         width: 30px;
+    }
+}
+
+/* CHANGE 2 */
+@media screen and (max-width: 520px) {
+    .signature-pizza {
+        width: 300px;
+        height: 343px;
+        background-color: #2D5D2A;
+        overflow: hidden;
+    
+        cursor: pointer;
     }
 }
 
