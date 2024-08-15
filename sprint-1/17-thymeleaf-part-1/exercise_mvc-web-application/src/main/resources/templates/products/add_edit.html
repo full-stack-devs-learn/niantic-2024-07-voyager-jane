@@ -18,8 +18,6 @@
     <h4 th:if="${action} == 'add'">Add Product</h4>
     <h4 th:if="${action} == 'edit'">Edit Product</h4>
 
-    <br>
-
     <form method="post" th:object="${product}">
         <div class="form-floating mb-3">
             <input type="text" th:field="*{productName}" class="form-control" placeholder="Product Name">
@@ -59,6 +57,9 @@
         </div>
 
         <input type="submit" value="Save Product" class="btn btn-success">
+        <div th:if="${action} == 'edit'" style="display:inline-block;">
+            <a th:href="@{|/products?catId=${product.categoryId}|}" class="btn btn-secondary">Cancel</a>
+        </div>
     </form>
 
 </main>

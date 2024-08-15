@@ -14,7 +14,6 @@
 <div th:replace="fragments/header.html :: nav"></div>
 <main class="container mt-4">
 <h4>Category Details</h4>
-
 <table class="table">
     <tbody>
     <tr>
@@ -31,8 +30,8 @@
     </tr>
     </tbody>
 </table>
-
-<a> </a>
+    <a th:href="@{|/products?catId=${category.categoryId}|}" class="btn btn-primary">View Products</a>
+    <a th:href="@{|/categories|}" class="btn btn-secondary">Back</a>
 
 </main>
 </body>

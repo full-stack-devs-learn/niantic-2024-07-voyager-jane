@@ -17,12 +17,12 @@
 <main class="container mt-4">
     <h4>Delete Product</h4>
 
-    <br>
     <p>You are about to delete the following product, do you want to continue?</p>
     <form method="post">
-        <input type="submit" value="Delete Category" class="btn btn-danger">
+        <input type="submit" value="Delete Product" class="btn btn-danger">
         <a th:href="@{|/products?catId=${category.categoryId}|}" class="btn btn-secondary">Cancel</a>
     </form>
+
     <br>
 
     <table class="table">

@@ -17,8 +17,6 @@
 <main class="container mt-4">
     <h4>Product Details</h4>
 
-    <br>
-
     <table class="table">
         <tbody>
         <tr>
@@ -62,6 +60,8 @@
         </tr>
         </tbody>
     </table>
+
+    <a th:href="@{|/products?catId=${product.categoryId}|}" class="btn btn-secondary">Back</a>
 
 </main>
 
