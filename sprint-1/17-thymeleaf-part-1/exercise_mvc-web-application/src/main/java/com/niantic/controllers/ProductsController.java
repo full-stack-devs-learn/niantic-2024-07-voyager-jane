@@ -6,10 +6,7 @@ import com.niantic.services.CategoryDao;
 import com.niantic.services.ProductDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -46,7 +43,7 @@ public class ProductsController
         return "products/details";
     }
 
-    @GetMapping("products/add")
+    @GetMapping("/products/add")
     public String addProduct(Model model)
     {
         ArrayList<Category> categories = categoryDao.getCategories();
@@ -56,5 +53,48 @@ public class ProductsController
         model.addAttribute("action", "add");
 
         return "products/add_edit";
+    }
+
+    @PostMapping("/products/add")
+    public String addProduct(@ModelAttribute("product") Product product)
+    {
+        productDao.addProduct(product);
+
+        return "redirect:/products";
+    }
+
+    @GetMapping("/products/{id}/edit")
+    public String editProduct(Model model, @PathVariable int id)
+    {
+        Product product = productDao.getProduct(id);
+
+        model.addAttribute("product", product);
+        model.addAttribute("action", "edit");
+
+        return "products/add_edit";
+    }
+
+    @PostMapping("/products/{id}/edit")
+    public String editProduct(@ModelAttribute("product") Product product, @PathVariable int id)
+    {
+        product.setProductId(id);
+
+        productDao.updateProduct(product);
+
+        return "redirect:/products";
+    }
+
+    @GetMapping("/products/{id}/delete")
+    public String deleteProduct(Model model, @PathVariable int id)
+    {
+        Product product = productDao.getProduct(id);
+        Category category = categoryDao.getCategoryById(product.getCategoryId());
+        String catName = category.getCategoryName();
+
+        model.addAttribute("product", product);
+        model.addAttribute("category", category);
+        model.addAttribute("categoryName", catName);
+
+        return "products/delete";
     }
 }
