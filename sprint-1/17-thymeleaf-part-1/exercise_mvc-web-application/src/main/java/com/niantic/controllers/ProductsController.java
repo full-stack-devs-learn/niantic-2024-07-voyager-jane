@@ -72,7 +72,9 @@ public class ProductsController
     {
         productDao.addProduct(product);
 
-        return "redirect:/categories";
+        String redirect = String.format("redirect:/products?catId=%d", product.getCategoryId());
+
+        return redirect;
     }
 
     @GetMapping("/products/{id}/edit")
@@ -99,7 +101,9 @@ public class ProductsController
 
         productDao.updateProduct(product);
 
-        return "redirect:/categories";
+        String redirect = String.format("redirect:/products?catId=%d", product.getCategoryId());
+
+        return redirect;
     }
 
     @GetMapping("/products/{id}/delete")
