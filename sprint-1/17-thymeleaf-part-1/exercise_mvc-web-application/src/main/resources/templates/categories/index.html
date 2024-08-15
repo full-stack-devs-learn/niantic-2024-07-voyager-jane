@@ -12,10 +12,12 @@
 </head>
 <body>
 <div th:replace="fragments/header.html :: nav"></div>
+
 <main class="container mt-4">
 <h4>Categories</h4>
 
     <a th:href="@{/categories/add}">New</a>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -29,6 +31,7 @@
         <td th:text="${category.categoryId}"></td>
         <td><a th:text="${category.categoryName}" th:href="@{|/categories/${category.categoryId}|}"></a></td>
         <td>
+            <a th:href="@{|/products?catId=${category.categoryId}|}" class="btn btn-primary">Products</a>
             <a th:href="@{|/categories/${category.categoryId}/edit|}" class="btn btn-success">Edit</a>
             <a th:href="@{|/categories/${category.categoryId}/delete|}" class="btn btn-danger">Delete</a>
         </td>
