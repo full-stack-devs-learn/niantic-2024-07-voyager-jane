@@ -60,15 +60,17 @@ public class ProductsController
     {
         productDao.addProduct(product);
 
-        return "redirect:/products";
+        return "redirect:/categories";
     }
 
     @GetMapping("/products/{id}/edit")
     public String editProduct(Model model, @PathVariable int id)
     {
         Product product = productDao.getProduct(id);
+        ArrayList<Category> categories = categoryDao.getCategories();
 
         model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
         model.addAttribute("action", "edit");
 
         return "products/add_edit";
@@ -81,7 +83,7 @@ public class ProductsController
 
         productDao.updateProduct(product);
 
-        return "redirect:/products";
+        return "redirect:/categories";
     }
 
     @GetMapping("/products/{id}/delete")
@@ -96,5 +98,13 @@ public class ProductsController
         model.addAttribute("categoryName", catName);
 
         return "products/delete";
+    }
+
+    @PostMapping("products/{id}/delete")
+    public String deleteProduct(@PathVariable int id)
+    {
+        productDao.deleteProduct(id);
+
+        return "redirect:/categories";
     }
 }

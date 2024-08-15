@@ -27,10 +27,10 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select id="categoryName" class="form-control">
-                <option th:each="category:${categories}" th:text="${category.categoryName}" value="${category.categoryName}"></option>
+            <select th:field="*{categoryId}" class="form-control">
+                <option th:each="category:${categories}" th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
             </select>
-            <label for="categoryName">Category Name</label>
+            <label th:for="*{categoryId}">Category Name</label>
         </div>
 
         <div class="form-floating mb-3">
