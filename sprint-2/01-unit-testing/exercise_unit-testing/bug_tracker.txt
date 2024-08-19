@@ -5,32 +5,45 @@ Class: Rectangle
     Bug 1:
 
         Describe the bug/error:
+        getArea() should return zero if either the width or height is negative.
 
         Where was the bug? (function, line number)
+        getArea(), Line 42 (originally)
 
         What test helped you find the bug?
+        getArea_shouldCalculateAreaCorrectly_whenCalled()
 
         What did you do to fix the bug?
+        I set up an if condition where if either height or width is less than or equal to zero, return 0.
 
     Bug 2:
 
         Describe the bug/error:
+        Class variable width and height are public and therefore can be changed by a different party without a setter function. Access to class variables should not be public.l
 
         Where was the bug? (function, line number)
+        public int width, Line 5
+        public int height, Line 6
 
         What test helped you find the bug?
+        newDefaultRectangle_shouldBeFiveFive_whenCreated() -> i just tried to see if setting the public variables would change default and it did.
 
         What did you do to fix the bug?
+        Set the class variables to private.
 
     Bug 3:
 
         Describe the bug/error:
+        Perimeter calculating incorrectly - it was only adding the width and height together once.
 
         Where was the bug? (function, line number)
+        getPerimeter(), Line 52 (originally)
 
         What test helped you find the bug?
+        getPerimeter_shouldCalculatePerimeterCorrectly_whenCalled()
 
         What did you do to fix the bug?
+        Set getPerimeter to return (2 * width) + (2 * height).
 
 
 

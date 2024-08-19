@@ -2,8 +2,8 @@ package com.niantic.part_1;
 
 public class Rectangle
 {
-    public int width;
-    public int height;
+    private int width;
+    private int height;
 
     public int getWidth()
     {
@@ -39,6 +39,10 @@ public class Rectangle
 
     public int getArea()
     {
+        if (width <= 0 || height <= 0)
+        {
+            return 0;
+        }
         return width * height;
     }
 
@@ -49,7 +53,7 @@ public class Rectangle
             return 0;
         }
 
-        return width + height;
+        return (2 * width) + (2 * height);
     }
 
 }
