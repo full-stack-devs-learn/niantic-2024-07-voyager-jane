@@ -20,8 +20,14 @@ public class Printer
 
     public Printer(int sheets, int toner)
     {
-        this.sheets = sheets;
-        this.toner = toner;
+        // Check for Edge Cases of Over Max or Negative Values
+        if (sheets > MAX_SHEET_CAPACITY) this.sheets = MAX_SHEET_CAPACITY;
+        else if (sheets < 0) this.sheets = 0;
+        else this.sheets = sheets;
+
+        if (toner > MAX_TONER) this.toner = MAX_TONER;
+        else if (toner < 0) this.toner = 0;
+        else this.toner = toner;
     }
 
     public int print(int pages)
