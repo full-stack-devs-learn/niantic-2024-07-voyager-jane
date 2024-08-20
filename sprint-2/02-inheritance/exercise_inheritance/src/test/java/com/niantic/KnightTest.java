@@ -61,33 +61,54 @@ public class KnightTest
     }
 
     @Test
-    public void levelUp_shouldNot_increase_armorLevel_forDefeatedKnight()
+    public void levelUp_shouldNot_increase_levelOrArmor_forDefeatedKnight()
     {
         // arrange
-        int expected = 5;
+        int expectedArmor = 5;
+        int expectedLevel = 1;
+
         knight.takeDamage(55);
 
         // act
-
+        int actualArmor = knight.getArmor();
+        int actualLevel = knight.getLevel();
 
         // assert
-
+        assertEquals(expectedArmor, actualArmor, "levelUp() should not increase armor when knight is defeated.");
+        assertEquals(expectedLevel, actualLevel, "levelUp() should not increase level when knight is defeated.");
     }
 
     @Test
-    public void takeDamage_should_deflectDamage()
+    public void takeDamage_armor_should_deflectAllDamage_ifDamageIsEqualToOrLessThanArmor()
     {
         // arrange
+        int expectedHealth = 50;
+
         // act
+        knight.takeDamage(5);
+        int actualHealth1 = knight.getHealth();
+
+        knight.takeDamage(2);
+        int actualHealth2 = knight.getHealth();
+
         // assert
+        assertEquals(expectedHealth, actualHealth1, "Armor should deflect all damage equal to armor's value.");
+        assertEquals(expectedHealth, actualHealth2, "Armor should deflect all damage less than armor's value");
     }
 
     @Test
     public void takeDamage_should_decreaseHealth_ifDamageIsGreaterThanArmor()
     {
         // arrange
+        int expectedHealth = 45;
+
         // act
+        knight.takeDamage(10);
+
+        int actualHealth = knight.getHealth();
+
         // assert
+        assertEquals(expectedHealth, actualHealth, "Knight's health should go down if damage is greater than armor's value.");
     }
 
 

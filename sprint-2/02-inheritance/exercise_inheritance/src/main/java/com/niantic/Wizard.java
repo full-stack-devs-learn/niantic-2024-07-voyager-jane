@@ -30,11 +30,6 @@ public class Wizard extends Character
         }
     }
 
-    @Override
-    public void attack(Character target)
-    {
-        castSpell(target);
-    }
 
     public void regenerateMana(int amount)
     {
