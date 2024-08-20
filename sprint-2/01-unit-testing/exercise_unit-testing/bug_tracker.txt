@@ -16,6 +16,7 @@ Class: Rectangle
         What did you do to fix the bug?
         I set up an if condition where if either height or width is less than or equal to zero, return 0.
 
+
     Bug 2:
 
         Describe the bug/error:
@@ -30,6 +31,7 @@ Class: Rectangle
 
         What did you do to fix the bug?
         Set the class variables to private.
+
 
     Bug 3:
 
@@ -64,6 +66,7 @@ Class: Quiz
         What did you do to fix the bug?
         I set an if condition to check if PossiblePoints was given a zero or negative value, and, if yes, default PossiblePoints to be 100.
 
+
     Bug 2:
 
         Describe the bug/error:
@@ -78,6 +81,7 @@ Class: Quiz
         What did you do to fix the bug?
         Set a condition where if a score is less than zero, set the score to be 0 as default.
 
+
     Bug 3:
 
         Describe the bug/error:
@@ -91,6 +95,7 @@ Class: Quiz
 
         What did you do to fix the bug?
         I made a variable with a data type double to make sure I can calculate the decimals correctly by making score a double and then dividing it by possiblePoints in parentheses ((double) score / possiblePoints). Then I multiplied the result by 100 and rounded it (Math.round) for an accurate integer percentage.
+
 
     Bug 4:
 
@@ -116,23 +121,62 @@ Class: GameCharacter
     Bug 1:
 
         Describe the bug/error:
+        takeHit() should not make energyLevel fall below zero.
 
         Where was the bug? (function, line number)
+        takeHit(), Line 34 (originally)
 
         What test helped you find the bug?
+        takeHit_shouldNotReduceBelowZeroEnergy_whenCalled()
 
         What did you do to fix the bug?
+        Set an if/else condition where if energy level - damage < 0, set energyLevel to zero, otherwise proceed with the original calculation.
+
 
     Bug 2:
 
         Describe the bug/error:
+        At creation, energyLevel is set to 0 even though it should be set to maxEnergyLevel at creation (full energy).
 
         Where was the bug? (function, line number)
+        Constructor, Line 29 (at time of bug)
 
         What test helped you find the bug?
+        takeHit_shouldReduceGivenEnergyLvl_whenCalled()
 
         What did you do to fix the bug?
+        I set this.energyLevel to maxEnergyLevel in the Constructor.
 
+
+    Bug 3:
+
+        Describe the bug/error:
+        heal() should not result in energyLevel greater than maxEnergyLevel.
+
+        Where was the bug? (function, line number)
+        heal(), Line 48 (at time of bug)
+
+        What test helped you find the bug?
+        heal_shouldNotIncreaseAboveMaxEnergy_whenCalled()
+
+        What did you do to fix the bug?
+        I set an if/else condition where if the amount healed plus the current energyLevel is greater than maxEnergyLevel, set energyLevel to maxEnergyLevel, otherwise just add the given amount.
+
+
+
+    Bug 4:
+
+        Describe the bug/error:
+        heal() should not heal when character is knocked out (energyLevel is 0).
+
+        Where was the bug? (function, line number)
+        heal(), Lines 48-56 (at time of bug)
+
+        What test helped you find the bug?
+        heal_shouldNotHealWhenKnockedOut_whenCalled()
+
+        What did you do to fix the bug?
+        Set another if/elseif/else condition where first ifKnockedOut return nothing, else if check if healing goes over maxEnergyLevel (bug 3), else just heal the given amount.
 
 
 

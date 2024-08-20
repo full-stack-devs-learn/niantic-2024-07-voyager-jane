@@ -26,17 +26,39 @@ public class GameCharacter
         this.maxEnergyLevel = maxEnergyLevel;
         this.name = name;
 
-        this.energyLevel = 0;
+        this.energyLevel = maxEnergyLevel;
     }
 
     public void takeHit(int damage)
     {
-        energyLevel -= damage;
+        if (energyLevel - damage < 0)
+        {
+            energyLevel = 0;
+        }
+
+        else
+        {
+            energyLevel -= damage;
+        }
+
     }
 
     public void heal(int amount)
     {
-        energyLevel += amount;
+        if (isKnockedOut())
+        {
+            // do nothing
+        }
+
+        else if (amount + energyLevel > maxEnergyLevel)
+        {
+            energyLevel = maxEnergyLevel;
+        }
+
+        else
+        {
+            energyLevel += amount;
+        }
     }
 
     public boolean isKnockedOut()
