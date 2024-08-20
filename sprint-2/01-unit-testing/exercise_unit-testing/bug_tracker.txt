@@ -53,22 +53,58 @@ Class: Quiz
     Bug 1:
 
         Describe the bug/error:
+        Negative / Zero PossiblePoints should not exist or be a valid value.
 
         Where was the bug? (function, line number)
+        getPossiblePoints(), Line 21 (originally)
 
         What test helped you find the bug?
+        newQuiz_shouldMakeSurePossiblePointsArePositive_whenCreated()
 
         What did you do to fix the bug?
+        I set an if condition to check if PossiblePoints was given a zero or negative value, and, if yes, default PossiblePoints to be 100.
 
     Bug 2:
 
         Describe the bug/error:
+        Negative score should not exist or be a valid value.
 
         Where was the bug? (function, line number)
+        setScore(int score), Line 16 (originally)
 
         What test helped you find the bug?
+        setScore_shouldBePositive_whenSetterIsCalled()
 
         What did you do to fix the bug?
+        Set a condition where if a score is less than zero, set the score to be 0 as default.
+
+    Bug 3:
+
+        Describe the bug/error:
+        getPercent() / getPercentage() only returns 0 because of integer division.
+
+        Where was the bug? (function, line number)
+        getPercent(), Line54 (at time of bug found)
+
+        What test helped you find the bug?
+        getPercentage_ShouldCalculatePercentageCorrectly_whenCalled()
+
+        What did you do to fix the bug?
+        I made a variable with a data type double to make sure I can calculate the decimals correctly by making score a double and then dividing it by possiblePoints in parentheses ((double) score / possiblePoints). Then I multiplied the result by 100 and rounded it (Math.round) for an accurate integer percentage.
+
+    Bug 4:
+
+        Describe the bug/error:
+        Each letter grade didn't have a greater than or equal to for (90, 80, 70, 60) instead it was just greater than. AND Letter Grade "D" was given an incorrect range. So 2 bugs in 1.
+
+        Where was the bug? (function, line number)
+        getLetterGrade(), Lines 63 - 66 (at time of bug found)
+
+        What test helped you find the bug?
+        getLetterGrade_shouldReturnCorrectGrade_whenCalled()
+
+        What did you do to fix the bug?
+        I set each range to be greater than or equal to. I also made the range for "D" to be greater than or equal to 60 rather than 50.
 
 
 *** Optional / Challenge ***
