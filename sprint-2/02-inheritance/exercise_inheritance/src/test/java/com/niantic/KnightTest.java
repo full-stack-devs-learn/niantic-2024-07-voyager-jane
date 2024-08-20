@@ -8,13 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class KnightTest
 {
     private Knight knight;
-    private Character villain;
 
     @BeforeEach
     public void setup()
     {
         knight = new Knight("Bob", 50, 1, 100, 5);
-        villain = new Character("Archibald", 50, 1, 100);
     }
 
     @Test
