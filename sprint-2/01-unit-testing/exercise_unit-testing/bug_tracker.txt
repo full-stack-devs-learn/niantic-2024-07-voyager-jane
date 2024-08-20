@@ -188,10 +188,10 @@ Class: Printer
         New Printer should not hold sheets or toner values that are greater than MAX_SHEET_CAPACITY / MAX_TONER.
 
         Where was the bug? (function, line number)
-        Constructor, Lines 21-25 (at time of bug)
+        Constructor, Lines 21-25 (at time of bug found)
 
         What test helped you find the bug?
-        newPrinter_shouldNot_haveParametersWith_moreThanMaxSheetsAndToner()
+        newPrinter_shouldNot_haveValues_moreThanMaxSheetsAndToner()
 
         What did you do to fix the bug?
         I made default values to be max values for sheets and toner if the provided input(s) for the Constructor go over the max values.
@@ -203,7 +203,7 @@ Class: Printer
         New Printer should not have negative sheets or negative toner as values.
 
         Where was the bug? (function, line number)
-        Constructor, Lines 21-28 (at time of bug)
+        Constructor, Lines 21-28 (at time of bug found)
 
         What test helped you find the bug?
         newPrinter_shouldNot_haveNegative_sheetsAndToners()
@@ -215,6 +215,36 @@ Class: Printer
     Bug 3:
 
         Describe the bug/error:
+        replaceToner() did not reset toner attribute to MAX_TONER but instead added MAX_TONER to current toner value.
+
+        Where was the bug? (function, line number)
+        replaceToner(), Line 58 (at time of bug found)
+
+        What test helped you find the bug?
+        replaceToner_should_resetToner_ToMaxCapacity()
+
+        What did you do to fix the bug?
+        Set this.toner to MAX_TONER.
+
+
+    Bug 4:
+
+        Describe the bug/error:
+
+
+        Where was the bug? (function, line number)
+
+
+        What test helped you find the bug?
+
+
+        What did you do to fix the bug?
+
+
+
+    Bug 5:
+
+        Describe the bug/error:
 
         Where was the bug? (function, line number)
 
@@ -223,7 +253,7 @@ Class: Printer
         What did you do to fix the bug?
 
 
-    Bug 4:
+    Bug 6:
 
         Describe the bug/error:
 

@@ -13,7 +13,7 @@ class PrinterTests
     public void setup() { printer = new Printer(300, 500); }
 
     @Test
-    public void newPrinter_shouldNot_haveParametersWith_moreThanMaxSheetsAndToner()
+    public void newPrinter_shouldNot_haveValues_moreThanMaxSheetsAndToner()
     {
         // arrange
         int expectedToner = 1000;
@@ -51,14 +51,55 @@ class PrinterTests
     }
 
     @Test
-    public void test()
+    public void replaceToner_should_resetToner_ToMaxCapacity()
     {
         // arrange
-        
+        int expected = 1000;
+
         // act
+        printer.replaceToner();
+        int actual = printer.getToner();
 
         // assert
+        assertEquals(expected, actual, "replaceToner() should reset toner attribute to MAX_TONER.");
+    }
 
+    @Test
+    public void addPaper_should_updateSheetsVariable()
+    {
+        // arrange
+        int expected = 400;
+
+        // act
+        printer.addPaper(100);
+
+        int actual = printer.getSheets();
+
+        // assert
+        assertEquals(expected, actual, "addPaper(100) to a Printer with 300 sheets should result in 400 sheets in the Printer.");
+    }
+
+    @Test
+    public void addPaper_shouldNot_exceedMaxSheetsCapacity()
+    {
+        // arrange
+        int expected = 500;
+
+        // act
+        printer.addPaper(400);
+
+        int actual = printer.getSheets();
+
+        // assert
+        assertEquals(expected, actual, "Adding paper to a printer should not exceed printer's MAX_SHEET_CAPACITY.");
+    }
+
+    @Test
+    public void addPaper_shouldNot_addNegativePaper()
+    {
+        // arrange
+        // act
+        // assert
     }
 
     @Test

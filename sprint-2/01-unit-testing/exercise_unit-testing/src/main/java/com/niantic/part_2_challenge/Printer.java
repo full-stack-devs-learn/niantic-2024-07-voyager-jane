@@ -55,6 +55,6 @@ public class Printer
 
     public void replaceToner()
     {
-        this.toner += MAX_TONER;
+        this.toner = MAX_TONER;
     }
 }
