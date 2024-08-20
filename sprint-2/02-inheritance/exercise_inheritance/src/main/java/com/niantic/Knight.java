@@ -23,10 +23,18 @@ public class Knight extends Character
             health = 0;
             System.out.println(this.name + " has been defeated!");
         }
+
+        else if ((health + (getArmor() - damage)) == 0)
+        {
+            health = 0;
+            System.out.println(this.name + "'s armor deflected most of the damage, but it was still not enough to protect " + this.name + ". Health is now 0 and " + this.name + " has been defeated.");
+        }
+
+
         else if (getArmor() - damage < 0)
         {
             health += getArmor() - damage;
-            System.out.println(this.name + "'s deflected most of the damage. " + this.name + " now has " + this.health + " health remaining.");
+            System.out.println(this.name + "'s armor deflected most of the damage. " + this.name + " now has " + this.health + " health remaining.");
         }
         else System.out.println(this.name + "'s armor has deflected all damage from the attack! Health stays at " + getHealth());
     }
