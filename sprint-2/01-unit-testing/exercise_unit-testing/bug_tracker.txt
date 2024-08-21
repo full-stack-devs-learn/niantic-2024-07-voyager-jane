@@ -230,19 +230,33 @@ Class: Printer
     Bug 4:
 
         Describe the bug/error:
-
+        addPrinter() does not stop at MAX_SHEET_CAPACITY when paper input goes over max value.
 
         Where was the bug? (function, line number)
-
+        addPrinter(), Lines 44-54 (at time of bug found)
 
         What test helped you find the bug?
-
+        addPaper_shouldNot_exceedMaxSheetsCapacity()
 
         What did you do to fix the bug?
-
+        changed the if condition to be if (paper + getSheets() > MAX_SHEET_CAPACITY).
 
 
     Bug 5:
+
+        Describe the bug/error:
+        addPaper() subtracted sheets from printer when a negative input is given.
+
+        Where was the bug? (function, line number)
+        addPaper, Lines 46-53 (at time of bug found)
+
+        What test helped you find the bug?
+        addPaper_shouldNot_addNegativePaper()
+
+        What did you do to fix the bug?
+        set an if condition where if paper < 0, do nothing.
+
+    Bug 6:
 
         Describe the bug/error:
 
@@ -253,7 +267,7 @@ Class: Printer
         What did you do to fix the bug?
 
 
-    Bug 6:
+    Bug 7:
 
         Describe the bug/error:
 

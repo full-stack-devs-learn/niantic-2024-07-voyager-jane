@@ -98,12 +98,54 @@ class PrinterTests
     public void addPaper_shouldNot_addNegativePaper()
     {
         // arrange
+        int expected = 300;
+
+        // act
+        printer.addPaper(-10);
+
+        int actual = printer.getSheets();
+
+        // assert
+        assertEquals(expected, actual, "addPaper() should default negative input to 0 and not subtract paper.");
+    }
+
+    @Test
+    public void print_should_updateTonerAndSheets_afterPrintingPaper()
+    {
+        // arrange
+
+        // act
+
+        // assert
+
+    }
+
+    @Test
+    public void print_shouldNot_makeSheetsAndToner_fallBelowZero()
+    {
+        // arrange
         // act
         // assert
     }
 
     @Test
-    public void newtest()
+    public void print_should_return_CorrectNumberOfPagesPrinted()
+    {
+        // arrange
+        // act
+        // assert
+    }
+
+    @Test
+    public void print_shouldNot_printMoreThanSheetsAndTonerAvailable()
+    {
+        // arrange
+        // act
+        // assert
+    }
+
+    @Test
+    public void print_shouldNot_printNegativePages()
     {
         // arrange
         // act

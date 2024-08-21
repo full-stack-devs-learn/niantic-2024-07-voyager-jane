@@ -43,10 +43,13 @@ public class Printer
 
     public void addPaper(int paper)
     {
-        if(paper > MAX_SHEET_CAPACITY)
+        if (paper < 0) return;
+
+        else if (paper + getSheets() > MAX_SHEET_CAPACITY)
         {
             sheets = MAX_SHEET_CAPACITY;
         }
+
         else
         {
             sheets += paper;
