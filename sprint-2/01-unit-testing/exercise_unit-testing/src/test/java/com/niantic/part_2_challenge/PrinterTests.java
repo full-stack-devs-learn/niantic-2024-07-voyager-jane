@@ -113,42 +113,80 @@ class PrinterTests
     public void print_should_updateTonerAndSheets_afterPrintingPaper()
     {
         // arrange
+        int expectedSheets = 250;
+        int expectedToner = 450;
 
         // act
+        printer.print(50);
+
+        int actualSheets = printer.getSheets();
+        int actualToner = printer.getToner();
 
         // assert
-
+        assertEquals(expectedSheets, actualSheets, "Printer has 300 pages - print(50) should result in 250 pages left.");
+        assertEquals(expectedToner, actualToner, "Printer has 500 toner - print(50) should result in 450 toner left.");
     }
 
     @Test
     public void print_shouldNot_makeSheetsAndToner_fallBelowZero()
     {
         // arrange
+        int expectedSheets1 = 0;
+        int expectedToner1 = 200;
+        int expectedSheets2 = 200;
+        int expectedToner2 = 0;
+
+        Printer lessToner = new Printer(500, 300);
+
         // act
+        printer.print(550);
+        lessToner.print(550);
+
+        int actualSheets1 = printer.getSheets();
+        int actualToner1 = printer.getToner();
+        int actualSheets2 = lessToner.getSheets();
+        int actualToner2 = lessToner.getToner();
+
         // assert
+        assertEquals(expectedSheets1, actualSheets1, "Printer has 300 pages and 500 toner - print(550) should result in 0 pages left.");
+        assertEquals(expectedToner1, actualToner1, "Printer has 300 pages and 500 toner - print(550) should result in 200 toner left.");
+        assertEquals(expectedSheets2, actualSheets2, "Printer has 500 pages and 300 toner - print(550) should result in 200 pages left.");
+        assertEquals(expectedToner2, actualToner2, "Printer has 500 pages and 300 toner - print(550) should result in 0 toner left.");
     }
 
     @Test
     public void print_should_return_CorrectNumberOfPagesPrinted()
     {
         // arrange
+        int expectedReturn = 300;
+
+        Printer lessToner = new Printer(500, 300);
+
         // act
+        int actualReturn1 = printer.print(550);
+        int actualReturn2 = lessToner.print(550);
+
         // assert
+        assertEquals(expectedReturn, actualReturn1, "Printer has 300 pages and 500 toner - print(550) should print 300 pages");
+        assertEquals(expectedReturn, actualReturn2, "Printer has 500 pages and 300 toner - print(550) should print 300 pages");
     }
 
     @Test
-    public void print_shouldNot_printMoreThanSheetsAndTonerAvailable()
+    public void print_shouldNot_printNegativePagesOrUpdateVariables()
     {
         // arrange
-        // act
-        // assert
-    }
+        int expectedReturn = 0;
+        int expectedSheets = 300;
+        int expectedToner = 500;
 
-    @Test
-    public void print_shouldNot_printNegativePages()
-    {
-        // arrange
         // act
+        int actualReturn = printer.print(-5);
+        int actualSheets = printer.getSheets();
+        int actualToner = printer.getToner();
+
         // assert
+        assertEquals(expectedReturn, actualReturn, "Negative pages as input for print() should print 0 pages.");
+        assertEquals(expectedSheets, actualSheets, "Negative pages as input for print() should not change sheets value.");
+        assertEquals(expectedToner, actualToner, "Negative pages as input for print() should not change toner value.");
     }
 }

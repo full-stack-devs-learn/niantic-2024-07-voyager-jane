@@ -259,20 +259,13 @@ Class: Printer
     Bug 6:
 
         Describe the bug/error:
+        Negative number input in print() results in negative print copies and changes values for the printer's variables sheets and toner.
 
         Where was the bug? (function, line number)
+        print(), Lines 35-41 (at time of bug found)
 
         What test helped you find the bug?
+        print_shouldNot_printNegativePagesOrUpdateVariables()
 
         What did you do to fix the bug?
-
-
-    Bug 7:
-
-        Describe the bug/error:
-
-        Where was the bug? (function, line number)
-
-        What test helped you find the bug?
-
-        What did you do to fix the bug?
+        Set an if condition where if the pages input is less than or equal to 0, do not do anything but return 0.
