@@ -18,7 +18,13 @@ public class Maps
      */
     public List<String> mapCompanyNames(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapList = lineItems.stream()
+                                .map(item -> item.getCompanyName())
+                                .distinct()
+                                .sorted()
+                                .toList();
+
+        return mapList;
     }
 
     /*
@@ -31,7 +37,13 @@ public class Maps
      */
     public List<String> mapCategories(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapList = lineItems.stream()
+                                .map(item -> item.getCategoryName())
+                                .distinct()
+                                .sorted()
+                                .toList();
+
+        return mapList;
     }
 
     /*
@@ -44,7 +56,13 @@ public class Maps
      */
     public List<String> mapProducts(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapList = lineItems.stream()
+                                .map(item -> item.getProductName())
+                                .distinct()
+                                .sorted()
+                                .toList();
+
+        return mapList;
     }
 
     /*
@@ -57,7 +75,13 @@ public class Maps
      */
     public List<String> mapYears(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapList = lineItems.stream()
+                                .map(item -> Integer.toString(item.getOrderDate().getYear()))
+                                .distinct()
+                                .sorted()
+                                .toList();
+
+        return mapList;
     }
 
     /*
@@ -70,6 +94,12 @@ public class Maps
      */
     public List<String> mapOrderIds(List<LineItem> lineItems)
     {
-        return new ArrayList<>();
+        var mapList = lineItems.stream()
+                                .map(item -> Integer.toString(item.getOrderId()))
+                                .distinct()
+                                .sorted()
+                                .toList();
+
+        return mapList;
     }
 }
