@@ -16,7 +16,10 @@ public class Reducers
      */
     public double totalSales(List<LineItem> lineItems)
     {
-        return 0;
+        var sumSales = lineItems.stream()
+                                .map(item -> item.getLineTotal())
+                                .reduce(0.0, (temp, current) -> temp + current);
+        return sumSales;
     }
 
     /*
@@ -26,7 +29,9 @@ public class Reducers
      */
     public double averageSalesPerLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var sumSales = totalSales(lineItems);
+
+        return sumSales / lineItems.size();
     }
 
     /*
@@ -40,7 +45,13 @@ public class Reducers
      */
     public double averageSalesPerItem(List<LineItem> lineItems)
     {
-        return 0;
+        var sumSaleItems = lineItems.stream()
+                                    .map(item -> item.getUnitPrice() * item.getQuantity())
+                                    .reduce(0.0, (temp, current) -> temp + current);
+
+        var totalItems = totalItemCount(lineItems);
+
+        return sumSaleItems / totalItems;
     }
 
     /*
@@ -52,7 +63,11 @@ public class Reducers
      */
     public int totalItemCount(List<LineItem> lineItems)
     {
-        return 0;
+        var totalItems = lineItems.stream()
+                                    .map(item -> item.getQuantity())
+                                    .reduce(0, (temp, current) -> temp + current);
+
+        return totalItems;
     }
 
     /*
@@ -62,7 +77,9 @@ public class Reducers
      */
     public double averageItemCount(List<LineItem> lineItems)
     {
-        return 0;
+        var totalItems = totalItemCount(lineItems);
+
+        return (double) totalItems / lineItems.size();
     }
 
     /*
@@ -71,7 +88,14 @@ public class Reducers
      */
     public double maxLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var allLines = lineItems.stream()
+                                .map(item -> item.getLineTotal())
+                                .toList();
+
+        var maxLine = allLines.stream()
+                                .reduce(allLines.get(0), (temp, current) -> temp > current ? temp : current);
+
+        return maxLine;
     }
 
     /*
@@ -82,7 +106,14 @@ public class Reducers
      */
     public double minLineItem(List<LineItem> lineItems)
     {
-        return 0;
+        var allLines = lineItems.stream()
+                                .map(item -> item.getLineTotal())
+                                .toList();
+
+        var minLine = allLines.stream()
+                                .reduce(allLines.get(0), (temp, current) -> temp < current ? temp : current);
+
+        return minLine;
     }
 
 }
