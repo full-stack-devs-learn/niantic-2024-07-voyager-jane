@@ -13,7 +13,7 @@ class RectangleTests
     public void setup() {rectangle = new Rectangle();}
 
     @Test
-    public void newDefaultRectangle_shouldBeFiveFive_whenCreated()
+    public void newDefaultRectangle_should_haveFiveWidthFiveHeight()
     {
         // arrange
         int expectedHeight = 5;
@@ -30,7 +30,7 @@ class RectangleTests
     }
 
     @Test
-    public void newCustomRectangle_shouldHaveCorrectWidthHeight_whenCreated()
+    public void newCustomRectangle_should_haveCorrectWidthHeight()
     {
         // arrange
         Rectangle rectangle1 = new Rectangle(2, 4);
@@ -62,7 +62,7 @@ class RectangleTests
     }
 
     @Test
-    public void getArea_shouldCalculateCorrectly_whenCalled()
+    public void getArea_should_calculateAreaCorrectly()
     {
         // arrange
         Rectangle rectangle2 = new Rectangle(10, 2);
@@ -93,7 +93,7 @@ class RectangleTests
     }
 
     @Test
-    public void getPerimeter_shouldCalculatePerimeterCorrectly_whenCalled()
+    public void getPerimeter_should_calculatePerimeterCorrectly()
     {
         // arrange
         Rectangle rectangle2 = new Rectangle(10, 2);

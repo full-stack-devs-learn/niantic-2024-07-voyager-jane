@@ -30,7 +30,7 @@ class QuizTests
     }
 
     @Test
-    public void newQuiz_shouldMakeSurePossiblePointsArePositive_whenCreated()
+    public void newQuiz_should_makeSurePossiblePointsArePositive()
     {
         // arrange
 
@@ -47,7 +47,7 @@ class QuizTests
     }
 
     @Test
-    public void setScore_shouldBePositive_whenSetterIsCalled()
+    public void setScore_should_bePositive_whenSetterIsCalled()
     {
         // arrange
         int expectedScore = 0;
@@ -65,7 +65,7 @@ class QuizTests
     }
 
     @Test
-    public void getPercentage_ShouldCalculatePercentageCorrectly_whenCalled()
+    public void getPercentage_should_calculatePercentageCorrectly()
     {
         // arrange
         quiz1.setScore(68);
@@ -94,7 +94,7 @@ class QuizTests
     }
 
     @Test
-    public void getLetterGrade_shouldReturnCorrectGrade_whenCalled()
+    public void getLetterGrade_should_returnCorrectLetterGrade()
     {
         // arrange
         quiz1.setScore(52); // 52/100

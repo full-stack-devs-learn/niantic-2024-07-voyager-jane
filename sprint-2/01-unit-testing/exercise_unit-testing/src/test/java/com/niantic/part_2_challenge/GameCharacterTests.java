@@ -18,7 +18,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void takeHit_shouldNotReduceBelowZeroEnergy_whenCalled()
+    public void takeHit_shouldNot_reduceBelowZeroEnergy()
     {
         // arrange
         int expectedEnergyLevel = 0;
@@ -36,7 +36,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void takeHit_shouldReduceGivenEnergyLvl_whenCalled()
+    public void takeHit_should_reduceGivenEnergyLvl()
     {
         // arrange
         int expectedEnergyLevel1 = 5;
@@ -55,7 +55,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void isKnocked_shouldReturnTrueState_whenCalled()
+    public void isKnocked_should_returnActualState()
     {
         // arrange
 
@@ -68,7 +68,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void heal_shouldNotIncreaseAboveMaxEnergy_whenCalled()
+    public void heal_shouldNot_increaseAboveMaxEnergy()
     {
         // arrange
         int expectedEnergyLevel = bobCharacter.getMaxEnergyLevel();
@@ -83,7 +83,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void heal_shouldNotHealWhenKnockedOut_whenCalled()
+    public void heal_shouldNot_healWhenKnockedOut()
     {
         // arrange
         int expectedEnergyLevel = 0;
@@ -99,7 +99,7 @@ class GameCharacterTests
     }
 
     @Test
-    public void heal_shouldHealGivenEnergyLvl_whenCalled()
+    public void heal_should_healGivenEnergyLvl()
     {
         // arrange
         int expectedEnergyLevel1 = 4;

@@ -13,7 +13,7 @@ public class Quiz
 
     public void setScore(int score)
     {
-        if (score < 0)
+        if (score <= 0)
         {
             this.score = 0;
         }
