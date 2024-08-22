@@ -21,11 +21,6 @@ public class Player
         hand.dealTo(card);
     }
 
-    public int getHandValue()
-    {
-        return hand.getPointValue();
-    }
-
     public Hand getHand()
     {
         return hand;

@@ -16,7 +16,7 @@ public class UserInterface
             System.out.println(player.getName() + ": " + player.getHandValue());
             for (Card card : player.getHand().getCards())
             {
-                System.out.println("  " + card.getColor() + " " + card.getValue());
+                System.out.println("  " + card.getSuit() + " " + card.getCardValue());
             }
             System.out.println();
         }

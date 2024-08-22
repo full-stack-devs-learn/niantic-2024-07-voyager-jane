@@ -11,18 +11,6 @@ public class Hand
         return cards;
     }
 
-    public int getPointValue()
-    {
-        // return sum of all card points
-        int sum = 0;
-
-        for(Card card : cards)
-        {
-            sum += card.getValue();
-        }
-        return sum;
-    }
-
     public int getCardCount()
     {
         return cards.size();
@@ -31,5 +19,46 @@ public class Hand
     public void dealTo(Card card)
     {
         cards.add(card);
+    }
+
+    public ArrayList<Card> orderHandByValue()
+    {
+        ArrayList<Card> ordered = new ArrayList<>();
+
+        ordered.add(cards.get(0));
+
+
+        for (int i = 1; i < cards.size() - 1; i++)
+        {
+            Card current = cards.get(i);
+
+            for (Card compare : ordered)
+            {
+                int lastItem = ordered.size() - 1;
+
+                // if current > compare in new list & compare is the last item, add current to the end of the list
+                if (current.getValueOrder() > compare.getValueOrder()
+                        && ordered.get(lastItem).equals(compare))
+                {
+                    ordered.add(current);
+                }
+
+                // if current > compare, go next
+                else if (current.getValueOrder() > compare.getValueOrder())
+                {
+                    continue;
+                }
+
+                // if current < compare, add current to current position in ordered
+                else
+                {
+                    ordered.add(ordered.indexOf(compare), current);
+                    break;
+                }
+
+            }
+        }
+
+        return ordered;
     }
 }
