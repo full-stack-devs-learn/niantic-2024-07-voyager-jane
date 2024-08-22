@@ -57,4 +57,9 @@ public class Card
         return valueOrder.get(cardValue);
     }
 
+    public boolean isBomb()
+    {
+        return suitOrder.get(cardValue) == 13;
+    }
+
 }

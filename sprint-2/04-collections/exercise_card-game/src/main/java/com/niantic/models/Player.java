@@ -25,4 +25,13 @@ public class Player
     {
         return hand;
     }
+
+    public void playSingle()
+    {}
+
+    public void playPair()
+    {}
+
+    public void playStraight()
+    {}
 }

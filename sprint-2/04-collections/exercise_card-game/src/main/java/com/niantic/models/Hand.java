@@ -1,6 +1,7 @@
 package com.niantic.models;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Hand
 {
@@ -8,7 +9,7 @@ public class Hand
 
     public ArrayList<Card> getCards()
     {
-        return cards;
+        return sortHand(cards);
     }
 
     public int getCardCount()
@@ -21,44 +22,37 @@ public class Hand
         cards.add(card);
     }
 
-    public ArrayList<Card> orderHandByValue()
+    public ArrayList<Card> sortHand(ArrayList<Card> cards)
     {
-        ArrayList<Card> ordered = new ArrayList<>();
+        var sorted = cards.stream()
+                            .sorted((c1, c2) -> {{
 
-        ordered.add(cards.get(0));
+                                // if the two cards have the same value, check suit order
+                                if (c1.getValueOrder() == c2.getValueOrder())
+                                {
+                                    if (c1.getSuitOrder() < c2.getSuitOrder())
+                                    {
+                                        return -1;
+                                    }
 
+                                    else {
+                                        return 1;
+                                    }
+                                }
 
-        for (int i = 1; i < cards.size() - 1; i++)
-        {
-            Card current = cards.get(i);
+                                // if the two cards have different values, check value order
+                                if (c1.getValueOrder() < c2.getValueOrder())
+                                {
+                                    return -1;
+                                }
+                                else
+                                {
+                                    return 1;
+                                }
+                            }})
 
-            for (Card compare : ordered)
-            {
-                int lastItem = ordered.size() - 1;
+                            .collect(Collectors.toCollection(ArrayList::new));
 
-                // if current > compare in new list & compare is the last item, add current to the end of the list
-                if (current.getValueOrder() > compare.getValueOrder()
-                        && ordered.get(lastItem).equals(compare))
-                {
-                    ordered.add(current);
-                }
-
-                // if current > compare, go next
-                else if (current.getValueOrder() > compare.getValueOrder())
-                {
-                    continue;
-                }
-
-                // if current < compare, add current to current position in ordered
-                else
-                {
-                    ordered.add(ordered.indexOf(compare), current);
-                    break;
-                }
-
-            }
-        }
-
-        return ordered;
+        return sorted;
     }
 }
