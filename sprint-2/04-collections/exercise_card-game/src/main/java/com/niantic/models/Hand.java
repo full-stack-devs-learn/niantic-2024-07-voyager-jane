@@ -22,6 +22,17 @@ public class Hand
         cards.add(card);
     }
 
+    public void removeCard(Card card)
+    {
+        cards.remove(cards.indexOf(card));
+    }
+
+    public void placeInPile(Hand pile, Card card)
+    {
+        pile.dealTo(card);
+        removeCard(card);
+    }
+
     public ArrayList<Card> sortHand(ArrayList<Card> cards)
     {
         var sorted = cards.stream()

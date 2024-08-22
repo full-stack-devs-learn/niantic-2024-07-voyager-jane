@@ -1,5 +1,7 @@
 package com.niantic.models;
 
+import java.util.ArrayList;
+
 public class Player
 {
     private String name;
@@ -26,12 +28,14 @@ public class Player
         return hand;
     }
 
-    public void playSingle()
-    {}
+    public void playSingle(Hand pile, Card card)
+    {
+        hand.placeInPile(pile, card);
+    }
 
-    public void playPair()
-    {}
+    public void playPairOrStraight(Hand pile, ArrayList<Card> cards)
+    {
+        cards.stream().forEach(card -> hand.placeInPile(pile, card));
+    }
 
-    public void playStraight()
-    {}
 }
