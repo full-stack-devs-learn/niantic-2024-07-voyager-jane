@@ -33,7 +33,7 @@ public class Hand
         removeCard(card);
     }
 
-    public ArrayList<Card> sortHand(ArrayList<Card> cards)
+    public static ArrayList<Card> sortHand(ArrayList<Card> cards)
     {
         var sorted = cards.stream()
                             .sorted((c1, c2) -> {{
