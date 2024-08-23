@@ -12,7 +12,7 @@ public class Deck
         // build the deck of cards
         cards = new ArrayList<>();
 
-        String[] suits = {"hearts", "diamonds", "clubs", "spades"};
+        String[] suits = {"heart", "diamond", "club", "spade"};
         String[] cardValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
         for(String value : cardValues)

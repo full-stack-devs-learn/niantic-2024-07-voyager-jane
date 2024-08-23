@@ -1,2 +1,9 @@
-package com.niantic.models;public class HandTest {
+package com.niantic.models;
+
+import org.junit.jupiter.api.Test;
+
+public class HandTest
+{
+    @Test
+
 }

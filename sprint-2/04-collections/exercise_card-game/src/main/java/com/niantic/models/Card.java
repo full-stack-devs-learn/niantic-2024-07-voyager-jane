@@ -9,32 +9,32 @@ public class Card
     private String cardValue;
 
     private static final Map<String, Integer> suitOrder = new HashMap<>() {{
-        put("hearts", 4);
-        put("diamonds", 3);
-        put("clubs", 2);
-        put("spades", 1);
+        put("heart", 4);
+        put("diamond", 3);
+        put("club", 2);
+        put("spade", 1);
     }};
 
     private static final Map<String, Integer> valueOrder = new HashMap<>() {{
-        put("3", 1);
-        put("4", 2);
-        put("5", 3);
-        put("6", 4);
-        put("7", 5);
-        put("8", 6);
-        put("9", 7);
-        put("10", 8);
-        put("J", 9);
-        put("Q", 10);
-        put("K", 11);
-        put("A", 12);
-        put("2", 13);
+        put("3", 3);
+        put("4", 4);
+        put("5", 5);
+        put("6", 6);
+        put("7", 7);
+        put("8", 8);
+        put("9", 9);
+        put("10", 10);
+        put("J", 11);
+        put("Q", 12);
+        put("K", 13);
+        put("A", 14);
+        put("2", 15);
     }};
 
-    public Card(String suit, String faceValue)
+    public Card(String suit, String cardValue)
     {
         this.suit = suit;
-        this.cardValue = faceValue;
+        this.cardValue = cardValue;
     }
 
     public String getSuit()
@@ -59,7 +59,7 @@ public class Card
 
     public boolean isBomb()
     {
-        return suitOrder.get(cardValue) == 13;
+        return valueOrder.get(cardValue) == 15;
     }
 
 }
