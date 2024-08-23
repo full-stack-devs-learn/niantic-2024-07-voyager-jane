@@ -139,7 +139,7 @@ public class Player
         if (isStraight(sorted))
         {
             Card firstCardHand = sorted.get(0);
-            Card firstCardPile = pileCards.get(pileSize - straightSize - 1);
+            Card firstCardPile = pileCards.get(pileSize - straightSize);
 
             int handValue = firstCardHand.getValueOrder();
             int pileValue = firstCardPile.getValueOrder();

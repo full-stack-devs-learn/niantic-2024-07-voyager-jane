@@ -26,6 +26,8 @@ public class PlayerTest
     private Card card11;
     private Card card12;
     private Card card13;
+    private Card card14;
+    private Card card15;
 
 
     @BeforeEach
@@ -50,6 +52,8 @@ public class PlayerTest
         card12 = new Card("spade", "J");
 
         card13 = new Card("heart", "10");
+        card14 = new Card("club", "9");
+        card15 = new Card("spade", "9");
     }
 
     @Test
@@ -347,6 +351,198 @@ public class PlayerTest
     @Test
     public void playStraight_should_removeCards_fromPlayerHand_toPutIntoPile()
     {
+        // arrange
+        int expectedHandSize = 0;
+        int expectedPile1Size = 8;
+        int expectedPile2Size = 6;
 
+        player.dealTo(card1);
+        player.dealTo(card13);
+        player.dealTo(card15);
+
+        player.dealTo(card2);
+        player.dealTo(card3);
+        player.dealTo(card4);
+        player.dealTo(card5);
+
+        // same value - player has stronger suit
+        pile1.dealTo(card9);
+        pile1.dealTo(card10);
+        pile1.dealTo(card11);
+        pile1.dealTo(card12);
+
+        // different value - player has stronger value
+        pile2.dealTo(card6);
+        pile2.dealTo(card8);
+        pile2.dealTo(card14);
+
+        Card cardHand1 = player.getHand().findCard("heart", "8");
+        Card cardHand2 = player.getHand().findCard("diamond", "9");
+        Card cardHand3 = player.getHand().findCard("diamond", "10");
+        Card cardHand4 = player.getHand().findCard("club", "J");
+
+        Card cardHand5 = player.getHand().findCard("spade", "8");
+        Card cardHand6 = player.getHand().findCard("heart", "10");
+        Card cardHand7 = player.getHand().findCard("spade", "9");
+
+
+        ArrayList<Card> straight1 = new ArrayList<>() {{
+            add(cardHand1);
+            add(cardHand2);
+            add(cardHand3);
+            add(cardHand4);
+        }};
+
+        ArrayList<Card> straight2 = new ArrayList<>() {{
+            add(cardHand5);
+            add(cardHand6);
+            add(cardHand7);
+        }};
+
+        // act
+        player.playStraight(pile1, straight1);
+        player.playStraight(pile2, straight2);
+
+        boolean inHand1 = player.getHand().findCard("heart", "8") != null;
+        boolean inHand2 = player.getHand().findCard("diamond", "9") != null;
+        boolean inHand3 = player.getHand().findCard("diamond", "10") != null;
+        boolean inHand4 = player.getHand().findCard("club", "J") != null;
+
+        boolean inHand5 = player.getHand().findCard("spade", "8") != null;
+        boolean inHand6 = player.getHand().findCard("heart", "10") != null;
+        boolean inHand7 = player.getHand().findCard("spade", "9") != null;
+
+        boolean inPile1 = pile1.findCard("heart", "8") != null;
+        boolean inPile2 = pile1.findCard("diamond", "9") != null;
+        boolean inPile3 = pile1.findCard("diamond", "10") != null;
+        boolean inPile4 = pile1.findCard("club", "J") != null;
+
+        boolean inPile5 = pile2.findCard("spade", "8") != null;
+        boolean inPile6 = pile2.findCard("heart", "10") != null;
+        boolean inPile7 = pile2.findCard("spade", "9") != null;
+
+        int actualHandSize = player.getHand().getCardCount();
+        int actualPile1Size = pile1.getCardCount();
+        int actualPile2Size = pile2.getCardCount();
+
+        // assert
+        assertFalse(inHand1, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand2, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand3, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand4, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand5, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand6, "Card should not be in player's hand after placed in pile as part of a straight.");
+        assertFalse(inHand7, "Card should not be in player's hand after placed in pile as part of a straight.");
+
+        assertTrue(inPile1, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile2, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile3, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile4, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile5, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile6, "Card should be in the pile after player played a straight.");
+        assertTrue(inPile7, "Card should be in the pile after player played a straight.");
+
+        assertEquals(expectedHandSize, actualHandSize, "Player's card count should decrease after playing a straight.");
+        assertEquals(expectedPile1Size, actualPile1Size, "Pile's card count should increase after playing a straight.");
+        assertEquals(expectedPile2Size, actualPile2Size, "Pile's card count should increase after playing a straight.");
+    }
+
+    @Test
+    public void playStraight_shouldNot_removeCards_fromPlayerHand_IfPileStraightLarger()
+    {
+        // arrange
+        int expectedHandSize = 7;
+        int expectedPile1Size = 4;
+        int expectedPile2Size = 3;
+
+        player.dealTo(card6);
+        player.dealTo(card8);
+        player.dealTo(card14);
+
+        player.dealTo(card9);
+        player.dealTo(card10);
+        player.dealTo(card11);
+        player.dealTo(card12);
+
+        // same value - player has weaker suit
+        pile1.dealTo(card2);
+        pile1.dealTo(card3);
+        pile1.dealTo(card4);
+        pile1.dealTo(card5);
+
+        // different value - player has weaker value
+        pile2.dealTo(card1);
+        pile2.dealTo(card13);
+        pile2.dealTo(card15);
+
+        Card cardHand1 = player.getHand().findCard("diamond", "8");
+        Card cardHand2 = player.getHand().findCard("heart", "9");
+        Card cardHand3 = player.getHand().findCard("club", "10");
+        Card cardHand4 = player.getHand().findCard("spade", "J");
+
+        Card cardHand5 = player.getHand().findCard("diamond", "7");
+        Card cardHand6 = player.getHand().findCard("club", "8");
+        Card cardHand7 = player.getHand().findCard("club", "9");
+
+
+        ArrayList<Card> straight1 = new ArrayList<>() {{
+            add(cardHand1);
+            add(cardHand2);
+            add(cardHand3);
+            add(cardHand4);
+        }};
+
+        ArrayList<Card> straight2 = new ArrayList<>() {{
+            add(cardHand5);
+            add(cardHand6);
+            add(cardHand7);
+        }};
+
+        // act
+        player.playStraight(pile1, straight1);
+        player.playStraight(pile2, straight2);
+
+        boolean inHand1 = player.getHand().findCard("diamond", "8") != null;
+        boolean inHand2 = player.getHand().findCard("heart", "9") != null;
+        boolean inHand3 = player.getHand().findCard("club", "10") != null;
+        boolean inHand4 = player.getHand().findCard("spade", "J") != null;
+
+        boolean inHand5 = player.getHand().findCard("diamond", "7") != null;
+        boolean inHand6 = player.getHand().findCard("club", "8") != null;
+        boolean inHand7 = player.getHand().findCard("club", "9") != null;
+
+        boolean inPile1 = pile1.findCard("diamond", "8") != null;
+        boolean inPile2 = pile1.findCard("heart", "9") != null;
+        boolean inPile3 = pile1.findCard("club", "10") != null;
+        boolean inPile4 = pile1.findCard("spade", "J") != null;
+
+        boolean inPile5 = pile2.findCard("diamond", "7") != null;
+        boolean inPile6 = pile2.findCard("club", "8") != null;
+        boolean inPile7 = pile2.findCard("club", "9") != null;
+
+        int actualHandSize = player.getHand().getCardCount();
+        int actualPile1Size = pile1.getCardCount();
+        int actualPile2Size = pile2.getCardCount();
+
+        // assert
+        assertTrue(inHand1, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand2, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand3, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand4, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand5, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand6, "Card should stay in player's hand if pile's straight is larger.");
+        assertTrue(inHand7, "Card should stay in player's hand if pile's straight is larger.");
+
+        assertFalse(inPile1, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile2, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile3, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile4, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile5, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile6, "Card should not be in the pile if player's straight is smaller.");
+        assertFalse(inPile7, "Card should not be in the pile if player's straight is smaller.");
+
+        assertEquals(expectedHandSize, actualHandSize, "Player's card count should stay the same if pile's straight is larger.");
+        assertEquals(expectedPile1Size, actualPile1Size, "Pile's card count should stay the same if player's straight is smaller.");
+        assertEquals(expectedPile2Size, actualPile2Size, "Pile's card count should stay the same if player's straight is smaller.");
     }
 }

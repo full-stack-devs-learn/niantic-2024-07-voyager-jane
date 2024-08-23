@@ -179,13 +179,13 @@ public class HandTest
         hand.dealTo(clubA);
 
         // act
-        hand.sortHand(hand.getCards());
+        var sorted = hand.sortHand(hand.getCards());
 
         boolean inOrder = true;
 
         for (int i = 0; i < hand.getCardCount() - 1; i++)
         {
-            if (hand.getCards().get(i) != compare.get(i))
+            if (sorted.get(i) != compare.get(i))
             {
                 inOrder = false;
             }
