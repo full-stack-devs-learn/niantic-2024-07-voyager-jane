@@ -17,6 +17,21 @@ public class Hand
         return cards.size();
     }
 
+    public Card findCard(String suit, String cardValue)
+    {
+        Card card = null;
+
+        for (Card c : cards)
+        {
+            if (c.getSuit().equals(suit) && c.getCardValue().equals(cardValue))
+            {
+                card = c;
+            }
+        }
+
+        return card;
+    }
+
     public void dealTo(Card card)
     {
         cards.add(card);

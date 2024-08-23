@@ -50,6 +50,29 @@ public class HandTest
     }
 
     @Test
+    public void findCard_should_ReturnCardFromInputs_IfPresentInHand()
+    {
+        // arrange
+
+        // act
+        hand.dealTo(heart5);
+        hand.dealTo(spadeA);
+
+        Card card1 = hand.findCard("heart", "5");
+        Card card2 = hand.findCard("spade", "A");
+        Card card3 = hand.findCard("diamond", "8");
+
+        boolean actual1 = card1 != null;
+        boolean actual2 = card2 != null;
+        boolean actual3 = card3 != null;
+
+        // assert
+        assertTrue(actual1, "If card is in hand, findCard() returns true.");
+        assertTrue(actual2, "If card is in hand, findCard() returns true.");
+        assertFalse(actual3, "If card is not in hand, findCard() returns false.");
+    }
+
+    @Test
     public void dealTo_should_addCardToHand()
     {
         // arrange

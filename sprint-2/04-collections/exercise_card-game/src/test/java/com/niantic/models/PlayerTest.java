@@ -123,13 +123,13 @@ public class PlayerTest
     }
 
     @Test
-    public void playSingle_should_removeCard_FromPlayerHand()
+    public void playSingle_should_removeCard_FromPlayerHandToPutIntoPile()
     {
 
     }
 
     @Test
-    public void playPair_should_removePickedCards_FromPlayerHand()
+    public void playPair_should_removePickedCards_FromPlayerHandToPutIntoPile()
     {
 
     }
