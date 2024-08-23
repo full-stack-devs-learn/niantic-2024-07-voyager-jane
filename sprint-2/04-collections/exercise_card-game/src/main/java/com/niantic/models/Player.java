@@ -64,9 +64,14 @@ public class Player
 
     public boolean playSingle(Hand pile, Card card)
     {
+        // WHY IS IT ADDING NEW ELEMENTS TO START OF ARRAYLIST?
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
-        Card cardOnTopOfPile = pileCards.get(pileSize - 1);
+        Card cardOnTopOfPile = pileCards.get(0);
+
+//        System.out.println(pileCards.get(0).getCardValue());
+//        System.out.println(pileCards.get(1).getCardValue());
+//        System.out.println(pileCards.get(2).getCardValue());
 
         if (card.getValueOrder() > cardOnTopOfPile.getValueOrder())
         {

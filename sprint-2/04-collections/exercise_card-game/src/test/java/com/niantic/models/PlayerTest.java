@@ -5,14 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest
 {
     private Player player;
-    private Hand pile1;
-    private Hand pile2;
+    private Hand pile;
 
     private Card card1;
     private Card card2;
@@ -29,20 +27,16 @@ public class PlayerTest
 
     private ArrayList<Card> pair1;
     private ArrayList<Card> pair2;
-    private ArrayList<Card> pilePair1;
-    private ArrayList<Card> pilePair2;
 
     private ArrayList<Card> straight1;
     private ArrayList<Card> straight2;
     private ArrayList<Card> straight3;
-    private ArrayList<Card> pileStraight1;
 
     @BeforeEach
     public void setup()
     {
         player = new Player("Bob");
-        pile1 = new Hand();
-        pile2 = new Hand();
+        pile = new Hand();
 
         card1 = new Card("spade", "8");
         card2 = new Card("heart", "8");
@@ -57,6 +51,20 @@ public class PlayerTest
         card10 = new Card("heart", "9");
         card11 = new Card("club", "10");
         card12 = new Card("spade", "J");
+
+//        player.dealTo(card1);
+//        player.dealTo(card2);
+//        player.dealTo(card3);
+//        player.dealTo(card4);
+//        player.dealTo(card5);
+//
+//        pile.dealTo(card6);
+//        pile.dealTo(card7);
+//        pile.dealTo(card8);
+//        pile.dealTo(card9);
+//        pile.dealTo(card10);
+//        pile.dealTo(card11);
+//        pile.dealTo(card12);
 
 
         pair1 = new ArrayList<>(){{
@@ -89,9 +97,6 @@ public class PlayerTest
             add(card2);
         }};
 
-        pileStraight1 = new ArrayList<>() {{
-            add(card8);
-        }};
     }
 
     @Test
@@ -125,11 +130,49 @@ public class PlayerTest
     @Test
     public void playSingle_should_removeCard_FromPlayerHandToPutIntoPile()
     {
+        // arrange
+        int expectedHandSize = 2;
+        int expectedPileSize = 4;
+
+        player.dealTo(card1);
+        player.dealTo(card3);
+        player.dealTo(card4);
+
+        pile.dealTo(card12);
+        pile.dealTo(card11);
+        pile.dealTo(card6);
+
+        // act
+        Card card = player.getHand().findCard("spade", "8");
+
+        player.playSingle(pile, card);
+
+        boolean inHand = player.getHand().findCard("spade", "8") != null;
+        boolean inPile = pile.findCard("spade", "8") != null;
+        int actualHandSize = player.getHand().getCardCount();
+        int actualPileSize = pile.getCardCount();
+
+        // assert
+        assertFalse(inHand, "Card should not be in hand after playing a valid single.");
+        assertTrue(inPile, "Card should be in pile after player places a valid single.");
+        assertEquals(expectedHandSize, actualHandSize, "Player's card count should lower after placing a card in the pile.");
+        assertEquals(expectedPileSize, actualPileSize, "Pile's card count should rise after player places a card in the pile.");
+    }
+
+    @Test
+    public void playSingle_shouldNot_removeCard_FromPlayerHandIfSmallerValueThanPile()
+    {
 
     }
 
     @Test
     public void playPair_should_removePickedCards_FromPlayerHandToPutIntoPile()
+    {
+
+    }
+
+    @Test
+    public void playStraight_should_removePickedCards_FromPlayerHandToPutIntoPile()
     {
 
     }
