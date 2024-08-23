@@ -9,7 +9,7 @@ public class Hand
 
     public ArrayList<Card> getCards()
     {
-        return sortHand(cards);
+        return cards;
     }
 
     public int getCardCount()

@@ -45,7 +45,7 @@ public class Player
     public boolean isStraight(ArrayList<Card> straight)
     {
 
-        // should i have made sorthand static?
+        // Q? should i have made sorthand static?
         var sorted = Hand.sortHand(straight);
 
         for (int i = 1; i < sorted.size(); i++)
@@ -64,25 +64,26 @@ public class Player
 
     public boolean playSingle(Hand pile, Card card)
     {
-        // WHY IS IT ADDING NEW ELEMENTS TO START OF ARRAYLIST?
+        // Q? WHY IS IT ADDING NEW ELEMENTS TO START OF ARRAYLIST IN PILE?
+        // A! its because i was sorting ALL hands including pile with getCards and i dont want that for the pile so i changed it to just return cards
+        // another question in isStraight
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
-        Card cardOnTopOfPile = pileCards.get(0);
+        Card cardOnTopOfPile = pileCards.get(pileSize - 1);
 
-//        System.out.println(pileCards.get(0).getCardValue());
-//        System.out.println(pileCards.get(1).getCardValue());
-//        System.out.println(pileCards.get(2).getCardValue());
+        int cardHandValue = card.getValueOrder();
+        int cardPileValue = cardOnTopOfPile.getValueOrder();
+        int cardHandSuit = card.getSuitOrder();
+        int cardPileSuit = cardOnTopOfPile.getSuitOrder();
 
-        if (card.getValueOrder() > cardOnTopOfPile.getValueOrder())
+        if (cardHandValue > cardPileValue
+                || cardHandSuit > cardPileSuit)
         {
             hand.placeInPile(pile, card);
             return true;
         }
 
-        else
-        {
-            return false;
-        }
+        else return false;
     }
 
     public boolean playPair(Hand pile, ArrayList<Card> cards)
@@ -119,8 +120,8 @@ public class Player
                 cards.stream().forEach(card -> hand.placeInPile(pile, card));
                 validMove = true;
             }
-        }
 
+        }
 
         return validMove;
     }
