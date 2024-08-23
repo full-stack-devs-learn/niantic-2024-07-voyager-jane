@@ -44,23 +44,22 @@ public class Player
 
     public boolean isStraight(ArrayList<Card> straight)
     {
-        boolean bool = true;
 
         // should i have made sorthand static?
         var sorted = Hand.sortHand(straight);
 
-        for (int i = 1; i < sorted.size() - 1; i++)
+        for (int i = 1; i < sorted.size(); i++)
         {
             int previous = sorted.get(i - 1).getValueOrder();
             int current = sorted.get(i).getValueOrder();
 
-            if (current != (previous + 1))
+            if (current != previous + 1)
             {
-                bool = false;
+                return false;
             }
         }
 
-        return bool;
+        return true;
     }
 
     public boolean playSingle(Hand pile, Card card)
