@@ -60,7 +60,7 @@ public class Player
         return true;
     }
 
-    public boolean playSingle(Hand pile, Card card)
+    public boolean playSingle(Hand pile, Card card, boolean chooseAction)
     {
         // Q? WHY IS IT ADDING NEW ELEMENTS TO START OF ARRAYLIST IN PILE?
         // A! its because i was sorting ALL hands including pile with getCards and i dont want that for the pile so i changed it to just return cards
@@ -68,7 +68,7 @@ public class Player
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
 
-        if (pileSize == 0)
+        if (pileSize == 0 || chooseAction)
         {
             hand.placeInPile(pile, card);
             return true;
@@ -88,14 +88,14 @@ public class Player
         } else return false;
     }
 
-    public boolean playPair(Hand pile, ArrayList<Card> cards)
+    public boolean playPair(Hand pile, ArrayList<Card> cards, boolean chooseAction)
     {
         boolean validMove = false;
 
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
 
-        if (pileSize == 0)
+        if (pileSize == 0 || chooseAction)
         {
             cards.stream().forEach(card -> hand.placeInPile(pile, card));
             validMove = true;
@@ -135,14 +135,14 @@ public class Player
         return validMove;
     }
 
-    public boolean playStraight(Hand pile, ArrayList<Card> cards)
+    public boolean playStraight(Hand pile, ArrayList<Card> cards, boolean chooseAction)
     {
         boolean validMove = false;
 
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pileCards.size();
 
-        if (pileSize == 0)
+        if (pileSize == 0 || chooseAction)
         {
             cards.stream().forEach(card -> hand.placeInPile(pile, card));
             validMove = true;

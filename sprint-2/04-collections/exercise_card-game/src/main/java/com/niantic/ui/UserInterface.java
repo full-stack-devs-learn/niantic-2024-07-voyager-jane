@@ -4,6 +4,7 @@ import com.niantic.models.Card;
 import com.niantic.models.Hand;
 import com.niantic.models.Player;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class UserInterface
@@ -21,7 +22,7 @@ public class UserInterface
 
             for (Card card : sortedHand)
             {
-                System.out.println("  " + card.getCardValue() + " " + card.getSuit());
+                System.out.println("  " + displayCard(card));
             }
             System.out.println();
         }
@@ -29,21 +30,13 @@ public class UserInterface
 
     public static void displayPlayerCards(Player player)
     {
-        System.out.println("Hand of Player " + player.getName());
+        System.out.println("Hand of Player " + displayPlayer(player));
         System.out.println("-".repeat(10));
         var cards = Hand.sortHand(player.getHand().getCards());
 
         for (Card card : cards)
         {
-            String color;
-
-            if (card.getSuit().equals("heart")  || card.getSuit().equals("diamond"))
-            {
-                color = ColorCodes.RED;
-            }
-            else color = ColorCodes.BLUE;
-
-            System.out.println("  " + card.getCardValue() + " " + color + card.getSuit() + ColorCodes.RESET);
+            System.out.println("  " + displayCard(card));
         }
         System.out.println();
     }
@@ -54,18 +47,29 @@ public class UserInterface
         System.out.println("-".repeat(10));
         var cards = pile.getCards();
 
-        String color;
-
         for (Card card : cards)
         {
-            if (card.getSuit().equals("heart")  || card.getSuit().equals("diamond"))
-            {
-                color = ColorCodes.RED;
-            }
-            else color = ColorCodes.BLUE;
-
-            System.out.println("  " + card.getCardValue() + " " + color + card.getSuit() + ColorCodes.RESET);
+            System.out.println("  " + displayCard(card));
         }
         System.out.println();
+    }
+
+    public static String displayCard(Card card)
+    {
+        String color;
+
+        if (card.getSuit().equals("heart")  || card.getSuit().equals("diamond"))
+        {
+            color = ColorCodes.RED;
+        }
+        else color = ColorCodes.BLUE;
+
+        return card.getCardValue() + " " + color + card.getSuit() + ColorCodes.RESET;
+    }
+
+    public static String displayPlayer(Player player)
+    {
+        if (player.getName().equalsIgnoreCase("one")) return ColorCodes.BOLD + ColorCodes.YELLOW + player.getName() + ColorCodes.RESET;
+        else return ColorCodes.BOLD + ColorCodes.PURPLE + player.getName() + ColorCodes.RESET;
     }
 }

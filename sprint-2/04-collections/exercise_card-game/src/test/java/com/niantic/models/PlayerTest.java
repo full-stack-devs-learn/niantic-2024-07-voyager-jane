@@ -136,8 +136,8 @@ public class PlayerTest
         Card card2 = player.getHand().findCard("heart", "8");
 
         // act
-        player.playSingle(pile1, card1);
-        player.playSingle(pile2, card2);
+        player.playSingle(pile1, card1, false);
+        player.playSingle(pile2, card2, false);
 
         boolean inHand1 = player.getHand().findCard("spade", "8") != null;
         boolean inHand2 = player.getHand().findCard("heart", "8") != null;
@@ -180,8 +180,8 @@ public class PlayerTest
         Card card = player.getHand().findCard("spade", "8");
 
         // act
-        player.playSingle(pile1, card);
-        player.playSingle(pile2, card);
+        player.playSingle(pile1, card, false);
+        player.playSingle(pile2, card, false);
 
         boolean inHand = player.getHand().findCard("spade", "8") != null;
         boolean inPile1 = pile1.findCard("spade", "8") != null;
@@ -242,8 +242,8 @@ public class PlayerTest
         }};
 
         // act
-        player.playPair(pile1, cardPair1);
-        player.playPair(pile2, cardPair2);
+        player.playPair(pile1, cardPair1, false);
+        player.playPair(pile2, cardPair2, false);
 
         boolean inHand1 = player.getHand().findCard("spade", "8") != null;
         boolean inHand2 = player.getHand().findCard("heart", "8") != null;
@@ -315,8 +315,8 @@ public class PlayerTest
         }};
 
         // act
-        player.playPair(pile1, cardPair1);
-        player.playPair(pile2, cardPair2);
+        player.playPair(pile1, cardPair1, false);
+        player.playPair(pile2, cardPair2, false);
 
         boolean inHand1 = player.getHand().findCard("club", "8") != null;
         boolean inHand2 = player.getHand().findCard("diamond", "8") != null;
@@ -400,8 +400,8 @@ public class PlayerTest
         }};
 
         // act
-        player.playStraight(pile1, straight1);
-        player.playStraight(pile2, straight2);
+        player.playStraight(pile1, straight1, false);
+        player.playStraight(pile2, straight2, false);
 
         boolean inHand1 = player.getHand().findCard("heart", "8") != null;
         boolean inHand2 = player.getHand().findCard("diamond", "9") != null;
@@ -499,8 +499,8 @@ public class PlayerTest
         }};
 
         // act
-        player.playStraight(pile1, straight1);
-        player.playStraight(pile2, straight2);
+        player.playStraight(pile1, straight1, false);
+        player.playStraight(pile2, straight2, false);
 
         boolean inHand1 = player.getHand().findCard("diamond", "8") != null;
         boolean inHand2 = player.getHand().findCard("heart", "9") != null;

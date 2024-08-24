@@ -9,6 +9,9 @@ import com.niantic.ui.UserInterface;
 
 import java.util.*;
 
+import static com.niantic.ui.UserInterface.displayCard;
+import static com.niantic.ui.UserInterface.displayPlayer;
+
 public class CardGameApplication
 {
     Deck deck = new Deck();
@@ -29,7 +32,7 @@ public class CardGameApplication
     {
         startGame();
         while (winner == null) playRound();
-        System.out.println("The winner is " + winner.getName());
+        System.out.println("The winner is " + displayPlayer(winner));
     }
 
     // <editor-fold desc="Start Game">
@@ -75,7 +78,7 @@ public class CardGameApplication
         input.nextLine();
         System.out.println(ColorCodes.GREEN + "Let's Start!" + ColorCodes.RESET);
         System.out.println();
-        System.out.println("The player with the lowest card value is " + startPlayer.getName() + "! They will start the first turn.");
+        System.out.println("The player with the lowest card value is " + displayPlayer(startPlayer) + "! They will start the first turn.");
         System.out.println();
     }
 
@@ -101,34 +104,51 @@ public class CardGameApplication
 
     // </editor-fold>
 
-    private void playRound()
+    private List<Player> createQueue()
     {
         // Creating Order of Players' turn based on starting player position ("clockwise" or consecutive then wrap)
         int startIndex = players.indexOf(startPlayer);
         var first = players.subList(startIndex, players.size());
-        var second = players.subList(0, startIndex);
-        first.addAll(second);
+        if (startIndex != 0 && first.size() < players.size())
+        {
+            var second = players.subList(0, startIndex);
+            first.addAll(second);
+        }
+        return first;
+    }
 
+    private void playRound()
+    {
         // Placing players in order into queue
-        Queue<Player> playerQueue = new LinkedList<>(first);
+        Queue<Player> playerQueue = new LinkedList<>(createQueue());
 
-        while (!playerQueue.isEmpty()) {
+        playerQueue.stream().forEach(player -> System.out.println(player.getName()));
+        System.out.println("NEW Q");
+
+        System.out.println("A new round has started! " + displayPlayer(startPlayer) + " will begin this round.");
+        System.out.println();
+
+        while (!playerQueue.isEmpty())
+        {
+
             currentPlayer = playerQueue.poll();
 
-            System.out.println("It's " + currentPlayer.getName() + "'s turn now!");
+            System.out.println("It's " + displayPlayer(currentPlayer) + "'s turn now!");
             System.out.println();
+            System.out.println("Press ENTER to continue");
+            input.nextLine();
 
             UserInterface.displayPlayerCards(currentPlayer);
-            System.out.println();
 
             offerPileView();
-            System.out.println();
+            System.out.println("Press ENTER to continue");
+            input.nextLine();
 
-            // if this is the start of a new round, choose the round's action
+            // if this is the start of a new round, current player chooses the round's action
             if (startPlayer.equals(currentPlayer) && firstAction)
             {
                 chooseAction();
-                firstAction = false;
+                playerQueue.offer(currentPlayer);
             }
 
             else
@@ -137,24 +157,38 @@ public class CardGameApplication
                 String skip = input.nextLine().strip().toLowerCase();
                 System.out.println();
 
-                if (skip.equalsIgnoreCase("y")) {
-                    continue;
-                } else {
-                    // if this is the last person left, end round and set them as the next round's starting player
-                    if (playerQueue.size() == 1) {
-                        startPlayer = currentPlayer;
+                // skip current player's turn and don't put them back into queue since they forfeited the rest of their turns for this round
+                if (skip.equalsIgnoreCase("y"))
+                {
+                    // if there is only one other person in queue, end round and set them as the next round's starting player
+                    if (playerQueue.size() == 1)
+                    {
+                        startPlayer = playerQueue.poll();
+                        firstAction = true;
                         action = null;
+
+                        System.out.println("The round has ended with only Player " + displayPlayer(startPlayer) + " left who hasn't skipped this round. They will start the next round");
                         break;
                     }
+                    else continue;
 
+                }
+
+                else
+                {
+                    playerQueue.offer(currentPlayer);
+
+                    // if there are more players in the queue, play the correct action
                     if (action.equals("single")) singleRound();
                     if (action.equals("pair")) pairRound();
                     if (action.equals("straight")) straightRound();
 
-                    if (currentPlayer.getHand().getCardCount() == 0) {
+                    // after playing action, if the current player's hand is empty, they are the winner and end the game
+                    if (currentPlayer.getHand().getCardCount() == 0)
+                    {
                         winner = currentPlayer;
                         break;
-                    } else playerQueue.offer(currentPlayer);
+                    }
                 }
             }
         }
@@ -182,19 +216,16 @@ public class CardGameApplication
                 case 1:
                     action = "single";
                     singleRound();
-
                     invalidOption = false;
                     break;
                 case 2:
                     action = "pair";
                     pairRound();
-
                     invalidOption = false;
                     break;
                 case 3:
                     action = "straight";
                     straightRound();
-
                     invalidOption = false;
                     break;
                 default:
@@ -214,17 +245,18 @@ public class CardGameApplication
             firstTurn = false;
             System.out.println("Staring player of the game's first turn must play their lowest card in their action!");
 
-            validCard = currentPlayer.getHand().getCards().get(0);
+            validCard = Hand.sortHand(currentPlayer.getHand().getCards()).get(0);
 
-            validTurn = currentPlayer.playSingle(pile, validCard);
+            validTurn = currentPlayer.playSingle(pile, validCard, true);
 
-            if (validTurn) System.out.println("Card " + validCard.getCardValue() + " " + validCard.getSuit() + " successfully played.");
+            if (validTurn) System.out.println("Card " + displayCard(validCard) + " successfully played.");
             else System.out.println("There was an error in placing the card.");
 
             System.out.println();
         }
 
-        else {
+        else
+        {
             do {
                 System.out.println("What card would you like to place in the pile?");
                 System.out.println("Choose Face or Number: ");
@@ -238,15 +270,23 @@ public class CardGameApplication
                 if (validCard == null) System.out.println("The card you chose doesn't exist in your hand. Please choose another card.");
                 else
                 {
-                    validTurn = currentPlayer.playSingle(pile, validCard);
+                    // if this is first action of the round it should always be played no matter the pile.
+                    // if not the first action, then compare to pile
+                    validTurn = currentPlayer.playSingle(pile, validCard, firstAction);
 
                     if (!validTurn) System.out.println("The card you chose does not have a larger value than the pile's top card. Please choose another card.");
                 }
             }
-            while (validTurn == false);
+            while (!validTurn);
 
-            System.out.println("Card " + validCard.getCardValue() + " " + validCard.getSuit() + " successfully played.");
+            System.out.println("Card " + displayCard(validCard) + " successfully played.");
+            System.out.println();
         }
+
+        // set firstAction to be false so players arent allowed to just put anything into the pile
+        firstAction = false;
+        System.out.println("Press ENTER to continue");
+        input.nextLine();
     }
 
     private void pairRound()
