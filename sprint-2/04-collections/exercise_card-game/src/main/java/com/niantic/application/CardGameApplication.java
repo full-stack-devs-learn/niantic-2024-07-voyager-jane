@@ -17,15 +17,19 @@ public class CardGameApplication
 
     private Player startPlayer = null;
     private Player currentPlayer;
+    private Player winner = null;
+
     private boolean firstTurn = true;
     private boolean firstAction = true;
     private String action;
+
     Scanner input = new Scanner(System.in);
     
     public void run()
     {
         startGame();
-        playRound();
+        while (winner == null) playRound();
+        System.out.println("The winner is " + winner.getName());
     }
 
     // <editor-fold desc="Start Game">
@@ -93,7 +97,6 @@ public class CardGameApplication
     {
         players.add(new Player("One"));
         players.add(new Player("Two"));
-        players.add(new Player("Three"));
     }
 
     // </editor-fold>
@@ -109,17 +112,17 @@ public class CardGameApplication
         // Placing players in order into queue
         Queue<Player> playerQueue = new LinkedList<>(first);
 
-        while (!playerQueue.isEmpty())
-        {
-            Player currentPlayer = playerQueue.poll();
+        while (!playerQueue.isEmpty()) {
+            currentPlayer = playerQueue.poll();
 
             System.out.println("It's " + currentPlayer.getName() + "'s turn now!");
             System.out.println();
 
-            UserInterface.displayPlayerCards(this.currentPlayer);
+            UserInterface.displayPlayerCards(currentPlayer);
             System.out.println();
 
             offerPileView();
+            System.out.println();
 
             // if this is the start of a new round, choose the round's action
             if (startPlayer.equals(currentPlayer) && firstAction)
@@ -127,17 +130,33 @@ public class CardGameApplication
                 chooseAction();
                 firstAction = false;
             }
-            // if this is the last person left, end round and set them as the next round's starting player
-            if (playerQueue.size() == 1)
+
+            else
             {
-                startPlayer = this.currentPlayer;
-                break;
+                System.out.println("Would you like to skip your turn? If you skip now, you can't place cards in the pile until the next round starts. (y/n)");
+                String skip = input.nextLine().strip().toLowerCase();
+                System.out.println();
+
+                if (skip.equalsIgnoreCase("y")) {
+                    continue;
+                } else {
+                    // if this is the last person left, end round and set them as the next round's starting player
+                    if (playerQueue.size() == 1) {
+                        startPlayer = currentPlayer;
+                        action = null;
+                        break;
+                    }
+
+                    if (action.equals("single")) singleRound();
+                    if (action.equals("pair")) pairRound();
+                    if (action.equals("straight")) straightRound();
+
+                    if (currentPlayer.getHand().getCardCount() == 0) {
+                        winner = currentPlayer;
+                        break;
+                    } else playerQueue.offer(currentPlayer);
+                }
             }
-
-            if (action.equals("single")) singleRound();
-            if (action.equals("pair")) pairRound();
-            if (action.equals("straight")) straightRound();
-
         }
     }
 
@@ -162,14 +181,20 @@ public class CardGameApplication
             {
                 case 1:
                     action = "single";
+                    singleRound();
+
                     invalidOption = false;
                     break;
                 case 2:
                     action = "pair";
+                    pairRound();
+
                     invalidOption = false;
                     break;
                 case 3:
                     action = "straight";
+                    straightRound();
+
                     invalidOption = false;
                     break;
                 default:
@@ -189,10 +214,14 @@ public class CardGameApplication
             firstTurn = false;
             System.out.println("Staring player of the game's first turn must play their lowest card in their action!");
 
-            validTurn = currentPlayer.playSingle(pile, currentPlayer.getHand().getCards().get(0));
+            validCard = currentPlayer.getHand().getCards().get(0);
+
+            validTurn = currentPlayer.playSingle(pile, validCard);
 
             if (validTurn) System.out.println("Card " + validCard.getCardValue() + " " + validCard.getSuit() + " successfully played.");
             else System.out.println("There was an error in placing the card.");
+
+            System.out.println();
         }
 
         else {

@@ -23,7 +23,7 @@ public class Hand
 
         for (Card c : cards)
         {
-            if (c.getSuit().equals(suit) && c.getCardValue().equals(cardValue))
+            if (c.getSuit().equalsIgnoreCase(suit) && c.getCardValue().equalsIgnoreCase(cardValue))
             {
                 card = c;
             }

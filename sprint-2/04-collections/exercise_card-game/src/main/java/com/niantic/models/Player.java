@@ -44,8 +44,6 @@ public class Player
 
     public boolean isStraight(ArrayList<Card> straight)
     {
-
-        // Q? should i have made sorthand static?
         var sorted = Hand.sortHand(straight);
 
         for (int i = 1; i < sorted.size(); i++)
@@ -66,9 +64,16 @@ public class Player
     {
         // Q? WHY IS IT ADDING NEW ELEMENTS TO START OF ARRAYLIST IN PILE?
         // A! its because i was sorting ALL hands including pile with getCards and i dont want that for the pile so i changed it to just return cards
-        // another question in isStraight
+
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
+
+        if (pileSize == 0)
+        {
+            hand.placeInPile(pile, card);
+            return true;
+        }
+
         Card cardOnTopOfPile = pileCards.get(pileSize - 1);
 
         int cardHandValue = card.getValueOrder();
@@ -77,13 +82,10 @@ public class Player
         int cardPileSuit = cardOnTopOfPile.getSuitOrder();
 
         if (cardHandValue > cardPileValue
-                || cardHandSuit > cardPileSuit)
-        {
+                || cardHandSuit > cardPileSuit) {
             hand.placeInPile(pile, card);
             return true;
-        }
-
-        else return false;
+        } else return false;
     }
 
     public boolean playPair(Hand pile, ArrayList<Card> cards)
@@ -92,6 +94,13 @@ public class Player
 
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pile.getCardCount();
+
+        if (pileSize == 0)
+        {
+            cards.stream().forEach(card -> hand.placeInPile(pile, card));
+            validMove = true;
+        }
+
         Card card1Pile = pileCards.get(pileSize - 1);
         Card card2Pile = pileCards.get(pileSize - 2);
 
@@ -132,6 +141,12 @@ public class Player
 
         ArrayList<Card> pileCards = pile.getCards();
         int pileSize = pileCards.size();
+
+        if (pileSize == 0)
+        {
+            cards.stream().forEach(card -> hand.placeInPile(pile, card));
+            validMove = true;
+        }
 
         var sorted = Hand.sortHand(cards);
         int straightSize = sorted.size();;
