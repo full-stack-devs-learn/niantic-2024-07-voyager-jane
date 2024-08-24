@@ -21,9 +21,51 @@ public class UserInterface
 
             for (Card card : sortedHand)
             {
-                System.out.println("  " + card.getSuit() + " " + card.getCardValue());
+                System.out.println("  " + card.getCardValue() + " " + card.getSuit());
             }
             System.out.println();
         }
+    }
+
+    public static void displayPlayerCards(Player player)
+    {
+        System.out.println("Hand of Player " + player.getName());
+        System.out.println("-".repeat(10));
+        var cards = Hand.sortHand(player.getHand().getCards());
+
+        for (Card card : cards)
+        {
+            String color;
+
+            if (card.getSuit().equals("heart")  || card.getSuit().equals("diamond"))
+            {
+                color = ColorCodes.RED;
+            }
+            else color = ColorCodes.BLUE;
+
+            System.out.println("  " + card.getCardValue() + " " + color + card.getSuit() + ColorCodes.RESET);
+        }
+        System.out.println();
+    }
+
+    public static void displayPile(Hand pile)
+    {
+        System.out.println("Current Pile - Card on Top is the last item of list");
+        System.out.println("-".repeat(10));
+        var cards = pile.getCards();
+
+        String color;
+
+        for (Card card : cards)
+        {
+            if (card.getSuit().equals("heart")  || card.getSuit().equals("diamond"))
+            {
+                color = ColorCodes.RED;
+            }
+            else color = ColorCodes.BLUE;
+
+            System.out.println("  " + card.getCardValue() + " " + color + card.getSuit() + ColorCodes.RESET);
+        }
+        System.out.println();
     }
 }
