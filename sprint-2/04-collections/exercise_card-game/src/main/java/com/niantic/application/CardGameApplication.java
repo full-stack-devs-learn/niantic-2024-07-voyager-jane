@@ -358,50 +358,23 @@ public class CardGameApplication
 
     private boolean pairRound()
     {
-        ArrayList<Card> cards = currentPlayer.getHand().getCards();
+        ArrayList<Card> cards = Hand.sortHand(currentPlayer.getHand().getCards());
+        boolean continueRound = false;
+        boolean beatPile = false;
+        boolean pairPresent = false;
 
-        // HOW DO I EVEN PULL THIS OFF FOR FIRST TURN DO I NEED TO CHECK IF THERES A PAIR FIRST
-        if (firstTurn)
-        {
-            firstTurn = false;
-            firstAction = false;
-            System.out.println("Staring player of the game's first turn must play their lowest card in their action!");
-            // PUT MORE HERE
-        }
+        int pileSize = pile.getCardCount();
+        int pileSuit1 = 0;
+        int pileSuit2 = 0;
+        int pileValue = 0;
 
-        // if player only has 1 card in hand, they can't play a pair. if first action of the round, choose a different option.
-        if (firstAction && currentPlayer.getHand().getCardCount() < 2)
-        {
-            System.out.println("You don't have enough cards to play a pair. Please choose a different option.");
-            System.out.println();
-            chooseAction();
-            return false;
-        }
-
-        // if a player only has 1 card in hand and this is not firstAction of the round, they cannot play for the rest of the round.
-        if (!firstAction && currentPlayer.getHand().getCardCount() < 2)
-        {
-            System.out.println("You don't have enough cards to play a pair. You are unable to play the rest of this round.");
-            return false;
-        }
-
-        // FIRST ACTION VERSION OF BELOW BUT FOR IF THERE IS A PAIR
-
-        // if a player's last 2 cards do not match, they cannot play for the rest of the round
-        if (currentPlayer.getHand().getCardCount() == 2 && !currentPlayer.isPair(cards))
-        {
-            System.out.println("The last 2 cards in your hand do not match and cannot be played as a pair. You are unable to play the rest of this round.");
-            return false;
+        if (pileSize >= 2) {
+            pileSuit1 = pile.getCards().get(pileSize - 1).getSuitOrder();
+            pileSuit2 = pile.getCards().get(pileSize - 2).getSuitOrder();
+            pileValue = pile.getCards().get(pileSize - 1).getValueOrder();
         }
 
         // check to make sure player has at least one pair in their hand that can beat pile
-        // NEED TO MAKE CONDITION IF PILE IS EMPTY
-        boolean beatPile = false;
-        int pileSize = pile.getCardCount();
-        int pileSuit1 = pile.getCards().get(pileSize - 1).getSuitOrder();
-        int pileSuit2 = pile.getCards().get(pileSize - 2).getSuitOrder();
-        int pileValue = pile.getCards().get(pileSize - 1).getValueOrder();
-
         for (Card card : cards)
         {
             int cardValue = card.getValueOrder();
@@ -411,13 +384,13 @@ public class CardGameApplication
             {
                 int compareValue = compare.getValueOrder();
                 int compareSuit = compare.getSuitOrder();
+                if (cardValue == compareValue) pairPresent = true;
 
-                if (cardValue == compareValue &&
-                        (cardValue > pileValue ||
-                                (cardValue == pileValue && cardSuit > pileSuit1) ||
-                                (cardValue == pileValue && cardSuit > pileSuit2) ||
-                                (cardValue == pileValue && compareSuit > pileSuit1) ||
-                                (cardValue == pileValue && compareSuit > pileSuit2)))
+                if (pileSize >= 2 && (cardValue > pileValue
+                        || (cardValue == pileValue && cardSuit > pileSuit1)
+                        || (cardValue == pileValue && cardSuit > pileSuit2)
+                        || (cardValue == pileValue && compareSuit > pileSuit1)
+                        || (cardValue == pileValue && compareSuit > pileSuit2)))
                 {
                     beatPile = true;
                     break;
@@ -425,9 +398,90 @@ public class CardGameApplication
             }
         }
 
-        // NEED FIRST ACTION OPTION
+        // if this is the first turn of the whole game and no pair is present
+        if (firstTurn && !pairPresent)
+        {
+            System.out.println("There is no pair in your hand. Please choose a different action.");
+            System.out.println();
+            chooseAction();
+        }
 
-        // if there is a pair present that can beat pile pair
+        if (firstTurn && pairPresent)
+        {
+            Card lowestCard = cards.get(0);
+            Card secondLowest = cards.get(1);
+
+            System.out.println("Staring player of the game's first turn must play their lowest card in their action!");
+            System.out.println();
+
+            if (lowestCard.getCardValue().equalsIgnoreCase(secondLowest.getCardValue()))
+            {
+                firstTurn = false;
+                System.out.println("The lowest card in your hand is " + displayCard(lowestCard) + ".");
+
+                while (validCard2 == null)
+                {
+                    System.out.println("What is the second card's suit you are choosing for the pair?");
+                    System.out.println("Choose Suit: ");
+                    String suit1 = input.nextLine().strip().toLowerCase();
+                    System.out.println();
+
+                    validCard2 = currentPlayer.getHand().findCard(suit1, lowestCard.getCardValue());
+
+                    if (validCard2 == null)
+                    {
+                        System.out.println("The card you chose doesn't exist in your hand. Please choose another card.");
+                        System.out.println();
+                    }
+                    else
+                    {
+                        ArrayList<Card> pair = new ArrayList<>() {{
+                            add(lowestCard);
+                            add(validCard2);
+                        }};
+
+                        currentPlayer.playPair(pile, pair, firstAction);
+                        System.out.println("Pair " + displayCard(validCard1) + " and " + displayCard(validCard2) + " successfully played.");
+                        System.out.println();
+                        continueRound = true;
+                    }
+                }
+            }
+            else
+            {
+                System.out.println("The lowest card in your hand does not have a matching pair. Please choose a different action.");
+                System.out.println();
+                chooseAction();
+            }
+        }
+
+        // if player only has 1 card in hand, they can't play a pair. if first action of the round, choose a different option.
+        if (firstAction && currentPlayer.getHand().getCardCount() < 2)
+        {
+            System.out.println("You don't have enough cards to play a pair. Please choose a different option.");
+            System.out.println();
+            chooseAction();
+        }
+
+        // if a player only has 1 card in hand and this is not firstAction of the round, they cannot play for the rest of the round.
+        if (!firstAction && currentPlayer.getHand().getCardCount() < 2)
+        {
+            System.out.println("You don't have enough cards to play a pair. You are unable to play the rest of this round.");
+        }
+
+        // if first action and player has two cards left thats a pair, put in pile
+        if (firstAction && currentPlayer.getHand().getCardCount() == 2 && currentPlayer.isPair(cards))
+        {
+            currentPlayer.playPair(pile, cards, firstAction);
+        }
+
+        // if a player's last 2 cards do not match, they cannot play for the rest of the round
+        if (currentPlayer.getHand().getCardCount() == 2 && !currentPlayer.isPair(cards))
+        {
+            System.out.println("The last 2 cards in your hand do not match and cannot be played as a pair. You are unable to play the rest of this round.");
+        }
+
+        // if there is a pair present that can beat pile pair with a hand that has 3 or more cards
         if (beatPile)
         {
             boolean validTurn = false;
@@ -460,9 +514,9 @@ public class CardGameApplication
                     String suit1 = input.nextLine().strip().toLowerCase();
                     System.out.println();
 
-                    validCard1 = currentPlayer.getHand().findCard(suit1, cardValue1);
+                    validCard2 = currentPlayer.getHand().findCard(suit1, cardValue1);
 
-                    if (validCard1 == null)
+                    if (validCard2 == null)
                     {
                         System.out.println("The card you chose doesn't exist in your hand. Please choose another card.");
                         System.out.println();
@@ -482,7 +536,7 @@ public class CardGameApplication
                     {
                         System.out.println("Pair " + displayCard(validCard1) + " and " + displayCard(validCard2) + " successfully played.");
                         System.out.println();
-                        return true;
+                        continueRound = true;
                     }
 
                     if (!validTurn)
@@ -509,19 +563,25 @@ public class CardGameApplication
 
                 System.out.println("Would you like to skip your turn? If you skip now, you can't place cards in the pile until the next round starts. (y/n)");
                 String skip = input.nextLine();
-                if (skip.equalsIgnoreCase("y")) return false;
+                if (skip.equalsIgnoreCase("y")) break;
+                System.out.println();
 
             }
 
         }
 
+        // if there is no pair present that can beat the pile
         else
         {
             System.out.println("There are no pairs present in your hand that can beat the pile pair. You are unable to play the rest of this round.");
-            return false;
         }
 
-        return false;
+        // set firstAction to be false so players arent allowed to just put anything into the pile
+        firstAction = false;
+        System.out.println("Press ENTER to continue");
+        input.nextLine();
+
+        return continueRound;
     }
 
     // <editor-fold desc="Helper Functions">
