@@ -32,7 +32,9 @@ public class CardGameApplication
     {
         startGame();
         while (winner == null) playRound();
-        System.out.println("The winner is " + displayPlayer(winner));
+
+        System.out.println();
+        System.out.println("The Winner is " + displayPlayer(winner));
     }
 
     // <editor-fold desc="Start Game">
@@ -86,7 +88,7 @@ public class CardGameApplication
     {
         deck.shuffle();
 
-        for (int i = 0; i < 13; i++)
+        for (int i = 0; i < 6; i++)
         {
             for(Player player : players)
             {
@@ -114,9 +116,6 @@ public class CardGameApplication
             var second = new ArrayList<>(players.subList(0, startIndex));
             first.addAll(second);
         }
-        System.out.println(players.size());
-        System.out.println(first.size());
-        System.out.println("NEW LIST");
         return first;
     }
 
@@ -124,8 +123,6 @@ public class CardGameApplication
     {
         // Placing players in order into queue
         Queue<Player> playerQueue = new LinkedList<>(createQueue());
-
-        playerQueue.stream().forEach(player -> System.out.println(player.getName()));
 
         System.out.println("A new round has started! " + displayPlayer(startPlayer) + " will begin this round.");
         System.out.println();
@@ -168,6 +165,8 @@ public class CardGameApplication
                 // skip current player's turn and don't put them back into queue since they forfeited the rest of their turns for this round
                 if (skip.equalsIgnoreCase("y"))
                 {
+                    System.out.println(displayPlayer(currentPlayer) + " has decided to skip the rest of their turns for this round.");
+                    System.out.println();
                     // if there is only one other person in queue, end round and set them as the next round's starting player
                     if (playerQueue.size() == 1)
                     {
@@ -184,12 +183,27 @@ public class CardGameApplication
 
                 else
                 {
-                    playerQueue.offer(currentPlayer);
+                    boolean canContinue = false;
 
                     // if there are more players in the queue, play the correct action
-                    if (action.equals("single")) singleRound();
-                    if (action.equals("pair")) pairRound();
-                    if (action.equals("straight")) straightRound();
+                    if (action.equals("single")) canContinue = singleRound();
+                    if (action.equals("pair")) canContinue = pairRound();
+                    if (action.equals("straight")) canContinue = straightRound();
+
+                    if (!canContinue)
+                    {
+                        if (playerQueue.size() == 1)
+                        {
+                            startPlayer = playerQueue.poll();
+                            firstAction = true;
+                            action = null;
+
+                            System.out.println("The round has ended with only Player " + displayPlayer(startPlayer) + " left who hasn't skipped this round. They will start the next round");
+                            break;
+                        }
+                    }
+
+                    playerQueue.offer(currentPlayer);
 
                     // after playing action, if the current player's hand is empty, they are the winner and end the game
                     if (currentPlayer.getHand().getCardCount() == 0)
@@ -243,15 +257,18 @@ public class CardGameApplication
         }
     }
 
-    private void singleRound()
+    private boolean singleRound()
     {
         Card validCard = null;
         boolean validTurn = false;
+        boolean continueRound;
 
         int handSize = currentPlayer.getHand().getCardCount();
         Card lastHandCard = Hand.sortHand(currentPlayer.getHand().getCards()).get(handSize - 1);
         int pileSize = pile.getCardCount();
-        Card topOfPile = pile.getCards().get(pileSize - 1);
+        Card topOfPile = null;
+
+        if (pile.getCardCount() != 0) topOfPile = pile.getCards().get(pileSize - 1);
 
         if (firstTurn)
         {
@@ -263,19 +280,17 @@ public class CardGameApplication
             validTurn = currentPlayer.playSingle(pile, validCard, true);
 
             if (validTurn) System.out.println("Card " + displayCard(validCard) + " successfully played.");
-            else System.out.println("There was an error in placing the card.");
+
+            continueRound = true;
 
             System.out.println();
         }
 
-        else if (lastHandCard.getValueOrder() < topOfPile.getValueOrder()
-                || (lastHandCard.getValueOrder() == topOfPile.getValueOrder() && lastHandCard.getSuitOrder() < topOfPile.getSuitOrder()))
-        {
-            System.out.println("Your largest value single card in your hand cannot beat the pile's single card. You are unable to continue this round.");
-            System.out.println();
-        }
-
-        else
+        // run code if this is the firstAction of the round OR the largest value card in hand can beat the pile
+        else if (firstAction ||
+                (lastHandCard.getValueOrder() > topOfPile.getValueOrder()
+                        || (lastHandCard.getValueOrder() == topOfPile.getValueOrder()
+                        && lastHandCard.getSuitOrder() > topOfPile.getSuitOrder())))
         {
             do {
                 System.out.println("What card would you like to place in the pile?");
@@ -309,21 +324,35 @@ public class CardGameApplication
 
             System.out.println("Card " + displayCard(validCard) + " successfully played.");
             System.out.println();
+
+            continueRound = true;
+        }
+
+        else
+        {
+            System.out.println("Your largest value single card in your hand cannot beat the pile's card. You are unable to continue this round.");
+            System.out.println();
+
+            continueRound = false;
         }
 
         // set firstAction to be false so players arent allowed to just put anything into the pile
         firstAction = false;
         System.out.println("Press ENTER to continue");
         input.nextLine();
+
+        return continueRound;
     }
 
-    private void pairRound()
+    private boolean pairRound()
     {
         System.out.println("Pair!");
+        return false;
     }
-    private void straightRound()
+    private boolean straightRound()
     {
         System.out.println("Straight!");
+        return false;
     }
 
     // <editor-fold desc="Helper Functions">

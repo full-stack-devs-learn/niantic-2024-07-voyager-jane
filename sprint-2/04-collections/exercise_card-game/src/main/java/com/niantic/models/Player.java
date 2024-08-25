@@ -82,7 +82,7 @@ public class Player
         int cardPileSuit = cardOnTopOfPile.getSuitOrder();
 
         if (cardHandValue > cardPileValue
-                || cardHandSuit > cardPileSuit) {
+                || (cardHandValue == cardPileValue && cardHandSuit > cardPileSuit)) {
             hand.placeInPile(pile, card);
             return true;
         } else return false;
