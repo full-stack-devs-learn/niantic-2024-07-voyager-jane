@@ -108,12 +108,15 @@ public class CardGameApplication
     {
         // Creating Order of Players' turn based on starting player position ("clockwise" or consecutive then wrap)
         int startIndex = players.indexOf(startPlayer);
-        var first = players.subList(startIndex, players.size());
-        if (startIndex != 0 && first.size() < players.size())
+        var first = new ArrayList<>(players.subList(startIndex, players.size()));
+        if (startIndex != 0)
         {
-            var second = players.subList(0, startIndex);
+            var second = new ArrayList<>(players.subList(0, startIndex));
             first.addAll(second);
         }
+        System.out.println(players.size());
+        System.out.println(first.size());
+        System.out.println("NEW LIST");
         return first;
     }
 
@@ -123,7 +126,6 @@ public class CardGameApplication
         Queue<Player> playerQueue = new LinkedList<>(createQueue());
 
         playerQueue.stream().forEach(player -> System.out.println(player.getName()));
-        System.out.println("NEW Q");
 
         System.out.println("A new round has started! " + displayPlayer(startPlayer) + " will begin this round.");
         System.out.println();
@@ -148,6 +150,12 @@ public class CardGameApplication
             if (startPlayer.equals(currentPlayer) && firstAction)
             {
                 chooseAction();
+                // after playing action, if the current player's hand is empty, they are the winner and end the game
+                if (currentPlayer.getHand().getCardCount() == 0)
+                {
+                    winner = currentPlayer;
+                    break;
+                }
                 playerQueue.offer(currentPlayer);
             }
 
@@ -240,6 +248,11 @@ public class CardGameApplication
         Card validCard = null;
         boolean validTurn = false;
 
+        int handSize = currentPlayer.getHand().getCardCount();
+        Card lastHandCard = Hand.sortHand(currentPlayer.getHand().getCards()).get(handSize - 1);
+        int pileSize = pile.getCardCount();
+        Card topOfPile = pile.getCards().get(pileSize - 1);
+
         if (firstTurn)
         {
             firstTurn = false;
@@ -255,6 +268,13 @@ public class CardGameApplication
             System.out.println();
         }
 
+        else if (lastHandCard.getValueOrder() < topOfPile.getValueOrder()
+                || (lastHandCard.getValueOrder() == topOfPile.getValueOrder() && lastHandCard.getSuitOrder() < topOfPile.getSuitOrder()))
+        {
+            System.out.println("Your largest value single card in your hand cannot beat the pile's single card. You are unable to continue this round.");
+            System.out.println();
+        }
+
         else
         {
             do {
@@ -267,14 +287,22 @@ public class CardGameApplication
 
                 validCard = currentPlayer.getHand().findCard(suit, cardValue);
 
-                if (validCard == null) System.out.println("The card you chose doesn't exist in your hand. Please choose another card.");
+                if (validCard == null)
+                {
+                    System.out.println("The card you chose doesn't exist in your hand. Please choose another card.");
+                    System.out.println();
+                }
                 else
                 {
                     // if this is first action of the round it should always be played no matter the pile.
                     // if not the first action, then compare to pile
                     validTurn = currentPlayer.playSingle(pile, validCard, firstAction);
 
-                    if (!validTurn) System.out.println("The card you chose does not have a larger value than the pile's top card. Please choose another card.");
+                    if (!validTurn)
+                    {
+                        System.out.println("The card you chose does not have a larger value than the pile's top card. Please choose another card.");
+                        System.out.println();
+                    }
                 }
             }
             while (!validTurn);
