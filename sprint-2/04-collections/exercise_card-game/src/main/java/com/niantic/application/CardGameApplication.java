@@ -31,10 +31,15 @@ public class CardGameApplication
     public void run()
     {
         startGame();
+
         while (winner == null) playRound();
 
         System.out.println();
+        System.out.println(ColorCodes.GREEN + "*".repeat(30) + ColorCodes.RESET);
+        System.out.println();
         System.out.println("The Winner is " + displayPlayer(winner));
+        System.out.println();
+        System.out.println(ColorCodes.GREEN + "*".repeat(30) + ColorCodes.RESET);
     }
 
     // <editor-fold desc="Start Game">
@@ -106,6 +111,8 @@ public class CardGameApplication
 
     // </editor-fold>
 
+
+    
     private List<Player> createQueue()
     {
         // Creating Order of Players' turn based on starting player position ("clockwise" or consecutive then wrap)
@@ -118,6 +125,8 @@ public class CardGameApplication
         }
         return first;
     }
+
+
 
     private void playRound()
     {
@@ -188,7 +197,6 @@ public class CardGameApplication
                     // if there are more players in the queue, play the correct action
                     if (action.equals("single")) canContinue = singleRound();
                     if (action.equals("pair")) canContinue = pairRound();
-                    if (action.equals("straight")) canContinue = straightRound();
 
                     if (!canContinue)
                     {
@@ -216,6 +224,8 @@ public class CardGameApplication
         }
     }
 
+
+
     private void chooseAction()
     {
         boolean invalidOption = true;
@@ -226,7 +236,6 @@ public class CardGameApplication
             System.out.println("-".repeat(10));
             System.out.println("1) Single");
             System.out.println("2) Pair");
-            System.out.println("3) Straight");
             System.out.println();
 
             System.out.print("Selection: ");
@@ -245,17 +254,14 @@ public class CardGameApplication
                     pairRound();
                     invalidOption = false;
                     break;
-                case 3:
-                    action = "straight";
-                    straightRound();
-                    invalidOption = false;
-                    break;
                 default:
                     System.out.println("Invalid Option. Please enter the options given.");
                     break;
             }
         }
     }
+
+
 
     private boolean singleRound()
     {
@@ -330,7 +336,8 @@ public class CardGameApplication
 
         else
         {
-            System.out.println("Your largest value single card in your hand cannot beat the pile's card. You are unable to continue this round.");
+            // if none of the cards in the hand, can beat the pile's card, they cannot play for the rest of the round.
+            System.out.println("Your largest value single card in your hand cannot beat the pile's card. You are unable to play the rest of this round.");
             System.out.println();
 
             continueRound = false;
@@ -344,14 +351,66 @@ public class CardGameApplication
         return continueRound;
     }
 
+
+
+
     private boolean pairRound()
     {
-        System.out.println("Pair!");
-        return false;
-    }
-    private boolean straightRound()
-    {
-        System.out.println("Straight!");
+        ArrayList<Card> cards = currentPlayer.getHand().getCards();
+
+        // if player only has 1 card in hand, they can't play a pair. if first action of the round, choose a different option.
+        if (firstAction && currentPlayer.getHand().getCardCount() < 2)
+        {
+            System.out.println("You don't have enough cards to play a pair. Please choose a different option.");
+            System.out.println();
+            chooseAction();
+            return false;
+        }
+
+        // if a player only has 1 card in hand and this is not firstAction of the round, they cannot play for the rest of the round.
+        if (!firstAction && currentPlayer.getHand().getCardCount() < 2)
+        {
+            System.out.println("You don't have enough cards to play a pair. You are unable to play the rest of this round.");
+            return false;
+        }
+
+        // if a player's last 2 cards do not match, they cannot play for the rest of the round
+        if (currentPlayer.getHand().getCardCount() == 2 && !currentPlayer.isPair(cards))
+        {
+            System.out.println("The last 2 cards in your hand do not match and cannot be played as a pair. You are unable to play the rest of this round.");
+            return false;
+        }
+
+        // check to make sure player has at least one pair in their hand
+        boolean pairPresent = false;
+        boolean secondBreak = false;
+        for (Card card : cards)
+        {
+            if (secondBreak)
+            {
+                break;
+            }
+            for (Card compare : cards)
+            {
+                if (card.getCardValue().equalsIgnoreCase(compare.getCardValue()))
+                {
+                    pairPresent = true;
+                    break;
+                }
+            }
+        }
+
+        if (pairPresent)
+        {
+
+        }
+
+        else
+        {
+            System.out.println("There are no pairs present in your hand. You are unable to play the rest of thie round.");
+            return false;
+        }
+
         return false;
     }
 
