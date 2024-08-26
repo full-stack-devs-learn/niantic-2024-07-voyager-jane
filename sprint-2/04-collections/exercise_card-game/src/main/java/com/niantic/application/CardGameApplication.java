@@ -37,6 +37,9 @@ public class CardGameApplication
         while (winner == null) playRound();
 
         System.out.println();
+        System.out.println(displayPlayer(winner) + " has no cards left!");
+        System.out.println();
+        System.out.println();
         System.out.println(ColorCodes.GREEN + "*".repeat(30) + ColorCodes.RESET);
         System.out.println();
         System.out.println("The Winner is " + displayPlayer(winner));
@@ -80,7 +83,7 @@ public class CardGameApplication
         System.out.println();
         System.out.println("*".repeat(45));
         System.out.println();
-        System.out.println("This game can be played up to 4 players. The first player to place all their cards into the pile wins!");
+        System.out.println("This version of the game can be played up to 2 players. The first player to place all their cards into the pile wins!");
         System.out.println();
 
         System.out.println("Press ENTER to Start");
@@ -95,7 +98,7 @@ public class CardGameApplication
     {
         deck.shuffle();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 8; i++)
         {
             for(Player player : players)
             {
@@ -199,7 +202,7 @@ public class CardGameApplication
 
                     // if there are more players in the queue, play the correct action
                     if (action.equals("single")) canContinue = singleRound();
-//                    if (action.equals("pair")) canContinue = pairRound();
+                    if (action.equals("pair")) canContinue = pairRound();
 
                     if (!canContinue)
                     {
@@ -238,7 +241,7 @@ public class CardGameApplication
             System.out.println("Please enter the number of the action you would like to do.");
             System.out.println("-".repeat(10));
             System.out.println("1) Single");
-//            System.out.println("2) Pair");
+            System.out.println("2) Pair");
             System.out.println();
 
             System.out.print("Selection: ");
@@ -252,11 +255,11 @@ public class CardGameApplication
                     singleRound();
                     invalidOption = false;
                     break;
-//                case 2:
-//                    action = "pair";
-//                    pairRound();
-//                    invalidOption = false;
-//                    break;
+                case 2:
+                    action = "pair";
+                    pairRound();
+                    invalidOption = false;
+                    break;
                 default:
                     System.out.println("Invalid Option. Please enter the options given.");
                     break;
@@ -486,9 +489,9 @@ public class CardGameApplication
             {
                 System.out.println("The lowest card in your hand does not have a matching pair. Please choose a different action.");
                 System.out.println();
+                endTurn = true;
                 chooseAction();
 
-                firstAction = false;
                 System.out.println("Press ENTER to continue");
                 input.nextLine();
 
@@ -507,7 +510,7 @@ public class CardGameApplication
 
             endTurn = true;
             chooseAction();
-            firstAction = false;
+
             return false;
         }
 
@@ -531,6 +534,8 @@ public class CardGameApplication
             endTurn = true;
             firstAction = false;
 
+            System.out.println("Pair " + displayCard(cards.get(0)) + " and " + displayCard(cards.get(1)) + " successfully played.");
+
             return true;
         }
 
@@ -547,8 +552,21 @@ public class CardGameApplication
             return false;
         }
 
+        if (firstAction && !pairPresent)
+        {
+            System.out.println("There are no pairs in your hand. Please choose a different option.");
+            System.out.println();
+            System.out.println("Press ENTER to continue");
+            input.nextLine();
+
+            endTurn = true;
+            chooseAction();
+
+            return false;
+        }
+
         // if there is a pair present that can beat pile pair with a hand that has 3 or more cards
-        if (firstAction || beatPile)
+        if ((firstAction && pairPresent) || beatPile)
         {
             boolean validTurn = false;
 
@@ -670,7 +688,7 @@ public class CardGameApplication
         System.out.println("Press ENTER to continue");
         input.nextLine();
 
-        return false;
+        return continueRound;
     }
 
     // <editor-fold desc="Helper Functions">
