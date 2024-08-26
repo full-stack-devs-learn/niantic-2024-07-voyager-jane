@@ -383,20 +383,33 @@ public class CardGameApplication
 
             for (Card compare : cards)
             {
-                int compareValue = compare.getValueOrder();
-                int compareSuit = compare.getSuitOrder();
-                if (cardValue == compareValue) pairPresent = true;
-
-                if (cardValue == compareValue
-                        && pileSize >= 2
-                        && (cardValue > pileValue
-                        || (cardValue == pileValue && cardSuit > pileSuit1)
-                        || (cardValue == pileValue && cardSuit > pileSuit2)
-                        || (cardValue == pileValue && compareSuit > pileSuit1)
-                        || (cardValue == pileValue && compareSuit > pileSuit2)))
+                if (card.getSuit().equalsIgnoreCase(compare.getSuit()) && card.getCardValue().equalsIgnoreCase(compare.getCardValue()))
                 {
-                    beatPile = true;
-                    break;
+                    continue;
+                }
+
+                else
+                {
+                    ArrayList<Card> lstPair = new ArrayList<>() {{
+                        add(card);
+                        add(compare);
+                    }};
+
+                    int compareSuit = compare.getSuitOrder();
+
+                    if (currentPlayer.isPair(lstPair)) pairPresent = true;
+
+                    if (currentPlayer.isPair(lstPair)
+                            && pileSize >= 2
+                            && (cardValue > pileValue
+                            || (cardValue == pileValue && cardSuit > pileSuit1)
+                            || (cardValue == pileValue && cardSuit > pileSuit2)
+                            || (cardValue == pileValue && compareSuit > pileSuit1)
+                            || (cardValue == pileValue && compareSuit > pileSuit2)))
+                    {
+                        beatPile = true;
+                        break;
+                    }
                 }
             }
         }
@@ -562,6 +575,7 @@ public class CardGameApplication
                         validPair1 = null;
                         validPair2 = null;
                         firstAction = false;
+                        endTurn = true;
                         return true;
                     }
 
