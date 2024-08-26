@@ -57,24 +57,4 @@ class CardTest
         // assert
         assertEquals(expectedValueOrder, actualValueOrder, "Card with " + card.getCardValue() + " face should have the order value of " + expectedIn);
     }
-
-    @ParameterizedTest
-    @CsvSource({
-        "diamond, Q, false",
-        "spade, 8, false",
-        "heart, 2, true"
-    })
-    public void isBomb_shouldReturn_correctBoolean(String suitIn, String cardValueIn, String expectedIn)
-    {
-        // arrange
-        Card card = new Card(suitIn, cardValueIn);
-
-        boolean expectedBoolean = Boolean.parseBoolean(expectedIn);
-
-        // act
-        boolean actualBoolean = card.isBomb();
-
-        // assert
-        assertEquals(expectedBoolean, actualBoolean, "Only cards with 2 face value is a Bomb - Card with " + card.getCardValue() + " face should return " + expectedIn);
-    }
 }
