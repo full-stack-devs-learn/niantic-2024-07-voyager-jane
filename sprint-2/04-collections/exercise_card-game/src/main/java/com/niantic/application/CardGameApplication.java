@@ -479,11 +479,10 @@ public class CardGameApplication
                         System.out.println("Press ENTER to continue");
                         input.nextLine();
 
+                        validPair2 = null;
                         return true;
                     }
                 }
-
-                validPair2 = null;
             }
             else
             {
@@ -514,18 +513,6 @@ public class CardGameApplication
             return false;
         }
 
-        // if a player only has 1 card in hand and this is not firstAction of the round, they cannot play for the rest of the round.
-        if (!firstAction && currentPlayer.getHand().getCardCount() < 2)
-        {
-            System.out.println("You don't have enough cards to play a pair. You are unable to play the rest of this round.");
-            endTurn = true;
-
-            firstAction = false;
-            System.out.println("Press ENTER to continue");
-            input.nextLine();
-
-            return false;
-        }
 
         // if first action and player has two cards left thats a pair, put in pile
         if (firstAction && currentPlayer.getHand().getCardCount() == 2 && currentPlayer.isPair(cards))
@@ -539,19 +526,6 @@ public class CardGameApplication
             return true;
         }
 
-        // if a player's last 2 cards do not match, they cannot play for the rest of the round
-        if (currentPlayer.getHand().getCardCount() == 2 && !currentPlayer.isPair(cards))
-        {
-            System.out.println("The last 2 cards in your hand do not match and cannot be played as a pair. You are unable to play the rest of this round.");
-            endTurn = true;
-
-            firstAction = false;
-            System.out.println("Press ENTER to continue");
-            input.nextLine();
-
-            return false;
-        }
-
         if (firstAction && !pairPresent)
         {
             System.out.println("There are no pairs in your hand. Please choose a different option.");
@@ -561,6 +535,32 @@ public class CardGameApplication
 
             endTurn = true;
             chooseAction();
+
+            return false;
+        }
+
+        // if a player only has 1 card in hand and this is not firstAction of the round, they cannot play for the rest of the round.
+        if (!firstAction && currentPlayer.getHand().getCardCount() < 2)
+        {
+            System.out.println("You don't have enough cards to play a pair. You are unable to play the rest of this round.");
+            endTurn = true;
+
+            firstAction = false;
+            System.out.println("Press ENTER to continue");
+            input.nextLine();
+
+            return false;
+        }
+
+        // if a player's last 2 cards do not match, they cannot play for the rest of the round
+        if (currentPlayer.getHand().getCardCount() == 2 && !currentPlayer.isPair(cards))
+        {
+            System.out.println("The last 2 cards in your hand do not match and cannot be played as a pair. You are unable to play the rest of this round.");
+            endTurn = true;
+
+            firstAction = false;
+            System.out.println("Press ENTER to continue");
+            input.nextLine();
 
             return false;
         }
