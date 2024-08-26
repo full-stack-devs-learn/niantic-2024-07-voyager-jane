@@ -245,17 +245,17 @@ public class CardGameApplication
             System.out.println();
 
             System.out.print("Selection: ");
-            var option = Integer.parseInt(input.nextLine().strip());
+            var option = input.nextLine().strip();
             System.out.println();
 
             switch (option)
             {
-                case 1:
+                case "1":
                     action = "single";
                     singleRound();
                     invalidOption = false;
                     break;
-                case 2:
+                case "2":
                     action = "pair";
                     pairRound();
                     invalidOption = false;
