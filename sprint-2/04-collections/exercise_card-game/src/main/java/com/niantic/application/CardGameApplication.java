@@ -358,7 +358,7 @@ public class CardGameApplication
     }
 
 
-    // not in the actual game, will be in the next update lol. just keeping this for if i ever want to do all actions of the game beside single card.
+
     private boolean pairRound()
     {
         ArrayList<Card> cards = Hand.sortHand(currentPlayer.getHand().getCards());
@@ -690,6 +690,8 @@ public class CardGameApplication
 
         return continueRound;
     }
+
+
 
     // <editor-fold desc="Helper Functions">
     private void offerPileView()

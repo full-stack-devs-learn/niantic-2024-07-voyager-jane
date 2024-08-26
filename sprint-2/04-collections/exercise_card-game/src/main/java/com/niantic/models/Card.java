@@ -57,9 +57,4 @@ public class Card
         return valueOrder.get(cardValue);
     }
 
-    public boolean isBomb()
-    {
-        return valueOrder.get(cardValue) == 15;
-    }
-
 }
