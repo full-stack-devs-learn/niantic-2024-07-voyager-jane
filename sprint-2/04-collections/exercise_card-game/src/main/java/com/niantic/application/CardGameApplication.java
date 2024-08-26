@@ -98,7 +98,7 @@ public class CardGameApplication
     {
         deck.shuffle();
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 13; i++)
         {
             for(Player player : players)
             {
