@@ -15,7 +15,14 @@
 
 -- (8 row)
 
+USE northwind;
 
+SELECT region
+	, COUNT(DISTINCT order_id) AS order_count
+FROM customer_orders
+WHERE country = 'USA'
+GROUP BY region
+ORDER BY order_count DESC;
 
 
 
