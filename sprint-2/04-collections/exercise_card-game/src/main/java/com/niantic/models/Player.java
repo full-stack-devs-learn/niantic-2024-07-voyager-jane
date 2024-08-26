@@ -97,8 +97,9 @@ public class Player
 
         if (pileSize == 0 || chooseAction)
         {
+            System.out.println("CHOOSE ACTION");
             cards.stream().forEach(card -> hand.placeInPile(pile, card));
-            validMove = true;
+            return true;
         }
 
         Card card1Pile = pileCards.get(pileSize - 1);
@@ -119,6 +120,7 @@ public class Player
             // if the player's pair is greater than the pile's pair
             if (handValue > pileValue)
             {
+                System.out.println("GREATER VALUE");
                 cards.stream().forEach(card -> hand.placeInPile(pile, card));
                 validMove = true;
             }
@@ -126,6 +128,7 @@ public class Player
             // if the player's and pile's pair is the same, but the player has the better suit
             if (handValue == pileValue && handMaxSuit > pileMaxSuit)
             {
+                System.out.println("GREATER SUIT");
                 cards.stream().forEach(card -> hand.placeInPile(pile, card));
                 validMove = true;
             }
