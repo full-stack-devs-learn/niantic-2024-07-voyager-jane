@@ -2,5 +2,10 @@
 
 -- (1 row)
 
+USE northwind;
 
+SELECT unit_price
+FROM products
+ORDER BY unit_price DESC
+LIMIT 1;
 

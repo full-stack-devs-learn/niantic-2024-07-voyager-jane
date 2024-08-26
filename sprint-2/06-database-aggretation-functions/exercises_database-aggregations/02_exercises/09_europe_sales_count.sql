@@ -4,6 +4,13 @@
 
 -- (1 row) - 371 orders
 
+USE northwind;
 
+SELECT *
+FROM customer_orders;
+
+SELECT COUNT(DISTINCT order_id)
+FROM customer_orders
+WHERE country IN ('Germany', 'Switzerland', 'France', 'Portugal', 'Finland', 'Poland', 'Ireland', 'Sweden', 'UK');
 
 

@@ -12,6 +12,15 @@
 
 -- (1 row)
 
+USE northwind;
+
+SELECT company_name
+	, order_id
+	, country
+    , sales_price * quantity AS total_sale
+FROM customer_orders
+ORDER BY sales_price * quantity DESC
+LIMIT 5;
 
 
 
