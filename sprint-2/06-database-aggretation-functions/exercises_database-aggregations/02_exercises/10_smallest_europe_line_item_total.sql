@@ -5,11 +5,8 @@
 
 USE northwind;
 
-SELECT *
-FROM customer_orders;
-
-SELECT MIN(sales_price * quantity)
+SELECT MIN(sales_price * quantity) AS europe_min_line_item_amount
 FROM customer_orders
-ORDER BY (sales_price * quantity);
+WHERE country IN ('Germany', 'Switzerland', 'France', 'Portugal', 'Finland', 'Poland', 'Ireland', 'Sweden', 'UK');
 
 

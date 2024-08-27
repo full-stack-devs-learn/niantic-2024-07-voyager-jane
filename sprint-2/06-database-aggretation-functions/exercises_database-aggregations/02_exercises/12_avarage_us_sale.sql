@@ -6,7 +6,7 @@
 
 USE northwind;
 
-SELECT ROUND(AVG(sales_price * quantity), 2)
+SELECT ROUND(AVG(sales_price * quantity), 2) AS us_avg_line_item_amount
 FROM customer_orders
 WHERE country = 'USA';
 

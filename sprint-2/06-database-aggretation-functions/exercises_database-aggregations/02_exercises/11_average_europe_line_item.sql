@@ -5,7 +5,7 @@
 
 USE northwind;
 
-SELECT ROUND(AVG(sales_price * quantity), 2)
+SELECT ROUND(AVG(sales_price * quantity), 2) AS europe_avg_sales_amount
 FROM customer_orders
 WHERE country IN ('Germany', 'Switzerland', 'France', 'Portugal', 'Finland', 'Poland', 'Ireland', 'Sweden', 'UK');
 

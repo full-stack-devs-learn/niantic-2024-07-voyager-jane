@@ -6,10 +6,7 @@
 
 USE northwind;
 
-SELECT *
-FROM customer_orders;
-
-SELECT COUNT(DISTINCT order_id)
+SELECT COUNT(DISTINCT order_id) AS europe_total_orders
 FROM customer_orders
 WHERE country IN ('Germany', 'Switzerland', 'France', 'Portugal', 'Finland', 'Poland', 'Ireland', 'Sweden', 'UK');
 

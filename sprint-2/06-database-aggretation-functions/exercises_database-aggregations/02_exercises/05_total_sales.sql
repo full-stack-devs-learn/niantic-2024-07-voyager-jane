@@ -6,7 +6,7 @@
 
 USE northwind;
 
-SELECT SUM(sales_price * quantity)
+SELECT SUM(sales_price * quantity) AS total_sales
 FROM customer_orders;
 
 
