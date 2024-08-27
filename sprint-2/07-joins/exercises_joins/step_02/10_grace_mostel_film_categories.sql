@@ -7,3 +7,14 @@
 
 USE sakila;
 
+SELECT a.first_name
+	, a.last_name
+    , c.name AS category_name
+    , COUNT(fc.film_id) AS film_count
+FROM actor AS a
+INNER JOIN film_actor AS fa ON a.actor_id = fa.actor_id
+INNER JOIN film AS f ON fa.film_id = f.film_id
+INNER JOIN film_category AS fc ON f.film_id = fc.film_id
+INNER JOIN category AS c ON fc.category_id = c.category_id
+GROUP BY a.first_name, a.last_name, c.name
+HAVING a.first_name = 'GRACE' AND a.last_name = 'MOSTEL';

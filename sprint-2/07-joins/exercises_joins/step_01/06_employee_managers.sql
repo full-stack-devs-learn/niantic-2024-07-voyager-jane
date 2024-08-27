@@ -11,5 +11,8 @@
 
 USE northwind;
 
-
+SELECT CONCAT(e.first_name, ' ', e.last_name) AS employee
+	, CONCAT(m.first_name, ' ', m.last_name) AS manager
+FROM employees AS e
+LEFT OUTER JOIN employees AS m ON e.reports_to = m.employee_id;
 
