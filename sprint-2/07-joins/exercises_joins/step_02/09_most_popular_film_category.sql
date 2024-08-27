@@ -11,7 +11,7 @@
 
 USE sakila;
 
-SELECT c.name
+SELECT c.name AS category_name
 	, COUNT(fa.actor_id) AS actor_count
 FROM category AS c
 INNER JOIN film_category AS fc ON c.category_id = fc.category_id
