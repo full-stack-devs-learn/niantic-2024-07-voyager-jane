@@ -4,8 +4,8 @@
 
 USE northwind;
 
-SELECT unit_price
-FROM products
-ORDER BY unit_price DESC
+SELECT sales_price
+FROM customer_orders
+ORDER BY sales_price DESC
 LIMIT 1;
 
