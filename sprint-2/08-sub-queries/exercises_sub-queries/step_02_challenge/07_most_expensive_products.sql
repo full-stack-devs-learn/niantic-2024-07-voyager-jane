@@ -23,4 +23,35 @@
 
 USE northwind;
 
+SELECT category_name
+	, p.product_name
+    , p1.most_expensive
+FROM categories AS c
+INNER JOIN products AS p ON c.category_id = p.category_id
+INNER JOIN (
+					SELECT MAX(unit_price) AS most_expensive
+						, category_id
+					FROM products
+					GROUP BY category_id
+			) AS p1 ON p1.category_id = c.category_id
+-- INNER JOIN (	
+-- 					SELECT product_name
+-- 							, unit_price
+--                             , category_id
+-- 					FROM products
+-- 			) AS p2 ON p1.most_expensive = p2.unit_price
+-- 				AND p2.category_id = c.category_id
+WHERE p.unit_price = p1.most_expensive
+ORDER BY category_name;
+
+
+
+-- My og way to do this was not have the first inner join products AS p. Then after p1 have the Inner Join below this comment. And didnt have where = p.unit_price = p1. most_expensive:
+-- INNER JOIN (	
+-- 					SELECT product_name
+-- 							, unit_price
+--                             , category_id
+-- 					FROM products
+-- 			) AS p2 ON p1.most_expensive = p2.unit_price
+-- 				AND p2.category_id = c.category_id
 
