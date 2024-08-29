@@ -150,4 +150,23 @@ function makeCustom()
 
 
 */
+function createOrder(name, hawaiian, cowboy, supreme, vegetarian, cheese)
+{
+	if (!hawaiian && !cowboy && !supreme && !vegetarian && !cheese) return {};
 
+	else 
+	{
+		let order = {
+			customer: name,
+			pizzas: []
+		}
+
+		if (!!hawaiian) order["pizzas"].push(makePizza("Hawaiian"));
+		if (cowboy) order.pizzas.push(makePizza("Cowboy"));
+		if (supreme) order.pizzas.push(makePizza("Supreme"));
+		if (vegetarian) order.pizzas.push(makePizza("Vegetarian"));
+		if (cheese) order.pizzas.push(makePizza("Cheese"));
+
+		return order;
+	}
+}
