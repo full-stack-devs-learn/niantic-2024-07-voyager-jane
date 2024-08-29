@@ -14,6 +14,21 @@
 */
 
 
+const pizzaTypes = {
+	HAWAIIAN: ["Ham","Pineapple","Mushroom"],
+	COWBOY: ["Pepperoni", "Sausage", "Beef"],
+	SUPREME: ["Pepperoni", "Sausage", "Pepper", "Onion", "Black Olives"],
+	VEGETARIAN: ["Spinach", "Zucchini", "Mushroom", "Artichoke", "Tomato", "Onion"],
+	CHEESE: ["Cheese"]
+}
+
+function getToppings(pizza)
+{
+	let pizzaUp = pizza.toUpperCase();
+
+	if (pizzaTypes[pizzaUp]) return pizzaTypes[pizzaUp]
+	else return [];
+}
 
 
 /*
@@ -29,7 +44,19 @@
 							}
 
 */
+function makePizza(pizza)
+{
+	if (getToppings(pizza).length != 0) 
+	{
+		let pizzaOrder = {
+			name: pizza,
+			toppings: getToppings(pizza)
+		}
+		return pizzaOrder;
+	}
 
+	else return {};
+}
 
 
 
@@ -63,7 +90,17 @@
 	makeCustom() => {}
 
 */
-
+function makeCustom()
+{
+	if (arguments.length != 0)
+	{
+		return {
+			name: "Custom",
+			toppings: Array.from(arguments)
+		};
+	}
+	else return {};
+}
 
 
 

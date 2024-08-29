@@ -16,7 +16,7 @@
 
 function calculateOrderSubtotal(quantity)
 {
-	return 0;
+	return quantity * 12.95;
 }
 
 
@@ -40,7 +40,9 @@ function calculateOrderSubtotal(quantity)
 
 function calculateTax(quantity)
 {
-	return 0;
+	let discount = calculateOrderSubtotal(quantity) * 0.0575
+
+	return Math.round(discount * 100) / 100;
 }
 
 
@@ -64,6 +66,12 @@ function calculateTax(quantity)
 */
 
 // create your function here
+function calculateOrderTotal(quantity)
+{
+	let orderTotal = calculateOrderSubtotal(quantity) + calculateTax(quantity)
+
+	return Math.round(orderTotal * 100) / 100;
+}
 
 
 /*
@@ -106,6 +114,18 @@ function calculateTax(quantity)
 */
 
 // create your function here
+function placeOrder(name, quantity)
+{
+	let receipt = {
+		customer: name,
+		quantity: quantity,
+		subtotal: calculateOrderSubtotal(quantity),
+		tax: calculateTax(quantity),
+		total: calculateOrderTotal(quantity)
+	}
+
+	return receipt;
+}
 
 
 /*
@@ -128,3 +148,10 @@ function calculateTax(quantity)
 */
 
 // create your function here
+function calculateCookiesNeeded(student1 = 0, student2 = 0, student3 = 0)
+{
+	let totalCookies = (student1 * 4) + (student2 * 3) + (student3 * 2);
+	let divideByDozen = Math.ceil(totalCookies / 12);
+	
+	return divideByDozen;
+}
