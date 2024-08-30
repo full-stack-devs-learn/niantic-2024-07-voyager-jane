@@ -36,6 +36,11 @@ function createItemDiv(item, parent)
     const itemDiv = document.createElement("li");
     itemDiv.classList.add("list-item");
 
+    if (item.isComplete === true)
+    {
+        itemDiv.classList.add("complete");
+    }
+
     parent.appendChild(itemDiv);
 
     buildItemTitle(item, itemDiv);
