@@ -45,7 +45,6 @@ function createItemDiv(item, parent)
 function buildItemTitle(item, parent)
 {
     const titleDiv = document.createElement("div");
-    // titleDiv.classList.add("itemTitle");
     titleDiv.textContent = item.title;
 
     parent.appendChild(titleDiv);
@@ -84,16 +83,26 @@ function markCompleted()
 
     listItems.forEach(itemDiv => 
         {
-            const divTitle = itemDiv.firstChild.textContent;
-
-            groceries.forEach(item => 
-                {
-                    if (item.title === divTitle && item.isComplete === true)
-                    {
-                        itemDiv.classList.add("complete");
-                    }
-                }); 
+            itemDiv.classList.add("complete");
         });
+
+
+    // THIS WAS MY ORIGINAL CODE WHERE I THOUGHT WE JUST HAD TO GREY OUT ONLY the objects with isComplete === true but turns out i just had to mark all of them as true no matter what isComplete was set to... keeping it for the memories
+
+    // const listItems = document.querySelectorAll(".list-item");
+
+    // listItems.forEach(itemDiv => 
+    //     {
+    //         const divTitle = itemDiv.firstChild.textContent;
+
+    //         groceries.forEach(item => 
+    //             {
+    //                 if (item.title === divTitle && item.isComplete === true)
+    //                 {
+    //                     itemDiv.classList.add("complete");
+    //                 }
+    //             }); 
+    //     });
 }
 
 document.addEventListener("DOMContentLoaded", () => 
