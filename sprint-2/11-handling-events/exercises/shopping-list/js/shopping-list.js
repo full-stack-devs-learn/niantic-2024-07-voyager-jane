@@ -30,9 +30,14 @@ function addListItem(item, parent)
     addItemTitle(item, div);
     addQuantity(item, div);
 
-    div.addEventListener("click", (event) => 
+    div.addEventListener("click", () => 
         {
-            individualComplete(event, div);
+            if (!div.classList.contains("complete")) div.classList.add("complete");
+        });
+    
+    div.addEventListener("dblclick", () => 
+        {
+            if (div.classList.contains("complete")) div.classList.remove("complete");
         });
 
     parent.appendChild(div)
@@ -87,22 +92,22 @@ function markCompleted(event)
     
 }
 
-// Individual Item Complete
-function individualComplete(event, item)
-{
-    event.preventDefault();
+// Individual Item Complete - Not needed if we're doing double click but keeping for the memories
+// function individualComplete(event, item)
+// {
+//     event.preventDefault();
 
-    if (!item.classList.contains("complete"))
-    {
-        item.classList.add("complete");
-    }
+//     if (!item.classList.contains("complete"))
+//     {
+//         item.classList.add("complete");
+//     }
     
-    else
-    {
-        item.classList.remove("complete");
-    }
+//     else
+//     {
+//         item.classList.remove("complete");
+//     }
 
-}
+// }
 
 // Add Item
 function submitItem(event)

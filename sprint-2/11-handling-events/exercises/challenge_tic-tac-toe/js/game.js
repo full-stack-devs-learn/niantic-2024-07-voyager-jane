@@ -17,13 +17,30 @@ function setNextPlayer()
 }
 
 
+function displayPlayer()
+{
+    const name = document.getElementById("playerName");
+    name.textContent = currentPlayer.name;
+}
+
+
 function init()
 {
-    
+    currentPlayer = player1;
+    displayPlayer();
 }
+
+
+function markSquare()
+{
+
+}
+
 
 // main
 document.addEventListener('DOMContentLoaded', () =>
 {
     init()
+
+    const squares = document.getElementsByClassName(".btn .btn-secondary .game-button");
 })
