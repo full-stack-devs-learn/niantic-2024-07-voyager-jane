@@ -58,15 +58,46 @@ function addQuantity(item, parent)
     parent.appendChild(div);
 }
 
+// Mark All (In)Completed Button
+function markCompleted(event) 
+{
+    event.preventDefault();
 
-function markCompleted() {
     const listItems = document.querySelectorAll(".list-item");
+    const button = document.getElementById("allCompleteButton");
 
-    listItems.forEach(item => {
-        item.classList.add("complete");
-    })
+    if (!allItemsIncomplete)
+    {
+        listItems.forEach(item => item.classList.remove("complete"));
+        button.textContent = "Mark All Complete";
+        allItemsIncomplete = true;
+    }
+
+    else
+    {
+        listItems.forEach(item => item.classList.add("complete"));
+        button.textContent = "Mark All Incomplete";
+        allItemsIncomplete = false;
+    }
+    
 }
 
+// Individual Item Complete
+function individualComplete(event, item)
+{
+    event.preventDefault();
+
+    if (!item.classList.contains("complete"))
+    {
+        item.classList.add("complete");
+    }
+    
+    else
+    {
+        item.classList.remove("complete");
+    }
+
+}
 
 // create the page load event here
 
@@ -76,5 +107,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     displayListTitle();
     displayShoppingList();
-});
 
+    // Individual Complete Click
+    // function() is there since calling individualComplete(item) in its place would run the function even if i didn't click so i need to only run function() when the condition is met
+    const listItems = document.querySelectorAll(".list-item");
+    listItems.forEach(item => {
+        item.addEventListener("click", function()
+                    {
+                        individualComplete(event, item);
+                    })
+    });
+
+    // Mark Complete Button Click
+    const completeButton = document.getElementById("allCompleteButton");
+    completeButton.addEventListener("click", markCompleted);
+
+    
+});
