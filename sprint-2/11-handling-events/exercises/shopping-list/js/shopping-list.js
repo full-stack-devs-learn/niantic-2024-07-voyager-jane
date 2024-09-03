@@ -24,11 +24,16 @@ function addListItem(item, parent)
     div.classList.add("list-item");
     if(item.isComplete)
     {
-        div.classList.add("complete")
+        div.classList.add("complete");
     }
 
     addItemTitle(item, div);
-    addQuantity(item, div)
+    addQuantity(item, div);
+
+    div.addEventListener("click", (event) => 
+        {
+            individualComplete(event, div);
+        });
 
     parent.appendChild(div)
 }
@@ -58,7 +63,7 @@ function addQuantity(item, parent)
     parent.appendChild(div);
 }
 
-// Mark All (In)Completed Button
+// Toggle All - Mark All (In)Completed Button
 function markCompleted(event) 
 {
     event.preventDefault();
@@ -99,6 +104,35 @@ function individualComplete(event, item)
 
 }
 
+// Add Item
+function submitItem(event)
+{
+    event.preventDefault();
+
+    const itemTitle = document.getElementById("itemName");
+    const quantity = document.getElementById("quantity");
+
+    const newItem = {
+        id: list.length + 1,
+        title: itemTitle.value,
+        quantity: parseInt(quantity.value.trim()),
+        isComplete: false
+    }
+
+    list.push(newItem);
+
+    const parent = document.getElementById("shopping-list");
+    addListItem(newItem, parent);
+
+    clearForm();
+}
+
+function clearForm()
+{
+    const itemTitle = document.getElementById("itemName").value = "";
+    const quantity = document.getElementById("quantity").value = "";
+}
+
 // create the page load event here
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -108,19 +142,11 @@ document.addEventListener("DOMContentLoaded", () => {
     displayListTitle();
     displayShoppingList();
 
-    // Individual Complete Click
-    // function() is there since calling individualComplete(item) in its place would run the function even if i didn't click so i need to only run function() when the condition is met
-    const listItems = document.querySelectorAll(".list-item");
-    listItems.forEach(item => {
-        item.addEventListener("click", function()
-                    {
-                        individualComplete(event, item);
-                    })
-    });
-
-    // Mark Complete Button Click
+    // Toggle All
     const completeButton = document.getElementById("allCompleteButton");
     completeButton.addEventListener("click", markCompleted);
 
-    
+    // Add New Items
+    const form = document.querySelector("form");
+    form.addEventListener("submit", submitItem);
 });
