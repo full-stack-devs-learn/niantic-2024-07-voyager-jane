@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<tr th:each="product:${products}">
+    <td th:text="${product.productId}"></td>
+    <td>
+        <a th:text="${product.productName}" th:href="@{|/products/${product.productID}|}"></a>
+    </td>
+    <td th:text="${product.unitPrice}"></td>
+    <td>
+        <a th:href="@{|/products/${product.productId}/edit|}" class="btn btn-warning">Edit</a>
+        <a th:href="@{|/products/${product.productId}/delete|}" class="btn btn-danger">Delete</a>
+    </td>
+</tr>
