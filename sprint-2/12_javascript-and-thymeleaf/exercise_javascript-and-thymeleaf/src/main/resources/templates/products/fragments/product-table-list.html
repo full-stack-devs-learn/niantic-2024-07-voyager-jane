@@ -1,7 +1,7 @@
 <tr th:each="product:${products}">
     <td th:text="${product.productId}"></td>
     <td>
-        <a th:text="${product.productName}" th:href="@{|/products/${product.productID}|}"></a>
+        <a th:text="${product.productName}" th:href="@{|/products/${product.productId}|}"></a>
     </td>
     <td th:text="${product.unitPrice}"></td>
     <td>

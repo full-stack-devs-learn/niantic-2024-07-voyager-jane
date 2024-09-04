@@ -30,13 +30,17 @@ public class ProductsController
         return "products/index";
     }
 
-    @GetMapping("/products/{category}")
-    public String getProductsByCategory(Model model, @PathVariable int category)
+    @GetMapping("/products/{categoryId}/page")
+    public String getProductsByCategory(Model model, @PathVariable int categoryId)
     {
         ArrayList<Product> products;
-        products = productDao.getProductsByCategory(category);
+        ArrayList<Category> categories;
+
+        products = productDao.getProductsByCategory(categoryId);
+        categories = categoryDao.getCategories();
 
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
 
         return "/products/fragments/product-table-list";
     }
