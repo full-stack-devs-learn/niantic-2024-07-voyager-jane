@@ -8,12 +8,16 @@ const player2 = {
     value: 'O'
 }
 
+let squares;
+
 // current
 let currentPlayer;
 
 
 function setNextPlayer()
 {
+    if (currentPlayer.value === 'X') currentPlayer = player2;
+    else currentPlayer = player1;
 }
 
 
@@ -31,9 +35,26 @@ function init()
 }
 
 
-function markSquare()
+function markSquare(event, square)
 {
+    event.preventDefault();
 
+    const playerSymbol = currentPlayer.value;
+    
+    if (square.textContent === "")
+    {
+        square.textContent = playerSymbol;
+        setNextPlayer();
+        displayPlayer();
+    }
+}
+
+function resetBoard(event)
+{
+    event.preventDefault();
+
+    squares.forEach(square => square.textContent = "");
+    init();
 }
 
 
@@ -42,5 +63,14 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     init()
 
-    const squares = document.getElementsByClassName(".btn .btn-secondary .game-button");
+    squares = document.querySelectorAll(".btn.btn-secondary.game-button");
+
+    squares.forEach(square => {
+        square.addEventListener("click", (event) => {
+            markSquare(event, square);
+        })
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    resetButton.addEventListener("click", resetBoard);
 })
