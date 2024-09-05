@@ -14,7 +14,7 @@ function loadPage()
     const container = document.getElementById("products-container");
     container.innerHTML = "";
 
-    const url = `/products/${categoryId}/page`;
+    const url = `/products/${categoryId}/display`;
 
     fetch(url).then(response => {
 //        if (response.status === 200)

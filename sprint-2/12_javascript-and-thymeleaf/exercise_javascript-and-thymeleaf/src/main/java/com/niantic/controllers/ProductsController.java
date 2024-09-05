@@ -4,8 +4,10 @@ import com.niantic.models.Category;
 import com.niantic.models.Product;
 import com.niantic.services.CategoryDao;
 import com.niantic.services.ProductDao;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class ProductsController
         return "products/index";
     }
 
-    @GetMapping("/products/{categoryId}/page")
+    @GetMapping("/products/{categoryId}/display")
     public String getProductsByCategory(Model model, @PathVariable int categoryId)
     {
         ArrayList<Product> products;
@@ -74,8 +76,13 @@ public class ProductsController
     }
 
     @PostMapping("/products/new")
-    public String saveProduct(@ModelAttribute("product") Product product)
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model)
     {
+        if (result.hasErrors())
+        {
+            model.addAttribute("isInvalid", true);
+            return "products/add";
+        }
 
         productDao.addProduct(product);
         return "redirect:/products?catId=" + product.getCategoryId();

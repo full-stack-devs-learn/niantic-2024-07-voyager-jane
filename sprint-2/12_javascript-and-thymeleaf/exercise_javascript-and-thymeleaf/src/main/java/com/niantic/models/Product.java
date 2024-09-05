@@ -1,12 +1,22 @@
 package com.niantic.models;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class Product
 {
     private int productId;
     private int categoryId;
+
+    @Size(min=3, message="Product Name must be at least 3 characters.")
+    @NotBlank(message="Product Name is required.")
     private String productName;
+
     private String quantityPerUnit;
+
+    @NotEmpty(message="Unit Price is required.")
     private double unitPrice;
+
     private int unitsInStock;
     private int unitsOnOrder;
     private int reorderLevel;
