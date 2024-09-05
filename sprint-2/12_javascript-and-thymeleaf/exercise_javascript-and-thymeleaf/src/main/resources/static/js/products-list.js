@@ -17,9 +17,7 @@ function loadPage()
     const url = `/products/${categoryId}/display`;
 
     fetch(url).then(response => {
-//        if (response.status === 200)
         return response.text()
-//        else throw new Error(response);
     })
     .then(data => {
         container.innerHTML = data;
