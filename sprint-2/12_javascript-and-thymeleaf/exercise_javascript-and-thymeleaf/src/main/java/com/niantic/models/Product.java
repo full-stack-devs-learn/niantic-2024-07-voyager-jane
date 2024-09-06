@@ -1,7 +1,5 @@
 package com.niantic.models;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public class Product
 {
@@ -14,7 +12,8 @@ public class Product
 
     private String quantityPerUnit;
 
-    @NotEmpty(message="Unit Price is required.")
+    @NotNull(message="Unit Price cannot be null.")
+    @DecimalMin(value = "0.1", inclusive = true, message="Unit Price must be greater than $0.01.")
     private double unitPrice;
 
     private int unitsInStock;
