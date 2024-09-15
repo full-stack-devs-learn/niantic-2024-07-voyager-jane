@@ -49,6 +49,6 @@ public class Sword extends Weapon
 
     @Override
     public int getRange() {
-        return 0;
+        return 1;
     }
 }

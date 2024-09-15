@@ -50,6 +50,39 @@ public class SwordTest
     }
 
     @Test
+    public void setPercentChanged_should_returnInRange()
+    {
+        // arrange
+        int expectedPercent1 = 0;
+        int expectedPercent2 = 36;
+        int expectedPercent3 = 100;
+
+        // act
+        sword1.attack();
+        sword1.setPercentCharged(0);
+        int actualPercent1 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(36);
+        int actualPercent2 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(100);
+        int actualPercent3 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(200);
+        int actualPercent4 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(-10);
+        int actualPercent5 = sword1.getPercentCharged();
+
+        // assert
+        assertEquals(expectedPercent1, actualPercent1, "percentCharged should be 0 if setter input is <= 0.");
+        assertEquals(expectedPercent1, actualPercent5, "percentCharged should be 0 if setter input is <= 0.");
+        assertEquals(expectedPercent2, actualPercent2, "percentCharged should be 36 if setter input is 36.");
+        assertEquals(expectedPercent3, actualPercent3, "percentCharged should be 100 if setter input >= 100.");
+        assertEquals(expectedPercent3, actualPercent4, "percentCharged should be 100 if setter input >= 100.");
+    }
+
+    @Test
     public void swordAttack_should_chargePercentChargedCorrectly()
     {
         // arrange
@@ -88,5 +121,18 @@ public class SwordTest
 
         // assert
         assertEquals(expectedDmg, actualDmg, "With percentCharged " + setCharge + " , powerAttack should return " + expected);
+    }
+
+    @Test
+    public void swordRange_shouldBe_1()
+    {
+        // arrange
+        int expectedRange = 1;
+
+        // act
+        int actualRange = sword1.getRange();
+
+        // assert
+        assertEquals(expectedRange, actualRange, "Sword range should be 1");
     }
 }

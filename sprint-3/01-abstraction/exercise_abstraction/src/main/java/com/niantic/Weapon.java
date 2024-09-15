@@ -26,7 +26,18 @@ public abstract class Weapon
     }
 
     protected void setPercentCharged(int percentCharged) {
-        this.percentCharged = percentCharged;
+        if (percentCharged < 0)
+        {
+            this.percentCharged = 0;
+        }
+        else if (percentCharged > 100)
+        {
+            this.percentCharged = 100;
+        }
+        else
+        {
+            this.percentCharged = percentCharged;
+        }
     }
 
     public abstract int attack();
