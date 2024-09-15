@@ -14,14 +14,37 @@ public class Sword extends Weapon
             percentCharged += 10;
         }
 
-        System.out.println(getName() + " deals " + getDamage() + " damage.");
+        System.out.println(name + " deals " + damage + " damage.");
 
-        return getDamage();
+        return damage;
     }
 
     @Override
     public int powerAttack() {
-        return 0;
+        if (percentCharged < 50)
+        {
+            return attack();
+        }
+
+        else if (percentCharged == 100)
+        {
+            percentCharged = 0;
+
+            int totDmg = damage * 4;
+            System.out.println(name + " deals " + totDmg + " damage.");
+
+            return damage * 4;
+        }
+
+        else
+        {
+            percentCharged -= 50;
+
+            int totDmg = damage * 2;
+            System.out.println(name + " deals " + totDmg + " damage.");
+
+            return damage * 2;
+        }
     }
 
     @Override

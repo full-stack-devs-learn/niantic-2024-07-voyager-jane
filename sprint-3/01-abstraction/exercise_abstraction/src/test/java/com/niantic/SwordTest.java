@@ -2,13 +2,14 @@ package com.niantic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SwordTest
 {
     private Sword sword1;
-    private Sword sword2;
 
     @BeforeEach
     public void setup()
@@ -66,5 +67,26 @@ public class SwordTest
         assertEquals(expectedCharge, actualCharge, "After attack, percentCharged should charge if percentCharged < 100");
         assertEquals(expectedNoCharge, actualNoCharge, "After attack, percentCharged should not charge if percentCharged = 100");
 
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "20, 0",
+            "20, 49",
+            "40, 50",
+            "40, 90",
+            "80, 100"
+    })
+    public void swordPowerAttack_should_returnCorrectDamageBasedOnPercentCharged(int expected, int setCharge)
+    {
+        // arrange
+        int expectedDmg = expected;
+        sword1.setPercentCharged(setCharge);
+
+        // act
+        int actualDmg = sword1.powerAttack();
+
+        // assert
+        assertEquals(expectedDmg, actualDmg, "With percentCharged " + setCharge + " , powerAttack should return " + expected);
     }
 }
