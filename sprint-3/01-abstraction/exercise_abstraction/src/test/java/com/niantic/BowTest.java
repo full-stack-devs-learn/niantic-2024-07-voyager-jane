@@ -9,6 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BowTest
 {
@@ -93,11 +94,32 @@ public class BowTest
                 latch.countDown();
             }
         };
-        timer.schedule(task, 11000);
-        latch.await(13, TimeUnit.SECONDS);
+        timer.schedule(task, 10000);
+        latch.await(11, TimeUnit.SECONDS);
 
         int actualCharge = standardBow.getPercentCharged();
 
         assertEquals(expectedCharge, actualCharge, "Power attack should charge to 100% after 10 seconds.");
+    }
+
+    @Test
+    public void bowPowerAttack_should_unleashUnlimitedArrows() throws InterruptedException {
+        boolean expectedMoreDoubleDmg;
+
+        int actualDmg = standardBow.powerAttack();
+
+        CountDownLatch latch = new CountDownLatch(1);
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                latch.countDown();
+            }
+        };
+        timer.schedule(task, 26000);
+        latch.await(28, TimeUnit.SECONDS);
+
+        expectedMoreDoubleDmg = actualDmg > 40;
+
+        assertTrue(expectedMoreDoubleDmg, "powerAttack should release 2x default damage with each unlimited arrow for over 5 seconds.");
     }
 }

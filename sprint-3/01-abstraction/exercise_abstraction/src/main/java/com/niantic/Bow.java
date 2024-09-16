@@ -16,6 +16,8 @@ public class Bow extends Weapon
     private TimerTask arrowTask;
     private TimerTask chargeTask;
     private TimerTask unlimitedTask;
+    private int powerDmg = 0;
+    boolean stopPower = true;
 
     public Bow(String name, int damage, String arrowType, int quiverSize) {
         super(name, damage);
@@ -89,7 +91,6 @@ public class Bow extends Weapon
 
     @Override
     public int powerAttack() {
-        int totDmg = 0;
         CountDownLatch latch = new CountDownLatch(1);
 
         chargeTimer = new Timer();
@@ -108,7 +109,6 @@ public class Bow extends Weapon
                 }
             }
         };
-
         chargeTimer.schedule(chargeTask, 0, 2000);
 
         try {
@@ -118,13 +118,42 @@ public class Bow extends Weapon
         }
         chargeTimer.cancel();
 
+        unlimitedArrows = new Timer();
         unlimitedTask = new TimerTask() {
             @Override
             public void run() {
-
+                if (stopPower)
+                {
+                    powerDmg += damage * 2;
+                }
             }
         };
-        return 0;
+        unlimitedArrows.schedule(unlimitedTask, 0, 1000);
+
+        CountDownLatch secondLatch = new CountDownLatch(1);
+        Timer cancelPower = new Timer();
+        TimerTask cancelTask =  new TimerTask() {
+            @Override
+            public void run() {
+                stopPower = false;
+                unlimitedArrows.cancel();
+                secondLatch.countDown();
+            }
+        };
+        cancelPower.schedule(cancelTask, 5000);
+
+        try {
+            secondLatch.await(6, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        cancelPower.cancel();
+
+        System.out.println("Unlimited Arrows have done " + powerDmg + " damage!");
+
+        percentCharged = 0;
+
+        return powerDmg;
     }
 
     @Override
