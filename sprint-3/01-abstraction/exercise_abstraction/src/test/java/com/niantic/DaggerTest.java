@@ -56,4 +56,14 @@ public class DaggerTest
         assertEquals(expectedDmg, actualDmg, "Attack with no daggers deals no damage.");
         assertEquals(expectedPC, actualPC, "Attack with no daggers should not increase percentCharged.");
     }
+
+    @Test
+    public void daggerRange_shouldBe_10()
+    {
+        int expectedRange = 10;
+
+        int actualRange = dagger.getRange();
+        
+        assertEquals(expectedRange, actualRange, "Dagger range should be 10.");
+    }
 }
