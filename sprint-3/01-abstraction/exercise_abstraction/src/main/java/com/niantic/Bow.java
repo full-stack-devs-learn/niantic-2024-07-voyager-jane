@@ -91,6 +91,7 @@ public class Bow extends Weapon
 
     @Override
     public int powerAttack() {
+        percentCharged = 0;
         CountDownLatch latch = new CountDownLatch(1);
 
         chargeTimer = new Timer();
@@ -150,8 +151,6 @@ public class Bow extends Weapon
         cancelPower.cancel();
 
         System.out.println("Unlimited Arrows have done " + powerDmg + " damage!");
-
-        percentCharged = 0;
 
         return powerDmg;
     }

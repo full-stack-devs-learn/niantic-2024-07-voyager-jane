@@ -3,11 +3,6 @@ package com.niantic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,8 +11,6 @@ public class BowTest
     private Bow standardBow;
     private Bow poisonBow;
     private Bow explosiveBow;
-    private Timer timer;
-    private TimerTask task;
 
     @BeforeEach
     public void setup()
@@ -25,8 +18,6 @@ public class BowTest
         standardBow = new Bow("Golden Harp", 20, "standard", 5);
         poisonBow = new Bow("Corrupt Harmony", 20, "poison", 5);
         explosiveBow = new Bow("Sonnet of Sparks", 20, "explosive", 5);
-
-        timer = new Timer();
     }
 
     @Test
@@ -64,17 +55,7 @@ public class BowTest
         int actualDecrease = standardBow.getArrowCount();
         int actualIncrease;
 
-        // testing timertask and making sure arrowCount replenishes after 5 seconds
-        CountDownLatch latch = new CountDownLatch(1);
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                latch.countDown();
-            }
-        };
-        timer.schedule(task, 7000);
-        latch.await(10, TimeUnit.SECONDS);
-
+        Thread.sleep(5000);
         actualIncrease = standardBow.getArrowCount();
 
         assertEquals(expectedDecrease, actualDecrease, "Bow attack should decrease arrowCount by 1.");
@@ -87,16 +68,7 @@ public class BowTest
 
         standardBow.powerAttack();
 
-        CountDownLatch latch = new CountDownLatch(1);
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                latch.countDown();
-            }
-        };
-        timer.schedule(task, 10000);
-        latch.await(11, TimeUnit.SECONDS);
-
+        Thread.sleep(10000);
         int actualCharge = standardBow.getPercentCharged();
 
         assertEquals(expectedCharge, actualCharge, "Power attack should charge to 100% after 10 seconds.");
@@ -108,16 +80,7 @@ public class BowTest
 
         int actualDmg = standardBow.powerAttack();
 
-        CountDownLatch latch = new CountDownLatch(1);
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                latch.countDown();
-            }
-        };
-        timer.schedule(task, 26000);
-        latch.await(28, TimeUnit.SECONDS);
-
+        Thread.sleep(15000);
         expectedMoreDoubleDmg = actualDmg > 40;
 
         assertTrue(expectedMoreDoubleDmg, "powerAttack should release 2x default damage with each unlimited arrow for over 5 seconds.");
