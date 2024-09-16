@@ -12,6 +12,7 @@ public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
     private int countFile = 0;
+    private String selectedFile;
 
     public void run()
     {
@@ -30,6 +31,7 @@ public class GradingApplication implements Runnable
                     break;
                 case 3:
                     displayStudentAverages();
+                    UserInput.displayUserContinue();
                     break;
                 case 4:
                     displayAllStudentStatistics();
@@ -59,11 +61,32 @@ public class GradingApplication implements Runnable
                 case 4:
                 case 5:
                     String fileName = gradesService.getFileNames()[choice - 1];
+                    selectedFile = fileName;
                     return gradesService.getAssignments(fileName);
                 default:
                     UserInput.displayMessage("Please make a valid selection");
             }
         }
+    }
+
+    private List<Assignment> chooseFile()
+    {
+        System.out.println();
+        System.out.println("What file would you like to choose?");
+        System.out.println("-".repeat(35));
+        displayAllFiles();
+
+        // choose file and returning list of assignments
+        System.out.println();
+        List<Assignment> assignments = fileSelectionCase();
+
+        // printing student name
+        System.out.println();
+        System.out.printf(parseStudentName(selectedFile).toUpperCase());
+        System.out.println();
+        System.out.println("-".repeat(35));
+
+        return assignments;
     }
 
     private void displayAllFiles()
@@ -88,23 +111,13 @@ public class GradingApplication implements Runnable
     {
         // todo: 2 - allow the user to select a file name
         // load all student assignment scores from the file - display all files
-        System.out.println();
-        System.out.println("What file would you like to choose?");
-        System.out.println("-".repeat(35));
-        displayAllFiles();
-
         // choose file and returning list of assignments
         System.out.println();
-        List<Assignment> assignments = fileSelectionCase();
-
-        // printing student name
-        System.out.println();
-        System.out.printf("Student Name: %s %s", assignments.get(0).getFirstName().toUpperCase(), assignments.get(0).getLastName().toUpperCase());
-        System.out.println();
-        System.out.println("-".repeat(45));
+        List<Assignment> assignments = chooseFile();
 
         // printing assignments
         System.out.printf("Assignment" + " ".repeat(20) + "Score");
+        System.out.println();
         System.out.println("-".repeat(35));
         assignments.forEach(assignment -> {
             System.out.println();
@@ -117,7 +130,28 @@ public class GradingApplication implements Runnable
     {
         // todo: 3 - allow the user to select a file name
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
+        System.out.println();
+        List<Assignment> assignments = chooseFile();
 
+        // Calculating Statistics
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int avg = 0;
+
+        for (Assignment assignment : assignments)
+        {
+            int score = assignment.getScore();
+            if (score < min) min = score;
+            if (score > max) max = score;
+            avg += score;
+        }
+
+        avg = avg / assignments.size();
+
+        // Print Statistics
+        System.out.println("Low Score: " + min);
+        System.out.println("High Score: " + max);
+        System.out.println("Average Score: " + avg);
     }
 
     private void displayAllStudentStatistics()
