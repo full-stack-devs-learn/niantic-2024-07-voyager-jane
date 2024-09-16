@@ -21,7 +21,19 @@ public class Dagger extends Weapon
 
     @Override
     public int attack() {
-        return 0;
+        if (daggerCount > 0)
+        {
+            percentCharged += 20;
+
+            System.out.println(name + " deals " + damage + " damage.");
+
+            return damage;
+        }
+        else
+        {
+            System.out.println("There are no daggers to throw. Damage is 0.");
+            return 0;
+        }
     }
 
     @Override
