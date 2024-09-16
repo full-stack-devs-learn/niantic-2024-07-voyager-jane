@@ -4,10 +4,10 @@ public class Dagger extends Weapon
 {
     private int daggerCount;
 
-    public Dagger(String name, int damage, int daggerCount) {
+    public Dagger(String name, int damage) {
         super(name, damage);
 
-        this.daggerCount = daggerCount;
+        this.daggerCount = 1;
     }
 
     public int getDaggerCount() {

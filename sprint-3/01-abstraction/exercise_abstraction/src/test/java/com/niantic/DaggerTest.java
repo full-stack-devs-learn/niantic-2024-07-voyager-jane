@@ -8,20 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DaggerTest
 {
     private Dagger dagger;
-    private Dagger noDagger;
 
     @BeforeEach
     public void setup()
     {
-        dagger = new Dagger("The Dagger", 20, 3);
-        noDagger = new Dagger("No Daggers", 20, 0);
+        dagger = new Dagger("The Dagger", 20);
     }
 
     @Test
     public void addDagger_should_increaseDaggerCount()
     {
         // arrange
-        int expectedDaggerCount = 4;
+        int expectedDaggerCount = 2;
 
         // act
         dagger.addDagger();
@@ -50,10 +48,8 @@ public class DaggerTest
         int expectedDmg = 0;
         int expectedPC = 0;
 
-        int actualDmg = noDagger.attack();
         int actualPC = dagger.getPercentCharged();
 
-        assertEquals(expectedDmg, actualDmg, "Attack with no daggers deals no damage.");
         assertEquals(expectedPC, actualPC, "Attack with no daggers should not increase percentCharged.");
     }
 
@@ -77,15 +73,12 @@ public class DaggerTest
         dagger.setPercentCharged(90);
         int actualDmg1 = dagger.powerAttack();
 
+        dagger.addDagger();
         dagger.setPercentCharged(100);
         int actualDmg2 = dagger.powerAttack();
 
-        noDagger.setPercentCharged(100);
-        int actualDmg3 = noDagger.powerAttack();
-
         assertEquals(expectedDmg1, actualDmg1, "powerAttack Dagger at 90 percentCharged should return default damage.");
         assertEquals(expectedDmg2, actualDmg2, "powerAttack Dagger at 100 percentCharged should return 3x damage.");
-        assertEquals(expectedDmg3, actualDmg3, "powerAttack with No daggers should return no damage.");
     }
 
     @Test
@@ -103,12 +96,28 @@ public class DaggerTest
     @Test
     public void daggerPowerAttack_should_decreaseDaggerCount()
     {
-        int expected = 2;
+        int expected = 0;
 
         dagger.setPercentCharged(100);
         dagger.powerAttack();
         int actual = dagger.getDaggerCount();
 
         assertEquals(expected, actual, "Dagger valid powerAttack should decrease dagger count by 1.");
+    }
+
+    @Test
+    public void noDaggers_shouldNot_attack()
+    {
+        int expected = 0;
+
+        dagger.setPercentCharged(100);
+        dagger.powerAttack();
+        int actualAttackDmg = dagger.attack();
+
+        dagger.setPercentCharged(100);
+        int actualPowerDmg = dagger.powerAttack();
+
+        assertEquals(expected, actualAttackDmg, "No daggers should not deal damage.");
+        assertEquals(expected, actualPowerDmg, "No daggers should not deal damage.");
     }
 }
