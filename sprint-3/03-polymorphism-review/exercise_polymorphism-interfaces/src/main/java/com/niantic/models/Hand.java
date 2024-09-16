@@ -1,6 +1,8 @@
 package com.niantic.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class Hand
 {
@@ -24,7 +26,9 @@ public class Hand
     public void Sort()
     {
         // Todo: Exercise 2: implement this sort method
-
+        cards = (ArrayList<Card>) cards.stream()
+                .sorted(Card::compareTo)
+                .collect(Collectors.toList());
     }
 
     public int getCardCount()
@@ -36,5 +40,6 @@ public class Hand
     public void dealTo(Card card)
     {
         cards.add(card);
+        Sort();
     }
 }
