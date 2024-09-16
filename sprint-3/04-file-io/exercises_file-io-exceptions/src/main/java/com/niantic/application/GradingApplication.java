@@ -6,11 +6,12 @@ import com.niantic.services.GradesService;
 import com.niantic.ui.UserInput;
 
 import java.util.Arrays;
-import java.util.Scanner;
+import java.util.List;
 
 public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
+    private int countFile = 0;
 
     public void run()
     {
@@ -21,10 +22,11 @@ public class GradingApplication implements Runnable
             {
                 case 1:
                     displayAllFiles();
-                    UserInput.displayUserNext();
+                    UserInput.displayUserContinue();
                     break;
                 case 2:
                     displayFileScores();
+                    UserInput.displayUserContinue();
                     break;
                 case 3:
                     displayStudentAverages();
@@ -44,26 +46,71 @@ public class GradingApplication implements Runnable
         }
     }
 
+    private List<Assignment> fileSelectionCase()
+    {
+        while(true)
+        {
+            int choice = UserInput.studentFileSelection();
+            switch(choice)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    String fileName = gradesService.getFileNames()[choice - 1];
+                    return gradesService.getAssignments(fileName);
+                default:
+                    UserInput.displayMessage("Please make a valid selection");
+            }
+        }
+    }
+
     private void displayAllFiles()
     {
         // todo: 1 - get and display all student file names
         String[] files = gradesService.getFileNames();
+        countFile = 0;
 
         System.out.println();
         System.out.println("File Names");
         System.out.println("-".repeat(35));
 
         Arrays.stream(files)
-                .sorted()
-                .forEach(file -> {
-            System.out.println(file);
-        });
+                .forEach(file ->
+                {
+                    countFile++;
+                    System.out.println(String.format("  %d.) %s", countFile, file));
+                });
     }
 
     private void displayFileScores()
     {
         // todo: 2 - allow the user to select a file name
         // load all student assignment scores from the file - display all files
+        System.out.println();
+        System.out.println("What file would you like to choose?");
+        System.out.println("-".repeat(35));
+        displayAllFiles();
+
+        // choose file and returning list of assignments
+        System.out.println();
+        List<Assignment> assignments = fileSelectionCase();
+
+        // printing student name
+        System.out.println();
+        System.out.printf("Student Name: %s %s", assignments.get(0).getFirstName().toUpperCase(), assignments.get(0).getLastName().toUpperCase());
+        System.out.println();
+        System.out.println("-".repeat(45));
+
+        // printing assignments
+        System.out.printf("Assignment" + " ".repeat(20) + "Score");
+        System.out.println("-".repeat(35));
+        assignments.forEach(assignment -> {
+            System.out.println();
+            System.out.printf("%-30s %d", assignment.getAssignmentName(), assignment.getScore());
+        });
+        System.out.println();
     }
 
     private void displayStudentAverages()

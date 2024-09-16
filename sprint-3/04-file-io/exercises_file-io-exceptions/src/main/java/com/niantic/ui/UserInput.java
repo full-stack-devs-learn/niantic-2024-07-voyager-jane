@@ -1,5 +1,7 @@
 package com.niantic.ui;
 
+import com.niantic.application.GradingApplication;
+
 import java.util.Scanner;
 
 public class UserInput
@@ -30,13 +32,20 @@ public class UserInput
         return Integer.parseInt(in.nextLine());
     }
 
+    public static int studentFileSelection()
+    {
+        System.out.println();
+        System.out.print("Please make a selection: ");
+        return Integer.parseInt(in.nextLine());
+    }
+
     public static void displayMessage(String message)
     {
         System.out.println();
         System.out.println(message);
     }
 
-    public static void displayUserNext()
+    public static void displayUserContinue()
     {
         System.out.println();
         System.out.print("Press ENTER to continue.");
