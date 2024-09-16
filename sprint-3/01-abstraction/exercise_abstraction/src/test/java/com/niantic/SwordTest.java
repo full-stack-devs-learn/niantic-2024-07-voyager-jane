@@ -124,6 +124,32 @@ public class SwordTest
     }
 
     @Test
+    public void swordPowerAttack_should_setPercentChargeCorrectly()
+    {
+        // arrange
+        int expectedPC1 = 0;
+        int expectedPC2 = 10;
+
+        // act
+        sword1.setPercentCharged(100);
+        sword1.powerAttack();
+        int actualPC1 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(50);
+        sword1.powerAttack();
+        int actualPC2 = sword1.getPercentCharged();
+
+        sword1.setPercentCharged(60);
+        sword1.powerAttack();
+        int actualPC3 = sword1.getPercentCharged();
+
+        // assert
+        assertEquals(expectedPC1, actualPC1, "At 100% charged, powerAttack should set percentCharged to 0.");
+        assertEquals(expectedPC1, actualPC2, "At 50% charged, powerAttack should set percentCharged to 0.");
+        assertEquals(expectedPC2, actualPC3, "At 60% charged, powerAttack should set percentCharged to 10.");
+    }
+
+    @Test
     public void swordRange_shouldBe_1()
     {
         // arrange
