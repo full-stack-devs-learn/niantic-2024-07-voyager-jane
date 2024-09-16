@@ -1,10 +1,15 @@
 package com.niantic;
 
+import java.util.Timer;
+
 public class Bow extends Weapon
 {
     private String arrowType;
     private int quiverSize;
     private int arrowCount;
+    private Timer arrowTimer;
+    private Timer chargeTimer;
+    private Timer unlimitedArrows;
 
     public Bow(String name, int damage, String arrowType, int quiverSize) {
         super(name, damage);
@@ -28,6 +33,36 @@ public class Bow extends Weapon
 
     @Override
     public int attack() {
+        if (arrowCount != 0)
+        {
+            arrowCount--;
+
+            if ("standard".equals(this.arrowType.toLowerCase()))
+            {
+                System.out.println("Standard arrow deals " + damage + " damage!");
+                return damage;
+            }
+
+            if ("poison".equals(this.arrowType.toLowerCase()))
+            {
+                int totDmg = damage * 2;
+
+                System.out.println("Poison arrow deals " + totDmg + " damage!");
+
+                return totDmg;
+            }
+
+            if ("explosive".equals(this.arrowType.toLowerCase()))
+            {
+                int totDmg = damage * 3;
+
+                System.out.println("Explosive arrow deals " + totDmg + " damage!");
+
+                return totDmg;
+            }
+        }
+
+        System.out.println("There are no arrows so no damage dealt!");
         return 0;
     }
 
