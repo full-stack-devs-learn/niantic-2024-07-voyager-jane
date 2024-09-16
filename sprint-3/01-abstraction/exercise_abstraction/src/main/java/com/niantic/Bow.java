@@ -2,6 +2,8 @@ package com.niantic;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class Bow extends Weapon
 {
@@ -12,6 +14,8 @@ public class Bow extends Weapon
     private Timer chargeTimer;
     private Timer unlimitedArrows;
     private TimerTask arrowTask;
+    private TimerTask chargeTask;
+    private TimerTask unlimitedTask;
 
     public Bow(String name, int damage, String arrowType, int quiverSize) {
         super(name, damage);
@@ -21,6 +25,8 @@ public class Bow extends Weapon
         this.arrowCount = quiverSize;
 
         arrowTimer = new Timer();
+        chargeTimer = new Timer();
+        unlimitedArrows = new Timer();
     }
 
     public String getArrowType() {
@@ -84,6 +90,35 @@ public class Bow extends Weapon
 
     @Override
     public int powerAttack() {
+        int totDmg = 0;
+        CountDownLatch latch = new CountDownLatch(1);
+
+        chargeTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (percentCharged < 100)
+                {
+                    percentCharged += 10;
+                }
+                else latch.countDown();
+            }
+        };
+
+        chargeTimer.schedule(chargeTask, 0, 2000);
+
+        try {
+            latch.await(12, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        unlimitedTask = new TimerTask() {
+            @Override
+            public void run() {
+                totDmg += damage * 2;
+            }
+        };
+
         return 0;
     }
 
