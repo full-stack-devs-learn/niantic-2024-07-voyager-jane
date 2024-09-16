@@ -35,9 +35,11 @@ public class GradingApplication implements Runnable
                     break;
                 case 4:
                     displayAllStudentStatistics();
+                    UserInput.displayUserContinue();
                     break;
                 case 5:
                     displayAssignmentStatistics();
+                    UserInput.displayUserContinue();
                     break;
                 case 0:
                     UserInput.displayMessage("Goodbye");
@@ -158,6 +160,56 @@ public class GradingApplication implements Runnable
     {
         // todo: 4 - Optional / Challenge - load all scores from all student and all assignments
         // display the statistics for all scores (low score, high score, average score, number of students, number of assignments)
+        String[] files = gradesService.getFileNames();
+        List<Assignment> assignments = gradesService.getAllAssignments(files);
+        int numStudents = files.length;
+        int numAssignments = assignments.size();
+
+        String lowStudent = "";
+        String lowAssignment = "";
+        String highStudent = "";
+        String highAssignment = "";
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int avg = 0;
+
+        // Calculating Statistics
+        for (Assignment assignment : assignments)
+        {
+            int score = assignment.getScore();
+
+            if (score < min)
+            {
+                min = score;
+                lowStudent = new String(assignment.getFirstName() + " " + assignment.getLastName()).toUpperCase();
+                lowAssignment = assignment.getAssignmentName();
+            }
+
+            if (score > max)
+            {
+                max = score;
+                highStudent = new String(assignment.getFirstName() + " " + assignment.getLastName()).toUpperCase();
+                highAssignment = assignment.getAssignmentName();
+            }
+
+            avg += score;
+        }
+
+        avg = avg / assignments.size();
+
+        // Print Statistics
+        System.out.println();
+        System.out.println("All Assignments Statistics");
+        System.out.println("-".repeat(35));
+        System.out.println("Low Score: " + min);
+        System.out.println(" ".repeat(5) + "Student: " + lowStudent);
+        System.out.println(" ".repeat(5) + "Assignment: " + lowAssignment);
+        System.out.println("High Score: " + max);
+        System.out.println(" ".repeat(5) + "Student: " + highStudent);
+        System.out.println(" ".repeat(5) + "Assignment: " + highAssignment);
+        System.out.println("Average Score: " + avg);
+        System.out.println("Number of Students: " + numStudents);
+        System.out.println("Number of Assignments: " + numAssignments);
     }
 
     private void displayAssignmentStatistics()

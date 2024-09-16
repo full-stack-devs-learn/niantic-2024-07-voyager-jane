@@ -28,7 +28,7 @@ public class GradesFileService implements GradesService
         File file = new File("files/" + fileName);
         List<Assignment> assignments = new ArrayList<>();
 
-        try(Scanner reader = new Scanner(file))
+        try (Scanner reader = new Scanner(file))
         {
             // skip header
             reader.nextLine();
@@ -60,6 +60,11 @@ public class GradesFileService implements GradesService
     public List<Assignment> getAllAssignments(String[] fileNames)
     {
         List<Assignment> allAssignments = new ArrayList<>();
+
+        for (String file : fileNames)
+        {
+            allAssignments.addAll(getAssignments(file));
+        }
 
         return allAssignments;
     }
