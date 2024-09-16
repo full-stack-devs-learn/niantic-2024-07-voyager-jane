@@ -99,4 +99,16 @@ public class DaggerTest
 
         assertEquals(expectedPC1, actualPC1, "Dagger powerAttack should reset percentCharged to 0 if valid.");
     }
+
+    @Test
+    public void daggerPowerAttack_should_decreaseDaggerCount()
+    {
+        int expected = 2;
+
+        dagger.setPercentCharged(100);
+        dagger.powerAttack();
+        int actual = dagger.getDaggerCount();
+
+        assertEquals(expected, actual, "Dagger valid powerAttack should decrease dagger count by 1.");
+    }
 }
