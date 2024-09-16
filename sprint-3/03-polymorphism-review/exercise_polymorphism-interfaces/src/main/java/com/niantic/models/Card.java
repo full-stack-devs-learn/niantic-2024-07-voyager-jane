@@ -1,6 +1,8 @@
 package com.niantic.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Card implements Comparable<Card>
@@ -59,10 +61,50 @@ public class Card implements Comparable<Card>
         put("2", 2);
     }};
 
+    private static final Map<String, Integer> suitValues = new HashMap<>()
+    {{
+        put("clubs", 1);
+        put("diamonds", 2);
+        put("hearts", 3);
+        put("spades", 4);
+    }};
+
+    private static final Map<String, Integer> tenOrder = new HashMap<>()
+    {{
+       put("10", 1);
+       put("J", 2);
+       put("Q", 3);
+       put("K", 4);
+    }};
+
     @Override
     public int compareTo(Card o)
     {
         // todo: Exercise 1: implement Comparable<Card>
-        return 0;
+        if (!o.getSuit().equals(this.getSuit()))
+        {
+            int otherSuit = suitValues.get(o.getSuit().toLowerCase());
+            int thisSuit = suitValues.get(this.getSuit().toLowerCase());
+
+            return otherSuit < thisSuit ? -1 : 1;
+        }
+        else
+        {
+            int otherPoint = o.getPointValue();
+            int thisPoint = this.getPointValue();
+
+            if (otherPoint < 10 && thisPoint < 10)
+            {
+                return otherPoint < thisPoint ? 1 : -1;
+            }
+
+            else
+            {
+                int otherTen = tenOrder.get(o.getFaceValue());
+                int thisTen = tenOrder.get(this.getFaceValue());
+
+                return otherTen < thisTen ? 1 : -1;
+            }
+        }
     }
 }
