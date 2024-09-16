@@ -35,4 +35,11 @@ public class UserInput
         System.out.println();
         System.out.println(message);
     }
+
+    public static void displayUserNext()
+    {
+        System.out.println();
+        System.out.print("Press ENTER to continue.");
+        in.nextLine();
+    }
 }
