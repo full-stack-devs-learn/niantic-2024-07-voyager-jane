@@ -38,7 +38,15 @@ public class Dagger extends Weapon
 
     @Override
     public int powerAttack() {
-        return 0;
+        if (percentCharged < 100 || daggerCount < 1) return attack();
+
+        daggerCount--;
+        percentCharged -= 100;
+
+        int totDmg = damage * 3;
+        System.out.println(name + " deals " + totDmg + " damage.");
+
+        return totDmg;
     }
 
     @Override

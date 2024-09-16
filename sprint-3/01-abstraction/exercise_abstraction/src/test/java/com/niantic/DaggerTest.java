@@ -63,7 +63,40 @@ public class DaggerTest
         int expectedRange = 10;
 
         int actualRange = dagger.getRange();
-        
+
         assertEquals(expectedRange, actualRange, "Dagger range should be 10.");
+    }
+
+    @Test
+    public void daggerPowerAttack_should_dealCorrectDamage()
+    {
+        int expectedDmg1 = 20;
+        int expectedDmg2 = 60;
+        int expectedDmg3 = 0;
+
+        dagger.setPercentCharged(90);
+        int actualDmg1 = dagger.powerAttack();
+
+        dagger.setPercentCharged(100);
+        int actualDmg2 = dagger.powerAttack();
+
+        noDagger.setPercentCharged(100);
+        int actualDmg3 = noDagger.powerAttack();
+
+        assertEquals(expectedDmg1, actualDmg1, "powerAttack Dagger at 90 percentCharged should return default damage.");
+        assertEquals(expectedDmg2, actualDmg2, "powerAttack Dagger at 100 percentCharged should return 3x damage.");
+        assertEquals(expectedDmg3, actualDmg3, "powerAttack with No daggers should return no damage.");
+    }
+
+    @Test
+    public void daggerPowerAttack_should_setCorrectPercentCharged()
+    {
+        int expectedPC1 = 0;
+
+        dagger.setPercentCharged(100);
+        dagger.powerAttack();
+        int actualPC1 = dagger.getPercentCharged();
+
+        assertEquals(expectedPC1, actualPC1, "Dagger powerAttack should reset percentCharged to 0 if valid.");
     }
 }

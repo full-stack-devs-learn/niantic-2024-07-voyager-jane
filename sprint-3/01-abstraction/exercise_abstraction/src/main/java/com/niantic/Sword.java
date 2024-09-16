@@ -33,7 +33,7 @@ public class Sword extends Weapon
             int totDmg = damage * 4;
             System.out.println(name + " deals " + totDmg + " damage.");
 
-            return damage * 4;
+            return totDmg;
         }
 
         else
@@ -43,7 +43,7 @@ public class Sword extends Weapon
             int totDmg = damage * 2;
             System.out.println(name + " deals " + totDmg + " damage.");
 
-            return damage * 2;
+            return totDmg;
         }
     }
 
