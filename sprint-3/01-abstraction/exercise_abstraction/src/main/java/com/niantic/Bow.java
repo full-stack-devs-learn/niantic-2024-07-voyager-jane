@@ -1,6 +1,7 @@
 package com.niantic;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class Bow extends Weapon
 {
@@ -10,6 +11,7 @@ public class Bow extends Weapon
     private Timer arrowTimer;
     private Timer chargeTimer;
     private Timer unlimitedArrows;
+    private TimerTask arrowTask;
 
     public Bow(String name, int damage, String arrowType, int quiverSize) {
         super(name, damage);
@@ -17,6 +19,8 @@ public class Bow extends Weapon
         this.arrowType = arrowType;
         this.quiverSize = quiverSize;
         this.arrowCount = quiverSize;
+
+        arrowTimer = new Timer();
     }
 
     public String getArrowType() {
@@ -36,6 +40,19 @@ public class Bow extends Weapon
         if (arrowCount != 0)
         {
             arrowCount--;
+
+            arrowTask = new TimerTask() {
+                @Override
+                public void run() {
+                    if (arrowCount < quiverSize)
+                    {
+                        arrowCount++;
+                        System.out.println("After 5 seconds, one arrow has been replenished. " + arrowCount + " arrows available.");
+                    }
+                }
+            };
+
+            arrowTimer.schedule(arrowTask, 5000);
 
             if ("standard".equals(this.arrowType.toLowerCase()))
             {

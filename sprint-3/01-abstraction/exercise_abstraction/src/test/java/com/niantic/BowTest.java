@@ -28,4 +28,20 @@ public class BowTest
 
         assertEquals(expected, actual, "Bow range should be 20.");
     }
+
+    @Test
+    public void bowAttack_should_dealDamageBasedOnArrowType()
+    {
+        int expectedStandard = standardBow.getDamage();
+        int expectedPoison = poisonBow.getDamage() * 2;
+        int expectedExplosive = explosiveBow.getDamage() * 3;
+
+        int actualStandard = standardBow.attack();
+        int actualPoison = poisonBow.attack();
+        int actualExplosive = explosiveBow.attack();
+
+        assertEquals(expectedStandard, actualStandard, "Standard bows should deal default damage.");
+        assertEquals(expectedPoison, actualPoison, "Poison bows should deal 2x default damage.");
+        assertEquals(expectedExplosive, actualExplosive, "Explosive bows should deal 3x default damage.");
+    }
 }
