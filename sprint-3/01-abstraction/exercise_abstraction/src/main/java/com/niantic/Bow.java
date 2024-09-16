@@ -115,7 +115,7 @@ public class Bow extends Weapon
         unlimitedTask = new TimerTask() {
             @Override
             public void run() {
-                totDmg += damage * 2;
+                
             }
         };
 
