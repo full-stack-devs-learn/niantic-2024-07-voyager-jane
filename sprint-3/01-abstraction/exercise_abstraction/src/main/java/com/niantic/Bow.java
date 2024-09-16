@@ -51,7 +51,6 @@ public class Bow extends Weapon
                     }
                 }
             };
-
             arrowTimer.schedule(arrowTask, 5000);
 
             if ("standard".equals(this.arrowType.toLowerCase()))
