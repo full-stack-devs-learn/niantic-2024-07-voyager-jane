@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Card implements Comparable<Card>
+public class Card implements Comparable<Card>, Cloneable
 {
     private String suit;
     private String faceValue;
@@ -106,5 +106,17 @@ public class Card implements Comparable<Card>
                 return otherTen < thisTen ? 1 : -1;
             }
         }
+    }
+
+    @Override
+    protected Card clone() throws CloneNotSupportedException {
+        // since strings are immutable you can technically just copy the reference
+        // but since deep copy means completely new -> new String instead
+        String suit = new String(this.getSuit());
+        String faceValue = new String(this.getFaceValue());
+
+        Card clone = new Card(suit, faceValue);
+
+        return clone;
     }
 }

@@ -2,9 +2,10 @@ package com.niantic.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class Hand
+public class Hand implements Cloneable
 {
     private ArrayList<Card> cards = new ArrayList<>();
 
@@ -41,5 +42,23 @@ public class Hand
     {
         cards.add(card);
         Sort();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        List<Card> cloneHand = new ArrayList<>();
+
+        cards.forEach(card -> {
+            try {
+                Card clone = card.clone();
+                cloneHand.add(clone);
+            }
+            catch (CloneNotSupportedException e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
+
+        return cloneHand;
     }
 }
