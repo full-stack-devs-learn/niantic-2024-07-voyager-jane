@@ -25,7 +25,6 @@ public class Bow extends Weapon
         this.arrowCount = quiverSize;
 
         arrowTimer = new Timer();
-        chargeTimer = new Timer();
         unlimitedArrows = new Timer();
     }
 
@@ -93,32 +92,38 @@ public class Bow extends Weapon
         int totDmg = 0;
         CountDownLatch latch = new CountDownLatch(1);
 
+        chargeTimer = new Timer();
         chargeTask = new TimerTask() {
             @Override
             public void run() {
                 if (percentCharged < 100)
                 {
+                    System.out.println("Charging ... " + percentCharged + "%");
                     percentCharged += 10;
                 }
-                else latch.countDown();
+                else
+                {
+                    System.out.println("100% charged! Unlimited arrows about to be unleashed.");
+                    latch.countDown();
+                }
             }
         };
 
         chargeTimer.schedule(chargeTask, 0, 2000);
 
         try {
-            latch.await(12, TimeUnit.SECONDS);
+            latch.await(22, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        chargeTimer.cancel();
 
         unlimitedTask = new TimerTask() {
             @Override
             public void run() {
-                
+
             }
         };
-
         return 0;
     }
 

@@ -79,4 +79,25 @@ public class BowTest
         assertEquals(expectedDecrease, actualDecrease, "Bow attack should decrease arrowCount by 1.");
         assertEquals(expectedIncrease, actualIncrease, "After a valid attack, replenish arrowCount by 1.");
     }
+
+    @Test
+    public void bowPowerAttack_should_chargePercent() throws InterruptedException {
+        int expectedCharge = 100;
+
+        standardBow.powerAttack();
+
+        CountDownLatch latch = new CountDownLatch(1);
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                latch.countDown();
+            }
+        };
+        timer.schedule(task, 11000);
+        latch.await(13, TimeUnit.SECONDS);
+
+        int actualCharge = standardBow.getPercentCharged();
+
+        assertEquals(expectedCharge, actualCharge, "Power attack should charge to 100% after 10 seconds.");
+    }
 }
