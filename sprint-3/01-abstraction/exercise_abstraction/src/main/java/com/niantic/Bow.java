@@ -101,7 +101,7 @@ public class Bow extends Weapon
                 if (percentCharged < 100)
                 {
                     System.out.println("Charging ... " + percentCharged + "%");
-                    percentCharged += 10;
+                    percentCharged += 20;
                 }
                 else
                 {
@@ -113,7 +113,7 @@ public class Bow extends Weapon
         chargeTimer.schedule(chargeTask, 0, 2000);
 
         try {
-            latch.await(22, TimeUnit.SECONDS);
+            latch.await(12, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

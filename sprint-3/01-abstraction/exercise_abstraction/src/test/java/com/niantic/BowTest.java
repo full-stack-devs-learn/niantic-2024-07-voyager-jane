@@ -55,7 +55,7 @@ public class BowTest
         int actualDecrease = standardBow.getArrowCount();
         int actualIncrease;
 
-        Thread.sleep(5000);
+        Thread.sleep(5100);
         actualIncrease = standardBow.getArrowCount();
 
         assertEquals(expectedDecrease, actualDecrease, "Bow attack should decrease arrowCount by 1.");
