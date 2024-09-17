@@ -3,6 +3,7 @@ package com.niantic.application;
 import com.niantic.models.Assignment;
 import com.niantic.services.GradesFileService;
 import com.niantic.services.GradesService;
+import com.niantic.services.LogService;
 import com.niantic.services.ReportsService;
 import com.niantic.ui.UserInput;
 
@@ -12,6 +13,8 @@ public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
     private ReportsService reportsService = new ReportsService("reports");
+    private LogService applicationLogger = new LogService("application");
+
     private int countFile = 0;
     private String selectedFile;
 
@@ -65,6 +68,8 @@ public class GradingApplication implements Runnable
         String[] files = gradesService.getFileNames();
         countFile = 0;
 
+        applicationLogger.createLogEntry("Display List of Files");
+
         System.out.println();
         System.out.println("File Names");
         System.out.println("-".repeat(35));
@@ -85,6 +90,8 @@ public class GradingApplication implements Runnable
         System.out.println();
         List<Assignment> assignments = chooseFile();
 
+        applicationLogger.createLogEntry("Display Student Assignments and Scores for " + selectedFile);
+
         UserInput.displayFileScores(assignments, parseStudentName(selectedFile).toUpperCase());
     }
 
@@ -94,6 +101,8 @@ public class GradingApplication implements Runnable
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
         System.out.println();
         List<Assignment> assignments = chooseFile();
+
+        applicationLogger.createLogEntry("Display Student Statistics for " + selectedFile);
 
         // Calculating Statistics
         int min = Integer.MAX_VALUE;
@@ -124,6 +133,8 @@ public class GradingApplication implements Runnable
         List<Assignment> assignments = gradesService.getAllAssignments(files);
         int numStudents = files.length;
         int numAssignments = assignments.size();
+
+        applicationLogger.createLogEntry("Display All Student Statistics for All Assignments");
 
         String lowStudent = "";
         String lowAssignment = "";
@@ -183,6 +194,8 @@ public class GradingApplication implements Runnable
         List<String> distinctAssignmentNames = distinctAssignments(assignments);
         Map<String, List<Integer>> assignmentStatisticsMap = new HashMap<>();
 
+        applicationLogger.createLogEntry("Display Statistics for Each Assignment");
+
         for (Assignment assignment : assignments)
         {
             int score = assignment.getScore();
@@ -240,6 +253,8 @@ public class GradingApplication implements Runnable
     {
         List<Assignment> assignments = chooseFile();
 
+        applicationLogger.createLogEntry("Create Student Summary Report for " + selectedFile);
+
         reportsService.createStudentSummaryReport(parseStudentName(selectedFile), assignments);
     }
 
@@ -247,6 +262,8 @@ public class GradingApplication implements Runnable
     {
         String[] fileNames = gradesService.getFileNames();
         List<Assignment> assignments = gradesService.getAllAssignments(fileNames);
+
+        applicationLogger.createLogEntry("Create All Student Statistics Report");
 
         reportsService.createAllStudentsReport(assignments);
     }

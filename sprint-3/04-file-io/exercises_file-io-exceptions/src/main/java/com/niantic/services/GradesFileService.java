@@ -11,20 +11,23 @@ import java.util.Scanner;
 
 public class GradesFileService implements GradesService
 {
+    private LogService errorLogger = new LogService("error");
 
     @Override
     public String[] getFileNames()
     {
         String[] files = new String[0];
+        File directory = new File("files");
 
-        try {
-            File directory = new File("files");
+        try
+        {
             files = directory.list();
             Arrays.sort(files);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            errorLogger.createLogEntry(e.getMessage());
+            System.out.println("There was an error in finding the file names.");
         }
 
         return files;
@@ -58,7 +61,8 @@ public class GradesFileService implements GradesService
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            errorLogger.createLogEntry(e.getMessage());
+            System.out.println("There was an error in finding the assignments.");
         }
 
         return assignments;

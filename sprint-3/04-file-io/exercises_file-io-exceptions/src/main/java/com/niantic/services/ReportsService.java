@@ -15,6 +15,7 @@ import java.util.Map;
 public class ReportsService
 {
     private String reportFolder;
+    private LogService errorLogger = new LogService("error");
 
     public ReportsService(String reportFolder)
     {
@@ -67,7 +68,8 @@ public class ReportsService
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("There was an error creating the Student Summary Report." + e.getMessage());
+            errorLogger.createLogEntry(e.getMessage());
+            System.out.println("There was an error creating the Student Summary Report.");
         }
     }
 
@@ -142,7 +144,8 @@ public class ReportsService
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("There was an error creating the All Students Report." + e.getMessage());
+            errorLogger.createLogEntry(e.getMessage());
+            System.out.println("There was an error creating the All Students Report.");
         }
     }
 
