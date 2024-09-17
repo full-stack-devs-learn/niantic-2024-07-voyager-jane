@@ -91,32 +91,50 @@ public class ReportsService
         {
             out.println("All Assignments");
             out.println("-".repeat(60));
-            out.printf("Total Students                                         %d\n", studentTotal);
-            out.printf("Total Assignments                                      %d\n", assignments.size());
+            out.printf("Total Students                                           %d\n", studentTotal);
+            out.printf("Total Assignments                                        %d\n", assignments.size());
             out.println("-".repeat(60));
             out.println();
 
-            out.println("-".repeat(40));
-            out.printf("Low Score                          %d\n", stats.get(0));
-            out.println("-".repeat(40));
+            out.println("-".repeat(60));
+            out.printf("Low Score                                                %d\n", stats.get(0));
+            out.println("-".repeat(60));
             mapScores.get("low").forEach(assignment -> {
-                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+                String name = assignment.getFirstName() + " " + assignment.getLastName();
+
+                out.printf("%-3s %-30s %-21s %d\n",
+                        assignment.getNumber(),
+                        assignment.getAssignmentName(),
+                        name,
+                        assignment.getScore());
             });
             out.println();
 
-            out.println("-".repeat(40));
-            out.printf("High Score                         %d\n", stats.get(1));
-            out.println("-".repeat(40));
+            out.println("-".repeat(60));
+            out.printf("High Score                                               %d\n", stats.get(1));
+            out.println("-".repeat(60));
             mapScores.get("high").forEach(assignment -> {
-                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+                String name = assignment.getFirstName() + " " + assignment.getLastName();
+
+                out.printf("%-3s %-30s %-21s %d\n",
+                        assignment.getNumber(),
+                        assignment.getAssignmentName(),
+                        name,
+                        assignment.getScore());
             });
             out.println();
 
-            out.println("-".repeat(40));
-            out.printf("Average Score                      %d\n", stats.get(2));
-            out.println("-".repeat(40));
+            out.println("-".repeat(60));
+            out.printf("Average Score                                            %d\n", stats.get(2));
+            out.println("-".repeat(60));
             mapScores.get("avg").forEach(assignment -> {
-                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+                String name = assignment.getFirstName() + " " + assignment.getLastName();
+
+                out.printf("%-3s %-30s %-21s %d\n",
+                        assignment.getNumber(),
+                        assignment.getAssignmentName(),
+                        name,
+                        assignment.getScore());
             });
 
             System.out.println();
