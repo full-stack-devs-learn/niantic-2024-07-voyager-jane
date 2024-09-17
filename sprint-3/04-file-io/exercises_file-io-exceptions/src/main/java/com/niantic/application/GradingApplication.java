@@ -178,7 +178,7 @@ public class GradingApplication implements Runnable
         String[] files = gradesService.getFileNames();
         List<Assignment> assignments = gradesService.getAllAssignments(files);
 
-        List<String> allAssignmentNames = distinctAssignments(assignments);
+        List<String> distinctAssignmentNames = distinctAssignments(assignments);
         Map<String, List<Integer>> assignmentStatisticsMap = new HashMap<>();
 
         for (Assignment assignment : assignments)
@@ -215,7 +215,7 @@ public class GradingApplication implements Runnable
             }
         }
 
-        for (String assignmentName : allAssignmentNames)
+        for (String assignmentName : distinctAssignmentNames)
         {
             List<Integer> assignmentStats = assignmentStatisticsMap.get(assignmentName);
             int sum = assignmentStats.get(2);
