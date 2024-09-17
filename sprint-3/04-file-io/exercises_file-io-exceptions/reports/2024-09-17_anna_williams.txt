@@ -1,5 +1,22 @@
 anna williams
 ----------------------------------------
-Low Score:                          85
-High Score:                         95
-Average Score:                      89
+
+----------------------------------------
+Low Score                          85
+----------------------------------------
+1   Addition Practice              85
+13  Time Problems                  85
+
+----------------------------------------
+High Score                         95
+----------------------------------------
+4   Division Practice              95
+
+----------------------------------------
+Average Score                      89
+----------------------------------------
+2   Subtraction Practice           90
+3   Multiplication Practice        88
+7   Word Problems                  89
+11  Graphing                       88
+12  Probability                    90
