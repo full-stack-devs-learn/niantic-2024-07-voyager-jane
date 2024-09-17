@@ -1,6 +1,8 @@
 package com.niantic.services;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -24,11 +26,21 @@ public class LogService
         return new File(fileName);
     }
 
-    public void createLogEntry(String message)
+    public void createLogEntry(String entry)
     {
+        var file = getLogFile();
         LocalDate dateTime = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String entry = dateTime.format(dateTimeFormatter) + " " + message;
+
+        try (FileOutputStream stream = new FileOutputStream(file, true);
+             PrintWriter out = new PrintWriter(stream))
+        {
+            out.printf("%s %s\n", dateTime.format(dateTimeFormatter), entry);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error in Creating Log Entry: " + e.getMessage());
+        }
     }
 
     private void ensureDirectoryExists(String filePath)
