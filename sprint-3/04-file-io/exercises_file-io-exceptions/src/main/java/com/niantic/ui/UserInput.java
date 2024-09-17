@@ -1,7 +1,9 @@
 package com.niantic.ui;
 
 import com.niantic.application.GradingApplication;
+import com.niantic.models.Assignment;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInput
@@ -24,6 +26,10 @@ public class UserInput
         System.out.println("  4) All Students: display average score");
         System.out.println("  5) All Assignments: display average score");
         System.out.println();
+        System.out.println("  ---------- Writing Files ----------");
+        System.out.println("  6) Create Student Summary Report");
+        System.out.println("  7) Create All Students Report");
+        System.out.println();
         System.out.println("  0) Exit");
 
         System.out.println();
@@ -37,6 +43,24 @@ public class UserInput
         System.out.println();
         System.out.print("Please make a selection: ");
         return Integer.parseInt(in.nextLine());
+    }
+
+    public static void displayFileScores(List<Assignment> assignments, String selectedFile)
+    {
+        // printing student name
+        System.out.println();
+        System.out.printf(selectedFile);
+        System.out.println();
+        System.out.println("-".repeat(40));
+
+        // printing assignments & scores
+        System.out.printf("Assignment" + " ".repeat(24) + "Score");
+        System.out.println();
+        System.out.println("-".repeat(40));
+        assignments.forEach(assignment -> {
+            System.out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+        });
+        System.out.println();
     }
 
     public static void displayMessage(String message)

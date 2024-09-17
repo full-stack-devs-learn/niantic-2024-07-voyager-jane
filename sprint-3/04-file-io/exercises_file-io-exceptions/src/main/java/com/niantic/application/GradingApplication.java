@@ -3,6 +3,7 @@ package com.niantic.application;
 import com.niantic.models.Assignment;
 import com.niantic.services.GradesFileService;
 import com.niantic.services.GradesService;
+import com.niantic.services.ReportsService;
 import com.niantic.ui.UserInput;
 
 import java.util.*;
@@ -10,6 +11,7 @@ import java.util.*;
 public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
+    private ReportsService reportsService = new ReportsService("reports");
     private int countFile = 0;
     private String selectedFile;
 
@@ -38,6 +40,14 @@ public class GradingApplication implements Runnable
                     break;
                 case 5:
                     displayAssignmentStatistics();
+                    UserInput.displayUserContinue();
+                    break;
+                case 6:
+                    createStudentSummaryReport();
+                    UserInput.displayUserContinue();
+                    break;
+                case 7:
+                    createAllStudentsReport();
                     UserInput.displayUserContinue();
                     break;
                 case 0:
@@ -75,15 +85,7 @@ public class GradingApplication implements Runnable
         System.out.println();
         List<Assignment> assignments = chooseFile();
 
-        // printing assignments
-        System.out.printf("Assignment" + " ".repeat(20) + "Score");
-        System.out.println();
-        System.out.println("-".repeat(35));
-        assignments.forEach(assignment -> {
-            System.out.println();
-            System.out.printf("%-30s %d", assignment.getAssignmentName(), assignment.getScore());
-        });
-        System.out.println();
+        UserInput.displayFileScores(assignments, parseStudentName(selectedFile).toUpperCase());
     }
 
     private void displayStudentAverages()
@@ -234,6 +236,21 @@ public class GradingApplication implements Runnable
         }
     }
 
+    private void createStudentSummaryReport()
+    {
+        List<Assignment> assignments = chooseFile();
+
+        reportsService.createStudentSummaryReport(parseStudentName(selectedFile), assignments);
+    }
+
+    private void createAllStudentsReport()
+    {
+        String[] fileNames = gradesService.getFileNames();
+        List<Assignment> assignments = gradesService.getAllAssignments(fileNames);
+
+        reportsService.createAllStudentsReport(assignments);
+    }
+
     private List<Assignment> fileSelectionCase()
     {
         while(true)
@@ -263,14 +280,7 @@ public class GradingApplication implements Runnable
         displayAllFiles();
 
         // choose file and returning list of assignments
-        System.out.println();
         List<Assignment> assignments = fileSelectionCase();
-
-        // printing student name
-        System.out.println();
-        System.out.printf(parseStudentName(selectedFile).toUpperCase());
-        System.out.println();
-        System.out.println("-".repeat(35));
 
         return assignments;
     }
