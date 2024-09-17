@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogService
@@ -29,7 +30,7 @@ public class LogService
     public void createLogEntry(String entry)
     {
         var file = getLogFile();
-        LocalDate dateTime = LocalDate.now();
+        LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         try (FileOutputStream stream = new FileOutputStream(file, true);

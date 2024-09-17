@@ -58,7 +58,10 @@ public class UserInput
         System.out.println();
         System.out.println("-".repeat(40));
         assignments.forEach(assignment -> {
-            System.out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            System.out.printf("%-3s %-30s %d\n",
+                    assignment.getNumber(),
+                    assignment.getAssignmentName(),
+                    assignment.getScore());
         });
         System.out.println();
     }
