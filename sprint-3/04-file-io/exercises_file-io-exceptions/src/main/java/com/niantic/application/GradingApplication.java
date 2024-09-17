@@ -5,8 +5,7 @@ import com.niantic.services.GradesFileService;
 import com.niantic.services.GradesService;
 import com.niantic.ui.UserInput;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class GradingApplication implements Runnable
 {
@@ -48,47 +47,6 @@ public class GradingApplication implements Runnable
                     UserInput.displayMessage("Please make a valid selection");
             }
         }
-    }
-
-    private List<Assignment> fileSelectionCase()
-    {
-        while(true)
-        {
-            int choice = UserInput.studentFileSelection();
-            switch(choice)
-            {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    String fileName = gradesService.getFileNames()[choice - 1];
-                    selectedFile = fileName;
-                    return gradesService.getAssignments(fileName);
-                default:
-                    UserInput.displayMessage("Please make a valid selection");
-            }
-        }
-    }
-
-    private List<Assignment> chooseFile()
-    {
-        System.out.println();
-        System.out.println("What file would you like to choose?");
-        System.out.println("-".repeat(35));
-        displayAllFiles();
-
-        // choose file and returning list of assignments
-        System.out.println();
-        List<Assignment> assignments = fileSelectionCase();
-
-        // printing student name
-        System.out.println();
-        System.out.printf(parseStudentName(selectedFile).toUpperCase());
-        System.out.println();
-        System.out.println("-".repeat(35));
-
-        return assignments;
     }
 
     private void displayAllFiles()
@@ -217,6 +175,119 @@ public class GradingApplication implements Runnable
         // todo: 5 - Optional / Challenge - load all scores from all student and all assignments
         // display the statistics for each assignment (assignment name, low score, high score, average score)
         // this one could take some time
+        String[] files = gradesService.getFileNames();
+        List<Assignment> assignments = gradesService.getAllAssignments(files);
+
+        List<String> allAssignmentNames = distinctAssignments(assignments);
+        Map<String, List<Integer>> assignmentStatisticsMap = new HashMap<>();
+        Map<String, Integer> countOccurrence = new HashMap<>();
+
+        for (Assignment assignment : assignments)
+        {
+            int score = assignment.getScore();
+            String name = assignment.getAssignmentName();
+
+            if (!assignmentStatisticsMap.containsKey(name))
+            {
+                List<Integer> initiate = new ArrayList<>() {{
+                    add(Integer.MAX_VALUE);
+                    add(0);
+                    add(0);
+                }};
+
+                assignmentStatisticsMap.put(name, initiate);
+            }
+            else
+            {
+                List<Integer> check = assignmentStatisticsMap.get(name);
+
+                // checking min
+                if (score < check.get(0))
+                {
+                    check.set(0, score);
+                }
+
+                // checking max
+                if (score > check.get(1))
+                {
+                    check.set(1, score);
+                }
+
+                // tracking for average
+                check.set(2, check.get(2) + score);
+                int assignmentCount = countOccurrence.getOrDefault(name, 0);
+                countOccurrence.put(name, assignmentCount + 1);
+            }
+        }
+
+        for (String assignmentName : allAssignmentNames)
+        {
+            int numRepeat = countOccurrence.get(assignmentName);
+            List<Integer> assignmentStats = assignmentStatisticsMap.get(assignmentName);
+            int sum = assignmentStats.get(2);
+
+            // calculating average
+            assignmentStats.set(2, sum / numRepeat);
+
+            // print statistics per distinct assignment
+            System.out.println();
+            System.out.println("Assignment: " + assignmentName);
+            System.out.println("-".repeat(35));
+            System.out.println("Low Score: " + assignmentStats.get(0));
+            System.out.println("High Score: " + assignmentStats.get(1));
+            System.out.println("Average Score: " + assignmentStats.get(2));
+        }
+    }
+
+    private List<Assignment> fileSelectionCase()
+    {
+        while(true)
+        {
+            int choice = UserInput.studentFileSelection();
+            switch(choice)
+            {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    String fileName = gradesService.getFileNames()[choice - 1];
+                    selectedFile = fileName;
+                    return gradesService.getAssignments(fileName);
+                default:
+                    UserInput.displayMessage("Please make a valid selection");
+            }
+        }
+    }
+
+    private List<Assignment> chooseFile()
+    {
+        System.out.println();
+        System.out.println("What file would you like to choose?");
+        System.out.println("-".repeat(35));
+        displayAllFiles();
+
+        // choose file and returning list of assignments
+        System.out.println();
+        List<Assignment> assignments = fileSelectionCase();
+
+        // printing student name
+        System.out.println();
+        System.out.printf(parseStudentName(selectedFile).toUpperCase());
+        System.out.println();
+        System.out.println("-".repeat(35));
+
+        return assignments;
+    }
+
+    private List<String> distinctAssignments(List<Assignment> assignments)
+    {
+        List<String> distinct = assignments.stream()
+                .map(assignment -> assignment.getAssignmentName())
+                .distinct()
+                .toList();
+
+        return distinct;
     }
 
     private String parseStudentName(String fileName)
