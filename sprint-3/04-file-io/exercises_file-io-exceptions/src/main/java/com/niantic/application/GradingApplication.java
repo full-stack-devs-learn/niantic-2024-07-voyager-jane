@@ -180,19 +180,21 @@ public class GradingApplication implements Runnable
 
         List<String> allAssignmentNames = distinctAssignments(assignments);
         Map<String, List<Integer>> assignmentStatisticsMap = new HashMap<>();
-        Map<String, Integer> countOccurrence = new HashMap<>();
 
         for (Assignment assignment : assignments)
         {
             int score = assignment.getScore();
             String name = assignment.getAssignmentName();
 
+            // Key: String assignmentName
+            // Value: List<Integer> [min, max, sum, count]
             if (!assignmentStatisticsMap.containsKey(name))
             {
                 List<Integer> initiate = new ArrayList<>() {{
-                    add(Integer.MAX_VALUE);
-                    add(0);
-                    add(0);
+                    add(score);
+                    add(score);
+                    add(score);
+                    add(1);
                 }};
 
                 assignmentStatisticsMap.put(name, initiate);
@@ -215,19 +217,18 @@ public class GradingApplication implements Runnable
 
                 // tracking for average
                 check.set(2, check.get(2) + score);
-                int assignmentCount = countOccurrence.getOrDefault(name, 0);
-                countOccurrence.put(name, assignmentCount + 1);
+                check.set(3, check.get(3) + 1);
             }
         }
 
         for (String assignmentName : allAssignmentNames)
         {
-            int numRepeat = countOccurrence.get(assignmentName);
             List<Integer> assignmentStats = assignmentStatisticsMap.get(assignmentName);
             int sum = assignmentStats.get(2);
+            int countName = assignmentStats.get(3);
 
             // calculating average
-            assignmentStats.set(2, sum / numRepeat);
+            assignmentStats.set(2, sum / countName);
 
             // print statistics per distinct assignment
             System.out.println();
