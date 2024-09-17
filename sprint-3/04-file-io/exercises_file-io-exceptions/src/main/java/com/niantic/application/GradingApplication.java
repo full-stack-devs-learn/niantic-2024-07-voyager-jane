@@ -204,16 +204,10 @@ public class GradingApplication implements Runnable
                 List<Integer> check = assignmentStatisticsMap.get(name);
 
                 // checking min
-                if (score < check.get(0))
-                {
-                    check.set(0, score);
-                }
+                if (score < check.get(0)) check.set(0, score);
 
                 // checking max
-                if (score > check.get(1))
-                {
-                    check.set(1, score);
-                }
+                if (score > check.get(1)) check.set(1, score);
 
                 // tracking for average
                 check.set(2, check.get(2) + score);
