@@ -8,7 +8,9 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportsService
 {
@@ -29,19 +31,43 @@ public class ReportsService
 
         File file = new File(fileName);
         List<Integer> stats = calculateStatistics(assignments);
+        Map<String, List<Assignment>> mapScores = mapAssignmentsToStatistics(stats, assignments);
 
         try (PrintWriter out = new PrintWriter(file))
         {
             out.println(name);
             out.println("-".repeat(40));
+            out.println();
+
+            out.println("-".repeat(40));
             out.printf("Low Score                          %d\n", stats.get(0));
+            out.println("-".repeat(40));
+            mapScores.get("low").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+            out.println();
+
+            out.println("-".repeat(40));
             out.printf("High Score                         %d\n", stats.get(1));
+            out.println("-".repeat(40));
+            mapScores.get("high").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+            out.println();
+
+            out.println("-".repeat(40));
             out.printf("Average Score                      %d\n", stats.get(2));
+            out.println("-".repeat(40));
+            mapScores.get("avg").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+
+            System.out.println();
             System.out.println("Student Summary Report created!");
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("There was an error creating the Student Summary Report.");
+            System.out.println("There was an error creating the Student Summary Report." + e.getMessage());
         }
     }
 
@@ -53,6 +79,8 @@ public class ReportsService
 
         File file = new File(fileName);
         List<Integer> stats = calculateStatistics(assignments);
+        Map<String, List<Assignment>> mapScores = mapAssignmentsToStatistics(stats, assignments);
+
         int studentTotal = assignments.stream()
                 .map(assignment -> new String(assignment.getFirstName() + " " + assignment.getLastName()))
                 .distinct()
@@ -66,14 +94,37 @@ public class ReportsService
             out.printf("Total Students                                         %d\n", studentTotal);
             out.printf("Total Assignments                                      %d\n", assignments.size());
             out.println("-".repeat(60));
-            out.printf("Low Score                                              %d\n", stats.get(0));
-            out.printf("High Score                                             %d\n", stats.get(1));
-            out.printf("Average Score                                          %d\n", stats.get(2));
+            out.println();
+
+            out.println("-".repeat(40));
+            out.printf("Low Score                          %d\n", stats.get(0));
+            out.println("-".repeat(40));
+            mapScores.get("low").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+            out.println();
+
+            out.println("-".repeat(40));
+            out.printf("High Score                         %d\n", stats.get(1));
+            out.println("-".repeat(40));
+            mapScores.get("high").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+            out.println();
+
+            out.println("-".repeat(40));
+            out.printf("Average Score                      %d\n", stats.get(2));
+            out.println("-".repeat(40));
+            mapScores.get("avg").forEach(assignment -> {
+                out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+            });
+
+            System.out.println();
             System.out.println("Student Summary Report created!");
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("There was an error creating the All Students Report.");
+            System.out.println("There was an error creating the All Students Report." + e.getMessage());
         }
     }
 
@@ -90,6 +141,29 @@ public class ReportsService
         }};
 
         return stats;
+    }
+
+    private Map<String, List<Assignment>> mapAssignmentsToStatistics(List<Integer> stats, List<Assignment> assignments)
+    {
+        List<Assignment> lowAssignments = new ArrayList<>();
+        List<Assignment> highAssignments = new ArrayList<>();
+        List<Assignment> avgAssignments = new ArrayList<>();
+
+        assignments.forEach(assignment -> {
+            int score = assignment.getScore();
+
+            if (score == stats.get(0)) lowAssignments.add(assignment);
+            if (score == stats.get(1)) highAssignments.add(assignment);
+            if (score == stats.get(2) || score == stats.get(2) - 1 || score == stats.get(2) + 1) avgAssignments.add(assignment);
+        });
+
+        Map<String, List<Assignment>> mapScores = new HashMap<>() {{
+            put("low", lowAssignments);
+            put("high", highAssignments);
+            put("avg", avgAssignments);
+        }};
+
+        return mapScores;
     }
 
     private void ensureDirectoryExists(String filePath)
