@@ -15,9 +15,17 @@ public class GradesFileService implements GradesService
     @Override
     public String[] getFileNames()
     {
-        File directory = new File("files");
-        String[] files = directory.list();
-        Arrays.sort(files);
+        String[] files = new String[0];
+
+        try {
+            File directory = new File("files");
+            files = directory.list();
+            Arrays.sort(files);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
         return files;
     }
