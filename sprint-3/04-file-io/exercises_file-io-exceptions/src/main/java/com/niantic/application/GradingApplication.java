@@ -12,8 +12,6 @@ public class GradingApplication implements Runnable
     private ReportsService reportsService = new ReportsService("reports");
     private StatisticsService statsService = new StatisticsService();
     private LogService applicationLogger = new LogService("application");
-
-    private int countFile = 0;
     private String selectedFile;
 
     public void run()
