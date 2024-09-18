@@ -1,10 +1,7 @@
 package com.niantic.application;
 
 import com.niantic.models.Assignment;
-import com.niantic.services.GradesFileService;
-import com.niantic.services.GradesService;
-import com.niantic.services.LogService;
-import com.niantic.services.ReportsService;
+import com.niantic.services.*;
 import com.niantic.ui.UserInput;
 
 import java.util.*;
@@ -13,6 +10,7 @@ public class GradingApplication implements Runnable
 {
     private GradesService gradesService = new GradesFileService();
     private ReportsService reportsService = new ReportsService("reports");
+    private StatisticsService statsService = new StatisticsService();
     private LogService applicationLogger = new LogService("application");
 
     private int countFile = 0;
@@ -66,20 +64,10 @@ public class GradingApplication implements Runnable
     {
         // todo: 1 - get and display all student file names
         String[] files = gradesService.getFileNames();
-        countFile = 0;
 
         applicationLogger.createLogEntry("Display List of Files");
 
-        System.out.println();
-        System.out.println("File Names");
-        System.out.println("-".repeat(35));
-
-        Arrays.stream(files)
-                .forEach(file ->
-                {
-                    countFile++;
-                    System.out.println(String.format("  %d.) %s", countFile, file));
-                });
+        UserInput.displayAllFiles(files);
     }
 
     private void displayFileScores()
@@ -92,7 +80,7 @@ public class GradingApplication implements Runnable
 
         applicationLogger.createLogEntry("Display Student Assignments and Scores for " + selectedFile);
 
-        UserInput.displayFileScores(assignments, parseStudentName(selectedFile).toUpperCase());
+        UserInput.displayStudentScores(assignments, parseStudentName(selectedFile));
     }
 
     private void displayStudentAverages()
@@ -104,25 +92,9 @@ public class GradingApplication implements Runnable
 
         applicationLogger.createLogEntry("Display Student Statistics for " + selectedFile);
 
-        // Calculating Statistics
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        int avg = 0;
+        List<Integer> stats = statsService.calculateStatistics(assignments);
 
-        for (Assignment assignment : assignments)
-        {
-            int score = assignment.getScore();
-            if (score < min) min = score;
-            if (score > max) max = score;
-            avg += score;
-        }
-
-        avg = avg / assignments.size();
-
-        // Print Statistics
-        System.out.println("Low Score: " + min);
-        System.out.println("High Score: " + max);
-        System.out.println("Average Score: " + avg);
+        UserInput.displayStudentAverages(parseStudentName(selectedFile), stats);
     }
 
     private void displayAllStudentStatistics()

@@ -15,6 +15,7 @@ import java.util.Map;
 public class ReportsService
 {
     private String reportFolder;
+    private StatisticsService statService = new StatisticsService();
     private LogService errorLogger = new LogService("error");
 
     public ReportsService(String reportFolder)
@@ -31,8 +32,8 @@ public class ReportsService
         String fileName = "reports/" + today.format(dateFormatter) + "_" + name.replace(" ", "_") + ".txt";
 
         File file = new File(fileName);
-        List<Integer> stats = calculateStatistics(assignments);
-        Map<String, List<Assignment>> mapScores = mapAssignmentsToStatistics(stats, assignments);
+        List<Integer> stats = statService.calculateStatistics(assignments);
+        Map<String, List<Assignment>> mapScores = statService.mapAssignmentsToStatistics(stats, assignments);
 
         try (PrintWriter out = new PrintWriter(file))
         {
@@ -64,12 +65,12 @@ public class ReportsService
             });
 
             System.out.println();
-            System.out.println("Student Summary Report created!");
+            System.out.println("Student Summary Report created for " + name);
         }
         catch (FileNotFoundException e)
         {
             errorLogger.createLogEntry(e.getMessage());
-            System.out.println("There was an error creating the Student Summary Report.");
+            System.out.println("There was an error creating the Student Summary Report for " + name);
         }
     }
 
@@ -80,8 +81,8 @@ public class ReportsService
         String fileName = "reports/" + today.format(dateFormatter) + "_all_students.txt";
 
         File file = new File(fileName);
-        List<Integer> stats = calculateStatistics(assignments);
-        Map<String, List<Assignment>> mapScores = mapAssignmentsToStatistics(stats, assignments);
+        List<Integer> stats = statService.calculateStatistics(assignments);
+        Map<String, List<Assignment>> mapScores = statService.mapAssignmentsToStatistics(stats, assignments);
 
         int studentTotal = assignments.stream()
                 .map(assignment -> new String(assignment.getFirstName() + " " + assignment.getLastName()))
@@ -140,51 +141,13 @@ public class ReportsService
             });
 
             System.out.println();
-            System.out.println("Student Summary Report created!");
+            System.out.println("All Students Report created!");
         }
         catch (FileNotFoundException e)
         {
             errorLogger.createLogEntry(e.getMessage());
             System.out.println("There was an error creating the All Students Report.");
         }
-    }
-
-    private List<Integer> calculateStatistics(List<Assignment> assignments)
-    {
-        int lowScore = assignments.stream().mapToInt(Assignment::getScore).min().getAsInt();
-        int highScore = assignments.stream().mapToInt(Assignment::getScore).max().getAsInt();
-        int avgScore = assignments.stream().mapToInt(Assignment::getScore).sum() / assignments.size();
-
-        List<Integer> stats = new ArrayList<>() {{
-            add(lowScore);
-            add(highScore);
-            add(avgScore);
-        }};
-
-        return stats;
-    }
-
-    private Map<String, List<Assignment>> mapAssignmentsToStatistics(List<Integer> stats, List<Assignment> assignments)
-    {
-        List<Assignment> lowAssignments = new ArrayList<>();
-        List<Assignment> highAssignments = new ArrayList<>();
-        List<Assignment> avgAssignments = new ArrayList<>();
-
-        assignments.forEach(assignment -> {
-            int score = assignment.getScore();
-
-            if (score == stats.get(0)) lowAssignments.add(assignment);
-            if (score == stats.get(1)) highAssignments.add(assignment);
-            if (score == stats.get(2) || score == stats.get(2) - 1 || score == stats.get(2) + 1) avgAssignments.add(assignment);
-        });
-
-        Map<String, List<Assignment>> mapScores = new HashMap<>() {{
-            put("low", lowAssignments);
-            put("high", highAssignments);
-            put("avg", avgAssignments);
-        }};
-
-        return mapScores;
     }
 
     private void ensureDirectoryExists(String filePath)
