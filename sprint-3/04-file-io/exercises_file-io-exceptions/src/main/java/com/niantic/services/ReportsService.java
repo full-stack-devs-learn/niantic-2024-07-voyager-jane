@@ -16,6 +16,7 @@ public class ReportsService
     private String reportFolder;
     private StatisticsService statService = new StatisticsService();
     private LogService errorLogger = new LogService("error");
+    private GradesService gradesService = new GradesFileService();
 
     public ReportsService(String reportFolder)
     {
@@ -89,12 +90,14 @@ public class ReportsService
                 .toList()
                 .size();
 
+        int distinctAssignments = gradesService.distinctAssignments(assignments).size();
+
         try (PrintWriter out = new PrintWriter(file))
         {
             out.println("All Assignments");
             out.println("-".repeat(60));
             out.printf("Total Students                                           %d\n", studentTotal);
-            out.printf("Total Assignments                                        %d\n", assignments.size());
+            out.printf("Total Assignments                                        %d\n", distinctAssignments);
             out.println("-".repeat(60));
             out.println();
 
