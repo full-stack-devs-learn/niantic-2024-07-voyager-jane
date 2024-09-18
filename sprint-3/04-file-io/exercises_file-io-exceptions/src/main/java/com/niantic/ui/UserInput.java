@@ -157,6 +157,7 @@ public class UserInput
     {
         // print student name
         System.out.println();
+        System.out.println();
         System.out.println(selectedFile.toUpperCase());
         System.out.println("-".repeat(40));
     }
@@ -164,10 +165,21 @@ public class UserInput
     public static void displayAllStudentsHeader(int studentTotal, int assignmentTotal)
     {
         System.out.println();
+        System.out.println();
         System.out.println("All Assignments");
         System.out.println("-".repeat(60));
         System.out.printf("Total Students                                           %d\n", studentTotal);
         System.out.printf("Total Assignments                                        %d\n", assignmentTotal);
+        System.out.println("-".repeat(60));
+    }
+
+    public static void displayAssignmentHeader(String assignmentName, int studentTotal)
+    {
+        System.out.println();
+        System.out.println();
+        System.out.println(assignmentName.toUpperCase());
+        System.out.println("-".repeat(60));
+        System.out.printf("Total Students                                           %d\n", studentTotal);
         System.out.println("-".repeat(60));
     }
 

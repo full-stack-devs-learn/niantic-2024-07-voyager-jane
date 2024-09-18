@@ -4,10 +4,7 @@ import com.niantic.models.Assignment;
 
 import java.io.File;
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class GradesFileService implements GradesService
 {
@@ -79,5 +76,32 @@ public class GradesFileService implements GradesService
         }
 
         return allAssignments;
+    }
+
+    @Override
+    public Map<String, List<Assignment>> distinctAssignments(List<Assignment> assignments)
+    {
+        Map<String, List<Assignment>> mapAssignments = new LinkedHashMap<>();
+
+//        List<String> distinct = assignments.stream()
+//                .map(assignment -> assignment.getAssignmentName())
+//                .distinct()
+//                .toList();
+
+        for (Assignment assignment : assignments)
+        {
+            String name = assignment.getAssignmentName();
+
+            if (!mapAssignments.containsKey(name))
+            {
+                mapAssignments.put(name, new ArrayList<>());
+            }
+            else
+            {
+                mapAssignments.get(name).add(assignment);
+            }
+        }
+
+        return mapAssignments;
     }
 }
