@@ -115,7 +115,7 @@ public class MySqlProductDao implements ProductDao
                     , units_on_order
                     , reorder_level
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -137,5 +137,30 @@ public class MySqlProductDao implements ProductDao
         int newId = keyHolder.getKey().intValue();
 
         return getProductById(newId);
+    }
+
+    @Override
+    public void updateProduct(int productId, Product product) {
+        String sql = """
+                UPDATE PRODUCTS
+                SET category_id = ?
+                    , product_name = ?
+                    , quantity_per_unit = ?
+                    , unit_price = ?
+                    , units_in_stock = ?
+                    , units_on_order = ?
+                    , reorder_level = ?
+                WHERE product_id = ?;
+                """;
+
+        jdbcTemplate.update(sql,
+                product.getCategoryId(),
+                product.getProductName(),
+                product.getQuantityPerUnit(),
+                product.getUnitPrice(),
+                product.getUnitsInStock(),
+                product.getUnitsOnOrder(),
+                product.getReorderLevel(),
+                productId);
     }
 }
