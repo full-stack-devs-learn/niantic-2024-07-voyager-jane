@@ -3,8 +3,11 @@ package com.niantic.services;
 import com.niantic.models.Product;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,5 +100,40 @@ public class MySqlProductDao implements ProductDao
         }
 
         return product;
+    }
+
+    @Override
+    public Product addProduct(Product product)
+    {
+        String sql = """
+                INSERT INTO products (
+                    category_id
+                    , product_name
+                    , quantity_per_unit
+                    , unit_price
+                    , units_in_stock
+                    , units_ons_order
+                    , reorder_level
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, product.getCategoryId());
+            statement.setString(2, product.getProductName());
+            statement.setString(3, product.getQuantityPerUnit());
+            statement.setDouble(4, product.getUnitPrice());
+            statement.setInt(5, product.getUnitsInStock());
+            statement.setInt(1, product.getUnitsOnOrder());
+            statement.setInt(1, product.getReorderLevel());
+            return statement;
+        }, keyHolder);
+
+        int newId = keyHolder.getKey().intValue();
+
+        return getProductById(newId);
     }
 }
