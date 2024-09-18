@@ -1,6 +1,7 @@
 package com.niantic.ui;
 
 import com.niantic.models.Assignment;
+import com.niantic.services.LogService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class UserInput
 {
     protected static Scanner in = new Scanner(System.in);
+    private static LogService errorLogger = new LogService("error");
     private static int countFile;
 
     public static int homeScreenSelection()
@@ -37,14 +39,34 @@ public class UserInput
         System.out.println();
         System.out.print("Please make a selection: ");
 
-        return Integer.parseInt(in.nextLine());
+        try {
+            return Integer.parseInt(in.nextLine());
+        }
+        catch (Exception e) {
+            UserInput.displayMessage("Please make a valid selection");
+            displayUserContinue();
+
+            errorLogger.createLogEntry(e.getMessage());
+
+            return 1000;
+        }
     }
 
     public static int studentFileSelection()
     {
         System.out.println();
         System.out.print("Please make a selection: ");
-        return Integer.parseInt(in.nextLine());
+        try {
+            return Integer.parseInt(in.nextLine());
+        }
+        catch (Exception e) {
+            UserInput.displayMessage("Please make a valid selection");
+            displayUserContinue();
+
+            errorLogger.createLogEntry(e.getMessage());
+
+            return 1000;
+        }
     }
 
     public static void displayAllFiles(String[] files)
@@ -158,7 +180,7 @@ public class UserInput
         // print student name
         System.out.println();
         System.out.println();
-        System.out.println(selectedFile.toUpperCase());
+        System.out.println("Student: " + selectedFile.toUpperCase());
         System.out.println("-".repeat(40));
     }
 
@@ -177,7 +199,7 @@ public class UserInput
     {
         System.out.println();
         System.out.println();
-        System.out.println(assignmentName.toUpperCase());
+        System.out.println("Assignment: " + assignmentName.toUpperCase());
         System.out.println("-".repeat(60));
         System.out.printf("Total Students                                           %d\n", studentTotal);
         System.out.println("-".repeat(60));
@@ -191,8 +213,14 @@ public class UserInput
 
     public static void displayUserContinue()
     {
-        System.out.println();
-        System.out.print("Press ENTER to continue.");
-        in.nextLine();
+        try {
+            System.out.println();
+            System.out.print("Press ENTER to continue.");
+            in.nextLine();
+        }
+        catch (Exception e) {
+            errorLogger.createLogEntry(e.getMessage());
+            UserInput.displayMessage("Please make a valid selection");
+        }
     }
 }

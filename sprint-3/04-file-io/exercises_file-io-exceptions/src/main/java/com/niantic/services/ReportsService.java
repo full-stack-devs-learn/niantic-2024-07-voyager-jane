@@ -1,6 +1,7 @@
 package com.niantic.services;
 
 import com.niantic.models.Assignment;
+import com.niantic.ui.UserInput;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,7 +69,7 @@ public class ReportsService
         catch (FileNotFoundException e)
         {
             errorLogger.createLogEntry(e.getMessage());
-            System.out.println("There was an error creating the Student Summary Report for " + name);
+            UserInput.displayMessage("There was an error creating the Student Summary Report for " + name);
         }
     }
 
@@ -144,7 +145,7 @@ public class ReportsService
         catch (FileNotFoundException e)
         {
             errorLogger.createLogEntry(e.getMessage());
-            System.out.println("There was an error creating the All Students Report.");
+            UserInput.displayMessage("There was an error creating the All Students Report.");
         }
     }
 

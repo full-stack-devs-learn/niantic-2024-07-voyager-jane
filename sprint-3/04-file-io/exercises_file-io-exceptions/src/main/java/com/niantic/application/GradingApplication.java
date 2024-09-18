@@ -141,61 +141,6 @@ public class GradingApplication implements Runnable
             UserInput.displayAllStudentsStatistics(stats, mapStatsToAssignments);
             UserInput.displayUserContinue();
         }
-
-
-//        Map<String, List<Integer>> assignmentStatisticsMap = new HashMap<>();
-
-//        for (Assignment assignment : assignments)
-//        {
-//            int score = assignment.getScore();
-//            String name = assignment.getAssignmentName();
-//
-//            // Key: String assignmentName
-//            // Value: List<Integer> [min, max, sum, count]
-//            if (!assignmentStatisticsMap.containsKey(name))
-//            {
-//                List<Integer> initiate = new ArrayList<>() {{
-//                    add(score);
-//                    add(score);
-//                    add(score);
-//                    add(1);
-//                }};
-//
-//                assignmentStatisticsMap.put(name, initiate);
-//            }
-//            else
-//            {
-//                List<Integer> check = assignmentStatisticsMap.get(name);
-//
-//                // checking min
-//                if (score < check.get(0)) check.set(0, score);
-//
-//                // checking max
-//                if (score > check.get(1)) check.set(1, score);
-//
-//                // tracking for average
-//                check.set(2, check.get(2) + score);
-//                check.set(3, check.get(3) + 1);
-//            }
-//        }
-//
-//        for (String assignmentName : distinctAssignmentNames)
-//        {
-//            List<Integer> assignmentStats = assignmentStatisticsMap.get(assignmentName);
-//            int sum = assignmentStats.get(2);
-//            int countName = assignmentStats.get(3);
-//
-//            // calculating average
-//            assignmentStats.set(2, sum / countName);
-//
-//            // print statistics per distinct assignment
-//            System.out.println();
-//            System.out.println("Assignment: " + assignmentName);
-//            System.out.println("-".repeat(35));
-//            System.out.println("Low Score: " + assignmentStats.get(0));
-//            System.out.println("High Score: " + assignmentStats.get(1));
-//            System.out.println("Average Score: " + assignmentStats.get(2));
-//        }
     }
 
     private void createStudentSummaryReport()
@@ -221,6 +166,9 @@ public class GradingApplication implements Runnable
     {
         while(true)
         {
+            displayAllFiles();
+            UserInput.displayMessage("What file would you like to choose?");
+
             int choice = UserInput.studentFileSelection();
             switch(choice)
             {
@@ -240,9 +188,6 @@ public class GradingApplication implements Runnable
 
     private List<Assignment> chooseFile()
     {
-        UserInput.displayMessage("What file would you like to choose?");
-        displayAllFiles();
-
         // choose file and returning list of assignments
         List<Assignment> assignments = fileSelectionCase();
 

@@ -1,6 +1,7 @@
 package com.niantic.services;
 
 import com.niantic.models.Assignment;
+import com.niantic.ui.UserInput;
 
 import java.io.File;
 import java.sql.Array;
@@ -24,7 +25,7 @@ public class GradesFileService implements GradesService
         catch (Exception e)
         {
             errorLogger.createLogEntry(e.getMessage());
-            System.out.println("There was an error in finding the file names.");
+            UserInput.displayMessage("There was an error in finding the file names.");
         }
 
         return files;
@@ -59,7 +60,7 @@ public class GradesFileService implements GradesService
         catch (Exception e)
         {
             errorLogger.createLogEntry(e.getMessage());
-            System.out.println("There was an error in finding the assignments.");
+            UserInput.displayMessage("There was an error in finding the assignments.");
         }
 
         return assignments;
