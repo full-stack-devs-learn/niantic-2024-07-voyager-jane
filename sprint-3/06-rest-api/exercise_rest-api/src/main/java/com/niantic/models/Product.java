@@ -11,7 +11,7 @@ public class Product
     private int unitsOnOrder;
     private int reorderLevel;
 
-    public Product(){}
+    public Product() {}
 
     public Product(int productId, int categoryId, String productName, String quantityPerUnit, double unitPrice, int unitsInStock, int unitsOnOrder, int reorderLevel)
     {
