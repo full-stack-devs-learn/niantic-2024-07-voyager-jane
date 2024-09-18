@@ -21,7 +21,7 @@ public class ProductsController
         return productDao.getProductsByCategory(catId);
     }
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/api/products/{productId}")
     public Product getProductById(@PathVariable int productId)
     {
         return productDao.getProductById(productId);
