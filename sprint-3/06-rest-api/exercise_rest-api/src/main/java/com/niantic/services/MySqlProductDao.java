@@ -112,7 +112,7 @@ public class MySqlProductDao implements ProductDao
                     , quantity_per_unit
                     , unit_price
                     , units_in_stock
-                    , units_ons_order
+                    , units_on_order
                     , reorder_level
                 )
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -122,13 +122,15 @@ public class MySqlProductDao implements ProductDao
 
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
             statement.setInt(1, product.getCategoryId());
             statement.setString(2, product.getProductName());
             statement.setString(3, product.getQuantityPerUnit());
             statement.setDouble(4, product.getUnitPrice());
             statement.setInt(5, product.getUnitsInStock());
-            statement.setInt(1, product.getUnitsOnOrder());
-            statement.setInt(1, product.getReorderLevel());
+            statement.setInt(6, product.getUnitsOnOrder());
+            statement.setInt(7, product.getReorderLevel());
+
             return statement;
         }, keyHolder);
 
