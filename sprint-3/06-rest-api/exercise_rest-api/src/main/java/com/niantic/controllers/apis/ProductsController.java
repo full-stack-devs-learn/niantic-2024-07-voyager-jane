@@ -36,6 +36,8 @@ public class ProductsController
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@PathVariable int productId, @RequestBody Product product)
     {
+        // overwrites so if you want to only update certain parts,
+        // make sure to also add old info for other columns
         productDao.updateProduct(productId, product);
     }
 }
