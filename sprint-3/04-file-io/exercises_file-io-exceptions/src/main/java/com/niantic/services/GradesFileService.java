@@ -83,12 +83,7 @@ public class GradesFileService implements GradesService
     public Map<String, List<Assignment>> distinctAssignments(List<Assignment> assignments)
     {
         Map<String, List<Assignment>> mapAssignments = new LinkedHashMap<>();
-
-//        List<String> distinct = assignments.stream()
-//                .map(assignment -> assignment.getAssignmentName())
-//                .distinct()
-//                .toList();
-
+        
         for (Assignment assignment : assignments)
         {
             String name = assignment.getAssignmentName();
