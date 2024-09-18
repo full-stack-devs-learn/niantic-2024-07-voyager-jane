@@ -40,4 +40,11 @@ public class ProductsController
         // make sure to also add old info for other columns
         productDao.updateProduct(productId, product);
     }
+
+    @DeleteMapping("/api/products/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable int productId)
+    {
+        productDao.deleteProduct(productId);
+    }
 }

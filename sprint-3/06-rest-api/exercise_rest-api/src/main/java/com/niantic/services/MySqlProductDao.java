@@ -163,4 +163,14 @@ public class MySqlProductDao implements ProductDao
                 product.getReorderLevel(),
                 productId);
     }
+
+    @Override
+    public void deleteProduct(int productId) {
+        String sql = """
+                DELETE FROM products
+                WHERE product_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, productId);
+    }
 }
