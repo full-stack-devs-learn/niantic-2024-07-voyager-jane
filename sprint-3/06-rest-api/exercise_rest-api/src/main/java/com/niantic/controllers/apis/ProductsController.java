@@ -14,7 +14,7 @@ public class ProductsController
 {
     private ProductDao productDao = new MySqlProductDao();
 
-    @GetMapping("/products")
+    @GetMapping("/api/products")
     public List<Product> getProductsByCategory(@RequestParam(required = false) int catId)
     {
         return productDao.getProductsByCategory(catId);

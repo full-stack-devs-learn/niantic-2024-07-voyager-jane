@@ -50,7 +50,7 @@ public class MySqlProductDao implements ProductDao
             int productId = row.getInt("product_id");
             String productName = row.getString("product_name");
             String quantityPerUnit = row.getString("quantity_per_unit");
-            int unitPrice = row.getInt("unit_price");
+            double unitPrice = row.getDouble("unit_price");
             int unitsInStock = row.getInt("units_in_stock");
             int unitsOnOrder = row.getInt("units_on_order");
             int reorderLevel = row.getInt("reorder_level");
