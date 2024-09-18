@@ -4,6 +4,7 @@ import com.niantic.models.Assignment;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserInput
@@ -62,13 +63,8 @@ public class UserInput
                 });
     }
 
-    public static void displayStudentScores(List<Assignment> assignments, String selectedFile)
+    public static void displayStudentScores(String selectedFile, List<Assignment> assignments)
     {
-        // printing student name
-        System.out.println();
-        System.out.println(selectedFile.toUpperCase());
-        System.out.println("-".repeat(40));
-
         // printing assignments & scores
         System.out.printf("Assignment" + " ".repeat(24) + "Score");
         System.out.println();
@@ -82,17 +78,41 @@ public class UserInput
         System.out.println();
     }
 
-    public static void displayStudentAverages(String selectedFile, List<Integer> stats)
+    public static void displayStatistics(List<Integer> stats, Map<String, List<Assignment>> mapStatsToAssignments)
+    {
+        // print stats and its associated assignments
+        System.out.println("-".repeat(40));
+        System.out.printf("Low Score                          %d\n", stats.get(0));
+        System.out.println("-".repeat(40));
+        mapStatsToAssignments.get("low").forEach(assignment -> {
+            System.out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+        });
+        System.out.println();
+
+        System.out.println("-".repeat(40));
+        System.out.printf("High Score                         %d\n", stats.get(1));
+        System.out.println("-".repeat(40));
+        mapStatsToAssignments.get("high").forEach(assignment -> {
+            System.out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+        });
+        System.out.println();
+
+        System.out.println("-".repeat(40));
+        System.out.printf("Average Score                      %d\n", stats.get(2));
+        System.out.println("-".repeat(40));
+        mapStatsToAssignments.get("avg").forEach(assignment -> {
+            System.out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
+        });
+
+        System.out.println();
+    }
+
+    public static void displayStudentHeader(String selectedFile)
     {
         // print student name
         System.out.println();
         System.out.println(selectedFile.toUpperCase());
         System.out.println("-".repeat(40));
-
-        // print stats
-        System.out.println("Low Score: " + stats.get(0));
-        System.out.println("High Score: " + stats.get(1));
-        System.out.println("Average Score: " + stats.get(2));
     }
 
     public static void displayMessage(String message)

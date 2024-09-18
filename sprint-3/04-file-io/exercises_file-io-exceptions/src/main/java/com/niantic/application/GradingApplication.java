@@ -80,7 +80,8 @@ public class GradingApplication implements Runnable
 
         applicationLogger.createLogEntry("Display Student Assignments and Scores for " + selectedFile);
 
-        UserInput.displayStudentScores(assignments, parseStudentName(selectedFile));
+        UserInput.displayStudentHeader(parseStudentName(selectedFile));
+        UserInput.displayStudentScores(parseStudentName(selectedFile), assignments);
     }
 
     private void displayStudentAverages()
@@ -88,13 +89,15 @@ public class GradingApplication implements Runnable
         // todo: 3 - allow the user to select a file name
         // load all student assignment scores from the file - display student statistics (low score, high score, average score)
         System.out.println();
+
         List<Assignment> assignments = chooseFile();
+        List<Integer> stats = statsService.calculateStatistics(assignments);
+        Map<String, List<Assignment>> mapStatsToAssignments = statsService.mapAssignmentsToStatistics(stats, assignments);
 
         applicationLogger.createLogEntry("Display Student Statistics for " + selectedFile);
 
-        List<Integer> stats = statsService.calculateStatistics(assignments);
-
-        UserInput.displayStudentAverages(parseStudentName(selectedFile), stats);
+        UserInput.displayStudentHeader(parseStudentName(selectedFile));
+        UserInput.displayStatistics(stats, mapStatsToAssignments);
     }
 
     private void displayAllStudentStatistics()

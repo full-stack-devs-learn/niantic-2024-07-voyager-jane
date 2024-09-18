@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +31,7 @@ public class ReportsService
 
         File file = new File(fileName);
         List<Integer> stats = statService.calculateStatistics(assignments);
-        Map<String, List<Assignment>> mapScores = statService.mapAssignmentsToStatistics(stats, assignments);
+        Map<String, List<Assignment>> mapStatsToAssignments = statService.mapAssignmentsToStatistics(stats, assignments);
 
         try (PrintWriter out = new PrintWriter(file))
         {
@@ -44,7 +42,7 @@ public class ReportsService
             out.println("-".repeat(40));
             out.printf("Low Score                          %d\n", stats.get(0));
             out.println("-".repeat(40));
-            mapScores.get("low").forEach(assignment -> {
+            mapStatsToAssignments.get("low").forEach(assignment -> {
                 out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
             });
             out.println();
@@ -52,7 +50,7 @@ public class ReportsService
             out.println("-".repeat(40));
             out.printf("High Score                         %d\n", stats.get(1));
             out.println("-".repeat(40));
-            mapScores.get("high").forEach(assignment -> {
+            mapStatsToAssignments.get("high").forEach(assignment -> {
                 out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
             });
             out.println();
@@ -60,7 +58,7 @@ public class ReportsService
             out.println("-".repeat(40));
             out.printf("Average Score                      %d\n", stats.get(2));
             out.println("-".repeat(40));
-            mapScores.get("avg").forEach(assignment -> {
+            mapStatsToAssignments.get("avg").forEach(assignment -> {
                 out.printf("%-3s %-30s %d\n", assignment.getNumber(), assignment.getAssignmentName(), assignment.getScore());
             });
 
@@ -82,7 +80,7 @@ public class ReportsService
 
         File file = new File(fileName);
         List<Integer> stats = statService.calculateStatistics(assignments);
-        Map<String, List<Assignment>> mapScores = statService.mapAssignmentsToStatistics(stats, assignments);
+        Map<String, List<Assignment>> mapStatsToAssignments = statService.mapAssignmentsToStatistics(stats, assignments);
 
         int studentTotal = assignments.stream()
                 .map(assignment -> new String(assignment.getFirstName() + " " + assignment.getLastName()))
@@ -102,7 +100,7 @@ public class ReportsService
             out.println("-".repeat(60));
             out.printf("Low Score                                                %d\n", stats.get(0));
             out.println("-".repeat(60));
-            mapScores.get("low").forEach(assignment -> {
+            mapStatsToAssignments.get("low").forEach(assignment -> {
                 String name = assignment.getFirstName() + " " + assignment.getLastName();
 
                 out.printf("%-3s %-30s %-21s %d\n",
@@ -116,7 +114,7 @@ public class ReportsService
             out.println("-".repeat(60));
             out.printf("High Score                                               %d\n", stats.get(1));
             out.println("-".repeat(60));
-            mapScores.get("high").forEach(assignment -> {
+            mapStatsToAssignments.get("high").forEach(assignment -> {
                 String name = assignment.getFirstName() + " " + assignment.getLastName();
 
                 out.printf("%-3s %-30s %-21s %d\n",
@@ -130,7 +128,7 @@ public class ReportsService
             out.println("-".repeat(60));
             out.printf("Average Score                                            %d\n", stats.get(2));
             out.println("-".repeat(60));
-            mapScores.get("avg").forEach(assignment -> {
+            mapStatsToAssignments.get("avg").forEach(assignment -> {
                 String name = assignment.getFirstName() + " " + assignment.getLastName();
 
                 out.printf("%-3s %-30s %-21s %d\n",
