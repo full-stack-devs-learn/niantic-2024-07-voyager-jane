@@ -23,6 +23,7 @@ public class ProductsController
     @GetMapping("")
     public ResponseEntity<?> getProductsByCategory(@RequestParam(required = false) int catId)
     {
+        // http://localhost:8080/api/products?catId=1
         try
         {
             Category category = categoryDao.getCategory(catId);
