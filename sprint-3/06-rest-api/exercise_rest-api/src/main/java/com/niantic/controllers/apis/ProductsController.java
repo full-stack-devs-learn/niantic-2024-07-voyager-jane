@@ -24,6 +24,7 @@ public class ProductsController
     public ResponseEntity<?> getProductsByCategory(@RequestParam(required = false) int catId)
     {
         // http://localhost:8080/api/products?catId=1
+
         try
         {
             Category category = categoryDao.getCategory(catId);
@@ -48,9 +49,28 @@ public class ProductsController
     }
 
     @GetMapping("{productId}")
-    public Product getProductById(@PathVariable int productId)
+    public ResponseEntity<?> getProductById(@PathVariable int productId)
     {
-        return productDao.getProductById(productId);
+        // http://localhost:8080/api/products/35
+
+        try
+        {
+            Product product = productDao.getProductById(productId);
+
+            if (product == null) {
+                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Product " + productId + " cannot be found");
+
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            }
+
+            return ResponseEntity.ok(product);
+        }
+        catch (Exception e)
+        {
+            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), "There was an error in getting Product " + productId);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
     @PostMapping("")
