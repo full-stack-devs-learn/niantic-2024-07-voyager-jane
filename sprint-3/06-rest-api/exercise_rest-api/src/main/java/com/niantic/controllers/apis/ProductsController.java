@@ -84,7 +84,7 @@ public class ProductsController
         {
             Product newProduct = productDao.addProduct(product);
 
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
         }
         catch (Exception e)
         {
