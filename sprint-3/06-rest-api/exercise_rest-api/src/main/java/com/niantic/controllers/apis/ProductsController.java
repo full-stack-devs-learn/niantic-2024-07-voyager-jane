@@ -127,8 +127,28 @@ public class ProductsController
 
     @DeleteMapping("{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable int productId)
+    public ResponseEntity<?> deleteProduct(@PathVariable int productId)
     {
-        productDao.deleteProduct(productId);
+        // http://localhost:8080/api/products/35
+
+        try
+        {
+            Product checkProduct = productDao.getProductById(productId);
+
+            if (checkProduct == null) {
+                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Product " + productId + " cannot be found");
+
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            }
+            productDao.deleteProduct(productId);
+
+            return ResponseEntity.noContent().build();
+        }
+        catch (Exception e)
+        {
+            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), "There was an error deleting Product " + productId);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 }

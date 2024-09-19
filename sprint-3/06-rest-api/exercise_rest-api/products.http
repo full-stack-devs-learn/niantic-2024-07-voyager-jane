@@ -32,3 +32,6 @@ Content-Type: application/json
     "unitsOnOrder": 0,
     "reorderLevel": 15
 }
+
+### DELETE request to delete product
+DELETE http://localhost:8080/api/products/35
