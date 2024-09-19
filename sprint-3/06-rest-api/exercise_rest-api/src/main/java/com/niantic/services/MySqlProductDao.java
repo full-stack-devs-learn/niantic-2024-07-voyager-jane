@@ -70,7 +70,7 @@ public class MySqlProductDao implements ProductDao
     @Override
     public Product getProductById(int productId)
     {
-        Product product = new Product();
+        Product product = null;
 
         String sql = """
                 SELECT category_id
