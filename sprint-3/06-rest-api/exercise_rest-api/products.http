@@ -1,0 +1,5 @@
+### GET request for all products in category 1
+GET http://localhost:8080/api/products?catId=1
+
+### GET request for product 35
+GET http://localhost:8080/api/products/35

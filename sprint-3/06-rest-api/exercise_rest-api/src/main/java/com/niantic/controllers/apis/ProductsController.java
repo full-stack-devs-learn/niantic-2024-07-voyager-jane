@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/products")
@@ -75,9 +76,22 @@ public class ProductsController
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody Product product)
+    public ResponseEntity<?> addProduct(@RequestBody Product product)
     {
-        return productDao.addProduct(product);
+        // http://localhost:8080/api/products
+
+        try
+        {
+            Product newProduct = productDao.addProduct(product);
+
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        catch (Exception e)
+        {
+            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), "There was an error adding a new product");
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
     @PutMapping("{productId}")
