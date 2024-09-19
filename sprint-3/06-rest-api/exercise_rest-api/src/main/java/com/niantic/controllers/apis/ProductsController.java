@@ -96,11 +96,33 @@ public class ProductsController
 
     @PutMapping("{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduct(@PathVariable int productId, @RequestBody Product product)
+    public ResponseEntity<?> updateProduct(@PathVariable int productId, @RequestBody Product product)
     {
         // overwrites so if you want to only update certain parts,
         // make sure to also add old info for other columns
-        productDao.updateProduct(productId, product);
+        // http://localhost:8080/api/products/35
+
+        try
+        {
+            Product checkProduct = productDao.getProductById(productId);
+
+            if (checkProduct == null)
+            {
+                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Product " + productId + " cannot be found");
+
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+            }
+
+            productDao.updateProduct(productId, product);
+
+            return ResponseEntity.noContent().build();
+        }
+        catch (Exception e)
+        {
+            var error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), "There was an error editing Product " + productId);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 
     @DeleteMapping("{productId}")

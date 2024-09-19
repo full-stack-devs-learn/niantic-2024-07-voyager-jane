@@ -142,7 +142,7 @@ public class MySqlProductDao implements ProductDao
     @Override
     public void updateProduct(int productId, Product product) {
         String sql = """
-                UPDATE PRODUCTS
+                UPDATE products
                 SET category_id = ?
                     , product_name = ?
                     , quantity_per_unit = ?

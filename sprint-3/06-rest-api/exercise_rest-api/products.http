@@ -18,3 +18,17 @@ Content-Type: application/json
     "unitsOnOrder": 0,
     "reorderLevel": 15
 }
+
+### PUT request to edit a product
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+    "categoryId": 1,
+    "productName": "TEST",
+    "quantityPerUnit": "12oz - 10 Bottles",
+    "unitPrice": 36.0,
+    "unitsInStock": 40,
+    "unitsOnOrder": 0,
+    "reorderLevel": 15
+}
