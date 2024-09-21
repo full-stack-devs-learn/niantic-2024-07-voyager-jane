@@ -11,16 +11,16 @@ Content-Type: application/json
 
 {
     "categoryId": 1,
-    "productName": "More Coffee",
-    "quantityPerUnit": "12oz - 10 Bottles",
-    "unitPrice": 36.0,
-    "unitsInStock": 40,
-    "unitsOnOrder": 0,
-    "reorderLevel": 15
+    "productName": "Ginger Beer",
+    "quantityPerUnit": "18oz - 2 bottles",
+    "unitPrice": 24.0,
+    "unitsInStock": 20,
+    "unitsOnOrder": 20,
+    "reorderLevel": 10
 }
 
 ### PUT request to edit a product
-PUT http://localhost:8080/api/products/1
+PUT http://localhost:8080/api/products/35
 Content-Type: application/json
 
 {
@@ -39,3 +39,7 @@ DELETE http://localhost:8080/api/products/35
 
 ### GET request to test Global Exception
 GET http://localhost:8080/api/prod
+
+
+### GET request for categories dependency injection
+GET http://localhost:8080/api/categories

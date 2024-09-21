@@ -20,12 +20,13 @@ import java.util.concurrent.ExecutionException;
 public class ProductsController
 {
     private ProductDao productDao;
-    private CategoryDao categoryDao = new MySqlCategoryDao();
+    private CategoryDao categoryDao;
 
     @Autowired
-    public ProductsController(ProductDao productDao)
+    public ProductsController(ProductDao productDao, CategoryDao categoryDao)
     {
         this.productDao = productDao;
+        this.categoryDao = categoryDao;
     }
 
     @GetMapping("")
