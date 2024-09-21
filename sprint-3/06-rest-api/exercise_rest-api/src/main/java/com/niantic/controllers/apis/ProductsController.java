@@ -7,6 +7,7 @@ import com.niantic.services.CategoryDao;
 import com.niantic.services.MySqlCategoryDao;
 import com.niantic.services.MySqlProductDao;
 import com.niantic.services.ProductDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,14 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/api/products")
 public class ProductsController
 {
-    private ProductDao productDao = new MySqlProductDao();
+    private ProductDao productDao;
     private CategoryDao categoryDao = new MySqlCategoryDao();
+
+    @Autowired
+    public ProductsController(ProductDao productDao)
+    {
+        this.productDao = productDao;
+    }
 
     @GetMapping("")
     public ResponseEntity<?> getProductsByCategory(@RequestParam(required = false) int catId)

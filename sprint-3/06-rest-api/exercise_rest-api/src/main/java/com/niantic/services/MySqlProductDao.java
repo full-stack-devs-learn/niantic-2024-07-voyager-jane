@@ -2,30 +2,25 @@ package com.niantic.services;
 
 import com.niantic.models.Product;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class MySqlProductDao implements ProductDao
 {
     private final JdbcTemplate jdbcTemplate;
 
-    public MySqlProductDao()
+    @Autowired
+    public MySqlProductDao(DataSource dataSource)
     {
-        String databaseUrl = "jdbc:mysql://localhost:3306/northwind";
-        String userName = "root";
-        String password = "P@ssw0rd";
-        DataSource dataSource = new BasicDataSource(){{
-            setUrl(databaseUrl);
-            setUsername(userName);
-            setPassword(password);
-        }};
-
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
