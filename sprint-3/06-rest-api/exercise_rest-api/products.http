@@ -35,3 +35,7 @@ Content-Type: application/json
 
 ### DELETE request to delete product
 DELETE http://localhost:8080/api/products/35
+
+
+### GET request to test Global Exception
+GET http://localhost:8080/api/prod
