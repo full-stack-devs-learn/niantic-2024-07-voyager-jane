@@ -38,14 +38,20 @@ public class MySqlProductDao implements ProductDao
                     , category_id
                     , quantity_per_unit
                     , unit_price
-                FROM products;
+                FROM products
+                WHERE category_id = ?;
                 """;
 
-        var row = jdbcTemplate.queryForRowSet(sql);
+        var row = jdbcTemplate.queryForRowSet(sql, categoryId);
 
         while (row.next())
         {
-            Product product = mapRowToProduct(row);
+            int id = row.getInt("product_id");
+            String name = row.getString("product_name");
+            String quantityPerUnit = row.getString("quantity_per_unit");
+            BigDecimal unitPrice = row.getBigDecimal("unit_price");
+
+            Product product = new Product(id, name, categoryId, quantityPerUnit, unitPrice);
             products.add(product);
         }
 
@@ -132,6 +138,6 @@ public class MySqlProductDao implements ProductDao
         String quantityPerUnit = row.getString("quantity_per_unit");
         BigDecimal unitPrice = row.getBigDecimal("unit_price");
 
-        return new Product(id, name,categoryId, quantityPerUnit, unitPrice);
+        return new Product(id, name, categoryId, quantityPerUnit, unitPrice);
     }
 }

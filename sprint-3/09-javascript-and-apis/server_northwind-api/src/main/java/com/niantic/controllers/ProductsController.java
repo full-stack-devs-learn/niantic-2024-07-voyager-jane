@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin
 public class ProductsController
 {
     private final ProductDao productDao;
@@ -26,8 +27,8 @@ public class ProductsController
         this.logger = logger;
     }
 
-    @GetMapping
-    public ResponseEntity<?> searchByCategory(@RequestParam(defaultValue = "1", name = "catId") Integer  categoryId)
+    @GetMapping("")
+    public ResponseEntity<?> searchByCategory(@RequestParam(defaultValue = "1", name = "catId") Integer categoryId)
     {
         try
         {
