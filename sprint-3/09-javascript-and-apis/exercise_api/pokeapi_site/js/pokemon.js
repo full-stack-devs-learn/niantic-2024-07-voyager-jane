@@ -3,9 +3,11 @@ let pokemonService;
 let next;
 let previous;
 let container;
+let action;
 
 let nextPokemon = null;
 let previousPokemon = null;
+let pageCount = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     pokemonService = new PokemonService();
@@ -25,10 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     container = document.getElementById("pokemon-list-container");
 
     next.addEventListener("click", () => {
+        action = 'next';
         loadPokemons(nextPokemon);
     })
 
     previous.addEventListener("click", () => {
+        action = 'previous';
         loadPokemons(previousPokemon);
     })
 
@@ -37,18 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function loadPokemons(url)
 {
+    if (action === 'next') pageCount++;
+    if (action === 'previous') pageCount--;
+    const pokemonPromise = pokemonService.getPokemons(url, pageCount);
 
-    let pokemonPromise;
-
-    if (url)
-    {
-        pokemonPromise = pokemonService.getPokemons(url);
-    }
-    else 
-    {
-        pokemonPromise = pokemonService.getPokemons();
-    }
-    
+        
     pokemonPromise.then(pokemons => {
         const pokemonsList = pokemons.results;
         container.innerHTML = '';
@@ -78,19 +75,6 @@ function setPrevious(previousPage)
         previousPokemon = previousPage;
     }
     else previous.disabled = true;
-    
-    // if (previousPage)
-    // {
-    //     previous.disabled = false;
-
-    //     previous.addEventListener("click", () => {
-    //         loadPokemons(previousPage);
-    //     }, {once: true})
-    // }
-    // else 
-    // {
-    //     previous.disabled = true;
-    // }
 }
 
 function setNext(nextPage)
@@ -101,17 +85,4 @@ function setNext(nextPage)
         nextPokemon = nextPage;
     }
     else next.disabled = true;
-    
-    // if (nextPage)
-    // {
-    //     next.disabled = false;
-
-    //     next.addEventListener("click", () => {
-    //     loadPokemons(nextPage);
-    //     }, {once: true})
-    // }
-    // else
-    // {
-    //     next.disabled = true;
-    // }
 }
