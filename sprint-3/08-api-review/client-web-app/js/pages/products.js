@@ -4,6 +4,7 @@ let addFormScreen;
 let addForm;
 let categoryId;
 let catList;
+let selectCat;
 
 document.addEventListener("DOMContentLoaded", function() {
     categoryService = new CategoryService();
@@ -12,33 +13,54 @@ document.addEventListener("DOMContentLoaded", function() {
     addFormScreen = document.getElementById("add-form-screen");
     addForm = document.getElementById("add-form");
     catList = document.getElementById("categories-list");
+    selectCat = document.getElementById("categories-select");
 
     document.getElementById("add-button").addEventListener("click", showForm);
     document.getElementById("cancel-button").addEventListener("click", cancelAdd);
     document.getElementById("save-button").addEventListener("click", addCategory);
 
+    selectCat.addEventListener("change", () => {
+        loadProducts(selectCat.value);
+    })
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     categoryId = urlParams.get("catId");
 
+    defaultSelect();
     pickCategory();
 })
+
+function defaultSelect()
+{
+    const defaultOption = document.createElement("option");
+    defaultOption.text = "Pick a Category";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    selectCat.appendChild(defaultOption);
+}
 
 function pickCategory()
 {
     categoryService.getAllCategories().then(categories => {
 
         categories.forEach(category => {
-            const li = document.createElement("li");
-            const a = document.createElement("button");
-            a.textContent = category.categoryName;
+            const option = document.createElement("option");
+            option.value = category.categoryId;
+            option.text = category.categoryName
 
-            a.addEventListener("click", () => {
-                loadProducts(category.categoryId);
-            });
+            selectCat.appendChild(option);
+
+            // const li = document.createElement("li");
+            // const a = document.createElement("button");
+            // a.textContent = category.categoryName;
+
+            // a.addEventListener("click", () => {
+            //     loadProducts(category.categoryId);
+            // });
             
-            li.appendChild(a);
-            catList.appendChild(li);
+            // li.appendChild(a);
+            // catList.appendChild(li);
         })
         
     })
