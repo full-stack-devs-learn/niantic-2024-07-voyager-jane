@@ -8,5 +8,19 @@ class PokemonService
     // of 20 pokemon - how can you request page 1,2, 3 etc?
     // consider using async/await with your axios request
 
+    async getPokemon(page)
+    {
+        let response;
 
+        if (page)
+        {
+            response = await axios.get(page);
+        }
+        else 
+        {
+            response = await axios.get(this.baseUrl);
+        }
+
+        return response.data;
+    }
 }
