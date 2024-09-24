@@ -2,8 +2,7 @@ let categoryService;
 let productService;
 let addFormScreen;
 let addForm;
-let categoryId;
-let catList;
+// let catList;
 let selectCat;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     addFormScreen = document.getElementById("add-form-screen");
     addForm = document.getElementById("add-form");
-    catList = document.getElementById("categories-list");
+    // catList = document.getElementById("categories-list");
     selectCat = document.getElementById("categories-select");
 
     document.getElementById("add-button").addEventListener("click", showForm);
@@ -22,10 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
     selectCat.addEventListener("change", () => {
         loadProducts(selectCat.value);
     })
-
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    categoryId = urlParams.get("catId");
 
     defaultSelect();
     pickCategory();
@@ -51,6 +46,7 @@ function pickCategory()
 
             selectCat.appendChild(option);
 
+            // // Just a list of categories with this code.
             // const li = document.createElement("li");
             // const a = document.createElement("button");
             // a.textContent = category.categoryName;
@@ -69,7 +65,7 @@ function pickCategory()
 function loadProducts(catId)
 {
     // load all products
-    let productPromise = productService.getAllProductsByCatId(catId);
+    let productPromise = productService.getProductsByCatId(catId);
 
     productPromise.then(products => {
         const productContainer = document.getElementById('products-container');
