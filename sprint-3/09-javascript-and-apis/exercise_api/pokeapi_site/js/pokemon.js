@@ -56,8 +56,9 @@ function loadPokemons(url)
         pokemonsList.forEach(pokemon => {
             const div = document.createElement("div");
             const a = document.createElement("a");
+
             a.textContent = pokemon.name;
-            a.href = 'pokemon.html';
+            a.href = `pokemon.html?pokeName=${pokemon.name}`;
             a.style.fontSize = '18px';
             a.style.color = '#000000';
 

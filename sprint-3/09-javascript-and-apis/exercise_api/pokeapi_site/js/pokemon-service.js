@@ -26,9 +26,9 @@ class PokemonService
         return response.data;
     }
 
-    async getPokemonById(id)
+    async getPokemonByName(name)
     {
-        const response = await axios.get(`${this.baseUrl}/${id}`);
+        const response = await axios.get(`${this.baseUrl}/${name}`);
 
         return response.data;
     }
