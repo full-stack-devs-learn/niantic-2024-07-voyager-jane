@@ -57,7 +57,7 @@ function loadPokemons(url)
             const div = document.createElement("div");
             const a = document.createElement("a");
 
-            a.textContent = pokemon.name;
+            a.textContent = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
             a.href = `pokemon.html?pokeName=${pokemon.name}`;
             a.style.fontSize = '18px';
             a.style.color = '#000000';
