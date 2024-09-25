@@ -1,11 +1,10 @@
+import Header from "./components/header/Header"
+
 function App() {
 
   return (
     <>
-      <div id="navigation">
-        <img src="images/logo.png" alt="Northwind Logo" />
-        <h1>Northwind Traders</h1>
-      </div>
+      <Header></Header>
 
       <header className="container mt-4">
         <h1>Employees</h1>
