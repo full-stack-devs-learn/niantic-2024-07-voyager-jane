@@ -1,12 +1,14 @@
 import Header from "./components/header/Header"
+import EmployeesPage from "./components/employees/employees-page/EmployeesPage"
 
 function App() {
 
   return (
     <>
       <Header></Header>
-
-      <header className="container mt-4">
+      
+      <EmployeesPage></EmployeesPage>
+      {/* <header className="container mt-4">
         <h1>Employees</h1>
       </header>
 
@@ -76,7 +78,7 @@ function App() {
           </div>
         </div>
 
-      </main>
+      </main> */}
 
     </>
   )
