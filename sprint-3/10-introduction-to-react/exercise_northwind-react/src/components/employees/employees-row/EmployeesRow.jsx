@@ -14,14 +14,16 @@ export default function EmployeesRow({fullName, title, id, salary, notes})
 
     return (
         <>
-        <div className="employee-row" onClick={() => changePage("show")}>
-        <img id="employee-image" src={imageUrl} />
-        <div className="employee-name">
-            <h1>{fullName}</h1>
-            <h6>{"Employee Id: " + id}</h6>
-            <h6>{title}</h6>
-        </div>
-        </div>
+        {(details === '') &&
+            <div className="employee-row" onClick={() => changePage("show")}>
+            <img id="employee-image" src={imageUrl} />
+            <div className="employee-name">
+                <h2>{fullName}</h2>
+                <h6>{"Employee Id: " + id}</h6>
+                <h6>{title}</h6>
+            </div>
+            </div>
+        }
 
         {(details === 'show') && <EmployeeDetails key={id}
                         fullName={fullName}

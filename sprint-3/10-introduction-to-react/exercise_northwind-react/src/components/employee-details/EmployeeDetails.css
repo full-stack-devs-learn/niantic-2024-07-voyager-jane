@@ -1,0 +1,13 @@
+#employee-head {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+#head-text {
+    margin-left: 20px;
+}
+
+#details-container {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
