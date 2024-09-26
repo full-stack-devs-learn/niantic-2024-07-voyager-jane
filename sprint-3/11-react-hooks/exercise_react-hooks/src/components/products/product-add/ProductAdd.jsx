@@ -42,7 +42,7 @@ export default function ProductAdd({onCancel, onProductAdded})
                     <input type="text" name="unit-price" id="unit-price" />
                 </div>
                 <div>
-                    <button className="btn btn-success" type="submit">Add</button>
+                    <button className="btn btn-success" type="submit">Save</button>
                     <button className="btn btn-dark" type="cancel" onClick={onCancel}>Cancel</button>
                 </div>
             </form>
