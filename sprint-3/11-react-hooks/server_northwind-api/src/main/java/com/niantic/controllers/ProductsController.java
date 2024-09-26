@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 @CrossOrigin
@@ -28,19 +31,28 @@ public class ProductsController
     }
 
     @GetMapping
-    public ResponseEntity<?> searchByCategory(@RequestParam(defaultValue = "1", name = "catId") Integer  categoryId)
+    public ResponseEntity<?> searchByCategory(@RequestParam(required = false, defaultValue = "0", name = "catId") Integer  categoryId)
     {
         try
         {
-            var category = categoryDao.getCategory(categoryId);
-            if(category == null)
-            {
-                logger.logMessage("Category id " + categoryId + " not found");
-                var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Category " + categoryId + " is invalid");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-            }
+            List<Product> products;
 
-            var products = productDao.getByCategoryId(categoryId);
+            if (categoryId == 0)
+            {
+                products = productDao.getAllProducts();
+            }
+            else
+            {
+                var category = categoryDao.getCategory(categoryId);
+
+                if(category == null)
+                {
+                    logger.logMessage("Category id " + categoryId + " not found");
+                    var error = new HttpError(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.toString(), "Category " + categoryId + " is invalid");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+                }
+                products = productDao.getByCategoryId(categoryId);
+            }
 
             return ResponseEntity.ok(products);
         }

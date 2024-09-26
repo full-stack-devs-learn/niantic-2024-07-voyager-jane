@@ -28,7 +28,7 @@ public class MySqlProductDao implements ProductDao
     }
 
     @Override
-    public List<Product> getByCategoryId(int categoryId)
+    public List<Product> getAllProducts()
     {
         List<Product> products = new ArrayList<>();
 
@@ -42,6 +42,32 @@ public class MySqlProductDao implements ProductDao
                 """;
 
         var row = jdbcTemplate.queryForRowSet(sql);
+
+        while (row.next())
+        {
+            Product product = mapRowToProduct(row);
+            products.add(product);
+        }
+
+        return products;
+    }
+
+    @Override
+    public List<Product> getByCategoryId(int categoryId)
+    {
+        List<Product> products = new ArrayList<>();
+
+        var sql = """
+                SELECT product_id
+                    , product_name
+                    , category_id
+                    , quantity_per_unit
+                    , unit_price
+                FROM products
+                WHERE category_id = ?;
+                """;
+
+        var row = jdbcTemplate.queryForRowSet(sql, categoryId);
 
         while (row.next())
         {
@@ -132,6 +158,6 @@ public class MySqlProductDao implements ProductDao
         String quantityPerUnit = row.getString("quantity_per_unit");
         BigDecimal unitPrice = row.getBigDecimal("unit_price");
 
-        return new Product(id, name,categoryId, quantityPerUnit, unitPrice);
+        return new Product(id, name, categoryId, quantityPerUnit, unitPrice);
     }
 }

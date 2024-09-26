@@ -12,18 +12,18 @@ export default function ProductsList({categoryId})
         productService.getProductByCategoryId(categoryId).then(data => {
             setProducts(data);
         })
-    }, []) 
+    }, [categoryId]) 
 
     return (
         <>
         {(categoryId == 0) 
-        ? <div>No Category Selected</div>
-        : <h3>
+        ? <div className="container mt-4">No Category Selected</div>
+        : <h3 className="mt-4">
             Products for category: {categoryId}
           </h3>
         }
 
-        <ul>
+        <ul className="container mt-4">
             {(categoryId !== 0) &&
                  products.map((product) => (
                     <li key={product.id}>{product.name}</li>

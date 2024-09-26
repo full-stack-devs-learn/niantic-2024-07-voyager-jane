@@ -45,7 +45,7 @@ export default function ProductAdd({onCancel, onProductAdded})
 
                 <div className="row">
                     <label htmlFor="category">Choose a Category:</label>
-                    <select name="category" id="category" defaultValue={'default'} onChange={(e) => setCategoryId(e.target.value)}>
+                    <select className="form-select" name="category" id="category" defaultValue={'default'} onChange={(e) => setCategoryId(e.target.value)}>
                         <option value={'default'} disabled>--Pick a Category--</option>
                         {categories.map((category) => (
                             <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
@@ -60,7 +60,7 @@ export default function ProductAdd({onCancel, onProductAdded})
 
                 <div className="row">
                     <label htmlFor="unit-price">Unit Price: </label>
-                    <input type="text" name="unit-price" id="unit-price" onChange={(e) => setUnitPrice(e.target.value)} />
+                    <input type="text" className="form-control" name="unit-price" id="unit-price" onChange={(e) => setUnitPrice(e.target.value)} />
                 </div>
                 <div>
                     <button className="btn btn-success" type="submit">Save</button>
