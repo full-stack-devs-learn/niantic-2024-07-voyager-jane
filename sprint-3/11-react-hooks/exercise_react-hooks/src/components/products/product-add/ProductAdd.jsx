@@ -38,12 +38,12 @@ export default function ProductAdd({onCancel, onProductAdded})
             <h2>Add Product</h2>
 
             <form onSubmit={addProductHandler}>
-                <div className="row">
+                <div className="row mb-3">
                     <label htmlFor="product-name">Product Name:</label>
                     <input type="text" className="form-control" name="product-name" id="product-name" onChange={(e) => setProductName(e.target.value)}/>
                 </div>
 
-                <div className="row">
+                <div className="row mb-3">
                     <label htmlFor="category">Choose a Category:</label>
                     <select className="form-select" name="category" id="category" defaultValue={'default'} onChange={(e) => setCategoryId(e.target.value)}>
                         <option value={'default'} disabled>--Pick a Category--</option>
@@ -53,15 +53,19 @@ export default function ProductAdd({onCancel, onProductAdded})
                     </select>
                 </div>
 
-                <div className="row">
+                <div className="row mb-3">
                     <label htmlFor="quantity-per-unit">Quantity Per Unit:</label>
                     <input type="text" className="form-control" name="quantity-per-unit" id="quantity-per-unit" onChange={(e) => setQuantityPerUnit(e.target.value)} />
                 </div>
 
-                <div className="row">
+                <div className="row mb-3">
                     <label htmlFor="unit-price">Unit Price: </label>
-                    <input type="text" className="form-control" name="unit-price" id="unit-price" onChange={(e) => setUnitPrice(e.target.value)} />
+                    <div className="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" className="form-control" name="unit-price" id="unit-price" onChange={(e) => setUnitPrice(e.target.value)} />
+                    </div>
                 </div>
+
                 <div>
                     <button className="btn btn-success" type="submit">Save</button>
                     <button className="btn btn-dark" type="cancel" onClick={onCancel}>Cancel</button>
