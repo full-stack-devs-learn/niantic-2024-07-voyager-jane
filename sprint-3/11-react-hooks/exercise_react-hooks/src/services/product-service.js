@@ -20,6 +20,12 @@ class ProductService
     {
         await axios.delete(`${this.baseUrl}/${productId}`)
     }
+
+    async getProductByCategoryId(catId)
+    {
+        const response = await axios.get(`${this.baseUrl}?catId=${catId}`);
+        return response.data;
+    }
 }
 
 const productService = new ProductService();

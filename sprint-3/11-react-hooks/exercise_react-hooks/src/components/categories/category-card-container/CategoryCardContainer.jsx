@@ -15,8 +15,8 @@ export default function CategoryCardContainer()
 
         categoryService.getAllCategories().then(data => {
 
-            console.log("data being returned:");            
-            console.log(data);
+            // console.log("data being returned:");            
+            // console.log(data);
             setCategories(data);   
         })
 
@@ -33,7 +33,7 @@ export default function CategoryCardContainer()
         const categoryId = categories.filter(cat => cat.categoryName === name)[0].categoryId;
 
         setSelectedCategoryId(categoryId);
-        console.log(name)
+        // console.log(name)
     }
 
     const categoryDeleted = (categoryId) => {
