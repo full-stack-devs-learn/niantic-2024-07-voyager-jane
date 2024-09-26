@@ -15,6 +15,11 @@ class ProductService
         const response = await axios.post(this.baseUrl, product);
         return response.data;
     }
+
+    async deleteProduct(productId)
+    {
+        await axios.delete(`${this.baseUrl}/${productId}`)
+    }
 }
 
 const productService = new ProductService();
