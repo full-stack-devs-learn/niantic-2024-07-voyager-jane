@@ -9,7 +9,7 @@ export default function ProductsPage()
 
     return (
         <>
-        <header className="container mt-4">
+        <header className={`container mt-4 ${action === "add" ? "d-none" : ''}`}>
             <h1>Products</h1>
             <button className="btn btn-success" onClick={() => setPAction("add")}>Add</button>
         </header>
