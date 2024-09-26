@@ -1,7 +1,7 @@
 import categoryService from "../../../services/category-service"
 import { useState, useEffect } from "react";
 
-export default function ProductAdd()
+export default function ProductAdd({onCancel, onProductAdded})
 {
     const [categories, setCategories] = useState([]);
 
@@ -40,6 +40,10 @@ export default function ProductAdd()
                 <div className="row">
                     <label htmlFor="unit-price">Unit Price: </label>
                     <input type="text" name="unit-price" id="unit-price" />
+                </div>
+                <div>
+                    <button className="btn btn-success" type="submit">Add</button>
+                    <button className="btn btn-dark" type="cancel" onClick={onCancel}>Cancel</button>
                 </div>
             </form>
         </div>
