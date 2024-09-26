@@ -16,9 +16,9 @@ export default function ProductCardContainer()
         <main className="container mt-4 categories-container">
             {
                 products.map((product) => (
-                    <ProductCard key={product.productId}
+                    <ProductCard key={product.id}
                         product={product.name}
-                        id={product.productId}>
+                        id={product.id}>
                     </ProductCard>
                 ))
             }
