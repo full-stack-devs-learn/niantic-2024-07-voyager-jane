@@ -1,14 +1,15 @@
 import categoryService from "../../../services/category-service"
+import { useState, useEffect } from "react";
 
 export default function ProductAdd()
 {
-    // let categories = []
-    // categoryService.getAllCategories().then(data => {
-    //     data.forEach(category => {
-    //         categories.push(category);
-    //     })
-    // });
-    // console.log(categories);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        categoryService.getAllCategories().then(data => {
+            setCategories(data);
+        });
+    }, [])
     
 
     return (
@@ -22,14 +23,14 @@ export default function ProductAdd()
                     <input type="text" className="form-control" name="product-name" id="product-name"/>
                 </div>
 
-                {/* <div className="row">
+                <div className="row">
                     <label htmlFor="category">Choose a Category:</label>
                     <select name="category" id="category">
                         {categories.map((category) => (
                             <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
                         ))}
                     </select>
-                </div> */}
+                </div>
 
                 <div className="row">
                     <label htmlFor="quantity-per-unit">Quantity Per Unit:</label>

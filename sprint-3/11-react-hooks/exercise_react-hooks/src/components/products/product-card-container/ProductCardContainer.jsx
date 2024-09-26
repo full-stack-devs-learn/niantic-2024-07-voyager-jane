@@ -10,7 +10,7 @@ export default function ProductCardContainer()
         productService.getAllProducts().then(data => {
             setProducts(data);
         })
-    })
+    }, [])
 
     return (
         <main className="container mt-4 categories-container">
