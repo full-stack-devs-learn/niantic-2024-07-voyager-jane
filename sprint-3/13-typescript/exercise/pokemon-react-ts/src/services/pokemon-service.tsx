@@ -1,35 +1,35 @@
-// define the SPokeAPI Pokemon service logic here
+import axios from "axios";
+import { PokemonListResponse } from "../models/PokemonListResponse";
 
 class PokemonService
 {
     pageNum = 0;
-    baseUrl = `${config.baseUrl}/pokemon`
+    baseUrl = 'https://pokeapi.co/api/v2/pokemon'
 
-    // write a function that allows you to request a page
-    // of 20 pokemon - how can you request page 1,2, 3 etc?
-    // consider using async/await with your axios request
-
-    async getPokemons(page, num)
+    async getPokemons(page: string, num: number): Promise<PokemonListResponse>
     {
         let response;
         this.pageNum = num * 20;
 
         if (page)
         {
-            response = await axios.get(`${this.baseUrl}?offset=${this.pageNum}&limit=20`);
+            response = await axios.get<PokemonListResponse>(`${this.baseUrl}?offset=${this.pageNum}&limit=20`);
         }
         else 
         {
-            response = await axios.get(`${this.baseUrl}?offset=0&limit=20`);
+            response = await axios.get<PokemonListResponse>(`${this.baseUrl}?offset=0&limit=20`);
         }
 
         return response.data;
     }
 
-    async getPokemonByName(name)
+    async getPokemonByName(name: string)
     {
         const response = await axios.get(`${this.baseUrl}/${name}`);
 
         return response.data;
     }
 }
+
+const pokemonService = new PokemonService();
+export default pokemonService;
