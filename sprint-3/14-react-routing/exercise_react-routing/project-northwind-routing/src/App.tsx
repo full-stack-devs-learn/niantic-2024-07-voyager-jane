@@ -19,11 +19,19 @@ function App() {
       <main className='container mt-4'>
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="/categories" element={<CategoriesPage />}>
             <Route path="" element={<CategoriesList />} />
             <Route path="add" element={<CategoryAdd />} />
             <Route path="edit" element={<CategoryEdit />} />
             <Route path="2" element={<CategoryDetails />} />
+          </Route>
+
+          <Route path="/products">
+            <Route path="" />
+            <Route path="add" />
+            <Route path="edit" />
+            <Route path="details" />
           </Route>
         </Routes>
       </main>
