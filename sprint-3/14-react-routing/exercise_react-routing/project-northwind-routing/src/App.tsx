@@ -7,9 +7,13 @@ import CategoryAdd from './assets/components/categories/category-add/CategoryAdd
 import CategoryEdit from './assets/components/categories/category-edit/CategoryEdit'
 import CategoryDetails from './assets/components/categories/category-details/CategoryDetails'
 import Home from './assets/components/home/Home'
+import ProductSearch from './assets/components/product/product-search/ProductSearch'
+import ProductAdd from './assets/components/product/product-add/ProductAdd'
+import ProductEdit from './assets/components/product/product-edit/ProductEdit'
+import ProductDetails from './assets/components/product/product-details/ProductDetails'
+import ProductPage from './assets/components/product/product-page/ProductPage'
 
 function App() {
-  // const [count, setCount] = useState(0)
 
   return (
     <>
@@ -23,15 +27,15 @@ function App() {
           <Route path="/categories" element={<CategoriesPage />}>
             <Route path="" element={<CategoriesList />} />
             <Route path="add" element={<CategoryAdd />} />
-            <Route path="edit" element={<CategoryEdit />} />
+            <Route path=":catId/edit" element={<CategoryEdit />} />
             <Route path="2" element={<CategoryDetails />} />
           </Route>
 
-          <Route path="/products">
-            <Route path="" />
-            <Route path="add" />
-            <Route path="edit" />
-            <Route path="details" />
+          <Route path="/products" element={<ProductPage />}>
+            <Route path="" element={<ProductSearch />} />
+            <Route path="add" element={<ProductAdd />} />
+            <Route path=":productId/edit" element={<ProductEdit />} />
+            <Route path="details" element={<ProductDetails />} />
           </Route>
         </Routes>
       </main>

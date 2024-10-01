@@ -19,7 +19,7 @@ export default function Header()
                         <NavLink to="/categories" className="nav-link">Categories</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/" className="nav-link">Products</NavLink>
+                        <NavLink to="/products" className="nav-link">Products</NavLink>
                     </li>
                 </ul>
                 </div>
