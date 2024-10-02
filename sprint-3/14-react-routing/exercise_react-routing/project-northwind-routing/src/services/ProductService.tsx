@@ -10,6 +10,12 @@ export class ProductService
         const response = await axios.get<Product[]>(this.baseUrl)
         return response.data
     }
+
+    async getProductById(id: number): Promise<Product>
+    {
+        const response = await axios.get<Product>(`${this.baseUrl}/${id}`)
+        return response.data
+    }
 }
 
 const productService = new ProductService()
