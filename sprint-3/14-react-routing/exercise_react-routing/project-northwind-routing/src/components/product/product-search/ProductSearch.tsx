@@ -8,6 +8,15 @@ export default function ProductSearch()
 
         <Link to="/products/add" className="btn btn-outline-success">Add</Link>
 
+        <form>
+            <h4>Filters</h4>
+            <div>
+                <label htmlFor="product-name">Product Name</label>
+                <input type="search" name="product-name" id="product-name" />
+                <input type="submit" value="Search" />
+            </div>    
+        </form>
+
             <table>
                 <tr>
                     <th>Product</th>

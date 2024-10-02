@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Header from './assets/components/header/Header'
-import CategoriesPage from './assets/components/categories/categories-page/CategoriesPage'
-import CategoriesList from './assets/components/categories/categories-list/CategoriesList'
-import CategoryAdd from './assets/components/categories/category-add/CategoryAdd'
-import CategoryEdit from './assets/components/categories/category-edit/CategoryEdit'
-import CategoryDetails from './assets/components/categories/category-details/CategoryDetails'
-import Home from './assets/components/home/Home'
-import ProductSearch from './assets/components/product/product-search/ProductSearch'
-import ProductAdd from './assets/components/product/product-add/ProductAdd'
-import ProductEdit from './assets/components/product/product-edit/ProductEdit'
-import ProductDetails from './assets/components/product/product-details/ProductDetails'
-import ProductPage from './assets/components/product/product-page/ProductPage'
+import Header from './components/header/Header'
+import CategoriesPage from './components/categories/categories-page/CategoriesPage'
+import CategoriesList from './components/categories/categories-list/CategoriesList'
+import CategoryAdd from './components/categories/category-add/CategoryAdd'
+import CategoryEdit from './components/categories/category-edit/CategoryEdit'
+import CategoryDetails from './components/categories/category-details/CategoryDetails'
+import Home from './components/home/Home'
+import ProductSearch from './components/product/product-search/ProductSearch'
+import ProductAdd from './components/product/product-add/ProductAdd'
+import ProductEdit from './components/product/product-edit/ProductEdit'
+import ProductDetails from './components/product/product-details/ProductDetails'
+import ProductPage from './components/product/product-page/ProductPage'
 
 function App() {
 
@@ -28,7 +28,7 @@ function App() {
             <Route path="" element={<CategoriesList />} />
             <Route path="add" element={<CategoryAdd />} />
             <Route path=":catId/edit" element={<CategoryEdit />} />
-            <Route path="2" element={<CategoryDetails />} />
+            <Route path=":catId" element={<CategoryDetails />} />
           </Route>
 
           <Route path="/products" element={<ProductPage />}>
