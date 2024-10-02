@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Product } from "../../../models/Product";
+import productService from "../../../services/ProductService";
 
 export default function ProductSearch()
 {
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {loadProducts()}, [])
+
+    async function loadProducts() 
+    {
+        const prodList = await productService.getAllProducts();
+        setProducts(prodList);    
+    }
+
     return (
         <>
         <h4>Product Search</h4>
@@ -17,16 +30,26 @@ export default function ProductSearch()
             </div>    
         </form>
 
-            <table>
-                <tr>
-                    <th>Product</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th><Link to="/products/2">Product 2</Link></th>
-                    <td><Link to="/products/2/edit" className="btn btn-outline-light btn-sm">Edit</Link></td>
-                </tr>
-            </table>
+        <table className="table mt-4">
+            <thead className="table table-dark">
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+                {
+                    products.map((product: Product) => (
+                        <tr key={product.id}>
+                            <th><Link to={`/products/${product.id}`}>{product.name}</Link></th>
+                            <td>{product.categoryId}</td>
+                            <td style={{textAlign: 'right'}}><Link to={`/products/${product.id}/edit`} className="btn btn-outline-light btn-sm">Edit</Link></td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
         </>
     )
 }

@@ -34,8 +34,8 @@ function App() {
           <Route path="/products" element={<ProductPage />}>
             <Route path="" element={<ProductSearch />} />
             <Route path="add" element={<ProductAdd />} />
-            <Route path=":productId/edit" element={<ProductEdit />} />
-            <Route path="details" element={<ProductDetails />} />
+            <Route path=":id/edit" element={<ProductEdit />} />
+            <Route path=":id" element={<ProductDetails />} />
           </Route>
         </Routes>
       </main>
