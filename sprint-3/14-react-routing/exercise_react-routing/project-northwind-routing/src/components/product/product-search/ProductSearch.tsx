@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Product } from "../../../models/Product";
 import productService from "../../../services/ProductService";
 
@@ -7,11 +7,25 @@ export default function ProductSearch()
 {
     const [products, setProducts] = useState<Product[]>([]);
 
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const name = params.get("name") ?? '';
+    const catId = params.get("catId") ?? 0;
+    const minPrice = params.get("minPrice") ?? 0;
+    const maxPrice = params.get("maxPrice") ?? 0;
+
     useEffect(() => {loadProducts()}, [])
 
     async function loadProducts() 
     {
-        const prodList = await productService.getAllProducts();
+        let prodList = await productService.getAllProducts();
+
+        // Filter By QueryString: name, catId, minPrice, maxPrice
+        if (name !== '') prodList = prodList.filter((product: Product) => product.name.toLowerCase() === name.toLowerCase())
+        if (+catId !== 0) prodList = prodList.filter((product: Product) => product.categoryId === +catId);
+        if (+maxPrice !== 0) prodList = prodList.filter((product: Product) => product.unitPrice <= +maxPrice)
+        prodList = prodList.filter((product: Product) => product.unitPrice >= +minPrice)
+
         setProducts(prodList);    
     }
 
@@ -20,15 +34,6 @@ export default function ProductSearch()
         <h4>Product Search</h4>
 
         <Link to="/products/add" className="btn btn-outline-success">Add</Link>
-
-        <form>
-            <h4>Filters</h4>
-            <div>
-                <label htmlFor="product-name">Product Name</label>
-                <input type="search" name="product-name" id="product-name" />
-                <input type="submit" value="Search" />
-            </div>    
-        </form>
 
         <table className="table mt-4">
             <thead className="table table-dark">
