@@ -28,6 +28,31 @@ public class MySqlProductDao implements ProductDao
     }
 
     @Override
+    public List<Product> getAllProducts()
+    {
+        List<Product> products = new ArrayList<>();
+
+        var sql = """
+                SELECT product_id
+                    , product_name
+                    , category_id
+                    , quantity_per_unit
+                    , unit_price
+                FROM products;
+                """;
+
+        var row = jdbcTemplate.queryForRowSet(sql);
+
+        while (row.next())
+        {
+            Product product = mapRowToProduct(row);
+            products.add(product);
+        }
+
+        return products;
+    }
+
+    @Override
     public List<Product> getByCategoryId(int categoryId)
     {
         List<Product> products = new ArrayList<>();
